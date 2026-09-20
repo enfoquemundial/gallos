@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crear cuenta | Tu Norte</title>
+<link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+
+<div class="auth-shell">
+  <div class="auth-card" style="max-width:440px;">
+    <a href="plataforma.html" class="brand"><img src="assets/logo-tu-norte.webp" alt="Peleas de Gallos Tu Norte" class="brand-logo-img"></a>
+    <h1>Crea tu cuenta</h1>
+    <p class="sub">El registro requiere verificar tu identidad y tu mayoría de edad.</p>
+
+    <form id="signup-form">
+      <div class="field">
+        <label for="fullname">Nombre completo</label>
+        <input type="text" id="fullname" placeholder="Como aparece en tu cédula" required>
+      </div>
+      <div class="field">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
+      </div>
+      <div class="field">
+        <label for="dob">Fecha de nacimiento</label>
+        <input type="date" id="dob" required>
+      </div>
+      <div class="field">
+        <label for="doc">Cédula / documento de identidad</label>
+        <input type="text" id="doc" placeholder="000-0000000-0" required>
+        <div class="field-hint">Usada para verificar que eres mayor de edad, según lo exige la licencia.</div>
+      </div>
+      <div class="field">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" placeholder="••••••••" required>
+      </div>
+
+      <div class="check-row">
+        <input type="checkbox" id="age-confirm" required>
+        <label for="age-confirm">Confirmo que soy mayor de 18 años y que la información proporcionada es correcta.</label>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="terms-confirm" required>
+        <label for="terms-confirm">Acepto los Términos y Condiciones y la Política de Juego Responsable.</label>
+      </div>
+
+      <button type="submit" class="btn btn-brass btn-block">Crear cuenta</button>
+    </form>
+
+    <div class="auth-foot">
+      ¿Ya tienes cuenta? <a href="login.html" style="color:var(--gold);">Inicia sesión</a>
+    </div>
+  </div>
+</div>
+
+<script src="app.js?v=3"></script>
+<script>
+document.getElementById('signup-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const dob = new Date(document.getElementById('dob').value);
+  if(isNaN(dob.getTime())){ showToast('Ingresa una fecha de nacimiento válida'); return; }
+
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  const hadBirthday = (today.getMonth() > dob.getMonth()) ||
+    (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
+  if(!hadBirthday) age--;
+
+  if(age < 18){
+    showToast('Debes ser mayor de 18 años para registrarte');
+    return;
+  }
+  if(!document.getElementById('age-confirm').checked || !document.getElementById('terms-confirm').checked){
+    showToast('Debes aceptar ambas confirmaciones para continuar');
+    return;
+  }
+
+  login();
+  window.location.href = 'plataforma.html';
+});
+</script>
+
+</body>
+</html>

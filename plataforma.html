@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tu Norte — Apuestas de Gallos en Vivo</title>
+<link rel="stylesheet" href="styles.css?v=3">
+<script>
+  if(localStorage.getItem('gc_auth') !== '1'){ /* home es pública, no se exige login para ver */ }
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <button class="menu-btn" aria-label="Menú" onclick="toggleSidebar()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg>
+    </button>
+    <a href="plataforma.html" class="brand">
+      <img src="assets/logo-tu-norte.webp" alt="Peleas de Gallos Tu Norte" class="brand-logo-img">
+    </a>
+
+    <nav class="main-nav">
+      <a href="plataforma.html" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/><path d="M8.5 8.5a5 5 0 0 0 0 7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+        EN VIVO
+      </a>
+      <a href="#proximas">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        PRÓXIMOS
+      </a>
+      <a href="billetera.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H8l-4 4V5z"/></svg>
+        MIS APUESTAS
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4a3 3 0 0 0 3 4"/><path d="M17 5h3a3 3 0 0 1-3 4"/><path d="M12 13v4"/><path d="M9 21h6"/></svg>
+        TORNEOS
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L12 16.9 6.4 20.1l1.4-6.3-4.8-4.3 6.4-.6L12 3z"/></svg>
+        RANKING
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11"/><path d="M4 9h16v4H4z"/><path d="M12 9v11"/></svg>
+        PROMOCIONES
+      </a>
+    </nav>
+
+    <div class="top-actions">
+      <span id="nav-guest" style="display:flex;">
+        <a href="login.html" class="btn btn-outline" style="padding:9px 18px; font-size:13px;">Iniciar sesión</a>
+      </span>
+      <span id="nav-user" style="display:none; align-items:center; gap:12px;">
+        <a href="billetera.html" class="wallet-pill">
+          <span class="amt" id="balance-pill">RD$ 0.00</span>
+          <span class="add-btn">+</span>
+        </a>
+        <button class="icon-btn" aria-label="Notificaciones">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+          <span class="badge">3</span>
+        </button>
+        <a href="#" onclick="logout(); return false;" class="icon-btn" aria-label="Cuenta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </a>
+      </span>
+    </div>
+  </div>
+</header>
+
+<div class="dashboard">
+
+  <!-- ===== LEFT SIDEBAR ===== -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="toggleSidebar()"></div>
+  <aside class="left-sidebar" id="left-sidebar">
+    <button class="sidebar-close" aria-label="Cerrar menú" onclick="toggleSidebar()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="side-panel">
+      <div class="side-section">
+        <div class="side-head">
+          <span class="title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/><path d="M8.5 8.5a5 5 0 0 0 0 7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+            En vivo
+          </span>
+          <span class="count-pill">12</span>
+        </div>
+      </div>
+      <div class="side-section">
+        <div class="side-link-list">
+          <a class="side-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Próximos eventos</a>
+          <a class="side-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L12 16.9 6.4 20.1l1.4-6.3-4.8-4.3 6.4-.6L12 3z"/></svg>Peleas destacadas</a>
+          <a class="side-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H4a3 3 0 0 0 3 4"/><path d="M17 5h3a3 3 0 0 1-3 4"/><path d="M12 13v4"/><path d="M9 21h6"/></svg>Torneos</a>
+          <a class="side-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L12 16.9 6.4 20.1l1.4-6.3-4.8-4.3 6.4-.6L12 3z"/></svg>Ranking de gallos</a>
+          <a class="side-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Estadísticas</a>
+          <a class="side-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4-3 7-7 8-4-1-7-4-7-8V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>Resultados</a>
+        </div>
+      </div>
+      <div class="side-section">
+        <div class="side-head"><span class="title" style="color:var(--ink-soft);">Deportes</span></div>
+        <div class="side-link-list">
+          <a class="side-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8l3 2-1 4h-4l-1-4z"/></svg>Fútbol</a>
+          <a class="side-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M6 6c2 2 2 5 0 7M18 6c-2 2-2 5 0 7"/></svg>Béisbol</a>
+          <a class="side-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.5 5.5c3 3 3 10 0 13M18.5 5.5c-3 3-3 10 0 13"/></svg>Baloncesto</a>
+          <a class="side-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M8 4h6a4 4 0 0 1 4 4v3a5 5 0 0 1-5 5h-1v3H9v-4c-2 0-3-1-3-3V9a5 5 0 0 1 2-5z"/></svg>Boxeo</a>
+          <a class="side-link active" href="plataforma.html"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg>Peleas de gallos</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="promo-card">
+      <svg class="trophy" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="1.5"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M9 21h6"/><path d="M9.5 17h5l.5 4h-6l.5-4z"/></svg>
+      <div class="label">Bono de bienvenida</div>
+      <div class="big">100%</div>
+      <div class="sub">Hasta RD$5,000</div>
+      <a href="registro.html" class="btn btn-brass btn-block" style="font-size:13px; padding:11px;">Reclamar bono</a>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main>
+    <div class="video-panel">
+      <div class="video-watermark">
+        <svg viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg>
+        TU NORTE
+      </div>
+      <div class="video-overlay-top">
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span class="live-badge"><span class="dot"></span>EN VIVO</span>
+          <span class="video-meta-pill">
+            <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span id="countdown">00:12:45</span></span>
+            <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><circle cx="17" cy="9" r="2.5"/></svg><span id="viewer-count">1,250</span></span>
+          </span>
+        </div>
+        <div class="video-controls">
+          <button class="video-icon-btn" id="mute-btn" aria-label="Sonido">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>
+          </button>
+          <button class="video-icon-btn" onclick="document.querySelector('.video-panel').requestFullscreen && document.querySelector('.video-panel').requestFullscreen()" aria-label="Pantalla completa">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg>
+          </button>
+        </div>
+      </div>
+      <iframe id="live-iframe"
+        src="https://www.youtube.com/embed/if_2f8as9RU?start=5&autoplay=1&mute=1&loop=1&playlist=if_2f8as9RU&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3"
+        title="Transmisión en vivo" allow="autoplay; encrypted-media" allowfullscreen>
+      </iframe>
+    </div>
+    <div class="video-caption">
+      <span>ARENA LA NORTEÑA</span><span class="sep">·</span><span>RONDA 3</span><span class="sep">·</span><span>PESO 2.5 LBS</span><span class="sep">·</span><span>REGLAS CLÁSICAS</span>
+    </div>
+
+    <div class="matchup-row">
+      <div class="side-card red">
+        <div class="side-card-top">
+          <span class="side-tag red">ROJO</span>
+          <span class="rooster-avatar red"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg></span>
+        </div>
+        <div class="name">El Diablo</div>
+        <div class="odds-val" id="odds-red">1.85</div>
+        <div class="quick-chips" id="chip-row-red"></div>
+        <button class="bet-btn" onclick="placeBet('red')">Apostar ahora</button>
+      </div>
+
+      <div class="vs-panel">
+        <div class="vs-mark">VS</div>
+        <div class="round">Ronda 3</div>
+        <div class="timer" id="countdown2">00:12:45</div>
+        <div class="live-note">Apuesta en vivo</div>
+        <svg class="ring-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg>
+      </div>
+
+      <div class="side-card blue">
+        <div class="side-card-top">
+          <span class="side-tag blue">AZUL</span>
+          <span class="rooster-avatar blue"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg></span>
+        </div>
+        <div class="name">El Relámpago</div>
+        <div class="odds-val" id="odds-blue">1.95</div>
+        <div class="quick-chips" id="chip-row-blue"></div>
+        <button class="bet-btn" onclick="placeBet('blue')">Apostar ahora</button>
+      </div>
+    </div>
+
+    <div class="chart-panel">
+      <div class="chart-head">
+        <span class="title">Movimiento de cuotas</span>
+        <div class="chart-legend">
+          <span><span class="dot red"></span>El Diablo <b id="legend-red" class="mono">1.85</b></span>
+          <span><span class="dot blue"></span>El Relámpago <b id="legend-blue" class="mono">1.95</b></span>
+        </div>
+      </div>
+      <svg class="chart-svg" viewBox="0 0 640 170" preserveAspectRatio="none">
+        <line x1="50" y1="10" x2="620" y2="10" stroke="rgba(255,255,255,0.06)"/>
+        <line x1="50" y1="42.5" x2="620" y2="42.5" stroke="rgba(255,255,255,0.06)"/>
+        <line x1="50" y1="75" x2="620" y2="75" stroke="rgba(255,255,255,0.06)"/>
+        <line x1="50" y1="107.5" x2="620" y2="107.5" stroke="rgba(255,255,255,0.06)"/>
+        <line x1="50" y1="140" x2="620" y2="140" stroke="rgba(255,255,255,0.06)"/>
+        <text x="4" y="14" fill="#5C6478" font-size="10">2.20</text>
+        <text x="4" y="46.5" fill="#5C6478" font-size="10">2.00</text>
+        <text x="4" y="79" fill="#5C6478" font-size="10">1.80</text>
+        <text x="4" y="111.5" fill="#5C6478" font-size="10">1.60</text>
+        <text x="4" y="144" fill="#5C6478" font-size="10">1.40</text>
+        <polyline points="50,34 164,51 278,59 392,62 506,70 600,67" fill="none" stroke="#FF3B47" stroke-width="2"/>
+        <polyline points="50,99 164,83 278,75 392,67 506,56 600,51" fill="none" stroke="#2E7DFF" stroke-width="2"/>
+        <text x="42" y="162" fill="#5C6478" font-size="10">-5:00</text>
+        <text x="150" y="162" fill="#5C6478" font-size="10">-4:00</text>
+        <text x="264" y="162" fill="#5C6478" font-size="10">-3:00</text>
+        <text x="378" y="162" fill="#5C6478" font-size="10">-2:00</text>
+        <text x="492" y="162" fill="#5C6478" font-size="10">-1:00</text>
+        <text x="580" y="162" fill="#5C6478" font-size="10">AHORA</text>
+      </svg>
+    </div>
+
+    <div class="upcoming-panel" id="proximas">
+      <div class="upcoming-title">Próximas peleas</div>
+      <div class="upcoming-grid" id="upcoming-grid"></div>
+    </div>
+  </main>
+
+  <!-- ===== RIGHT SIDEBAR ===== -->
+  <aside>
+    <div class="chat-card">
+      <div class="chat-card-head">
+        <span class="title">Chat en vivo</span>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="live-count"><span class="dot"></span><span id="chat-viewer-count">1,250</span></span>
+          <button class="more-btn" aria-label="Más opciones">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="chat-msgs" id="chat-messages"></div>
+      <div class="chat-input-bar">
+        <div class="chat-input-wrap">
+          <input type="text" id="chat-input" placeholder="Escribe un mensaje..." maxlength="140" onkeydown="if(event.key==='Enter') sendChatMessage();">
+          <button class="emoji-btn" aria-label="Emoji" onclick="return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01" stroke-linecap="round"/><path d="M8.5 14.5c1 1.3 2.2 2 3.5 2s2.5-.7 3.5-2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <button class="send-btn" onclick="sendChatMessage()" aria-label="Enviar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="leaderboard-card">
+      <div class="leaderboard-head"><span class="title">Top ganadores</span><span class="link">Ver todos</span></div>
+      <div id="leaderboard-list"></div>
+    </div>
+
+    <div class="tournament-card">
+      <svg class="trophy-graphic" viewBox="0 0 24 24" fill="none" stroke="#FFC107" stroke-width="1.4"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M9 21h6"/><path d="M9.5 17h5l.5 4h-6l.5-4z"/></svg>
+      <div class="label">Torneo actual</div>
+      <div class="name">Copa Tu Norte</div>
+      <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+      <div class="status"><span>Fase final</span><span>32 / 32</span></div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Tu Norte — Peleas de Gallos. Plataforma con licencia vigente. Prohibido para menores de 18 años.</div>
+    <div class="legal-badge">Juega con responsabilidad</div>
+  </div>
+</footer>
+
+<script src="app.js?v=3"></script>
+<script>
+/* ---------- Menú lateral (móvil) ---------- */
+function toggleSidebar(){
+  document.getElementById('left-sidebar').classList.toggle('open');
+  document.getElementById('sidebar-backdrop').classList.toggle('open');
+}
+
+/* ---------- Cuotas y apuesta rápida por esquina ---------- */
+let odds = { red: 1.85, blue: 1.95 };
+let selected = { red: 0, blue: 0 };
+const chipVals = [100, 500, 1000];
+
+function buildChips(side){
+  const row = document.getElementById('chip-row-' + side);
+  row.innerHTML = chipVals.map(v => `<div class="quick-chip" data-val="${v}" onclick="selectChip('${side}', ${v})">RD$${v}</div>`).join('');
+}
+buildChips('red'); buildChips('blue');
+
+function selectChip(side, val){
+  selected[side] = val;
+  document.querySelectorAll('#chip-row-' + side + ' .quick-chip').forEach(c => {
+    c.classList.toggle('active', parseInt(c.dataset.val) === val);
+  });
+}
+
+function placeBet(side){
+  const amt = selected[side];
+  if(!amt){ showToast('Selecciona un monto rápido primero'); return; }
+  if(!isAuthed()){ window.location.href = 'login.html?next=plataforma.html'; return; }
+  if(amt > Store.getBalance()){ showToast('Saldo insuficiente. Carga tu billetera.'); return; }
+
+  Store.setBalance(Store.getBalance() - amt);
+  Store.addBet({
+    id: 'AP-' + Math.floor(1000 + Math.random()*9000),
+    evento: 'Arena La Norteña — Ronda 3',
+    lado: side === 'red' ? 'Rojo' : 'Azul',
+    monto: amt,
+    cuota: odds[side],
+    resultado: 'pending',
+    fecha: 'Ahora'
+  });
+  renderBalancePill();
+  showToast(`Apuesta confirmada: ${money(amt)} al ${side === 'red' ? 'Rojo (El Diablo)' : 'Azul (El Relámpago)'}`);
+  selected[side] = 0;
+  document.querySelectorAll('#chip-row-' + side + ' .quick-chip').forEach(c => c.classList.remove('active'));
+}
+
+/* Fluctuación de cuotas en vivo */
+setInterval(() => {
+  odds.red = +(1.85 + (Math.random()*0.06 - 0.03)).toFixed(2);
+  odds.blue = +(1.95 + (Math.random()*0.06 - 0.03)).toFixed(2);
+  document.getElementById('odds-red').textContent = odds.red.toFixed(2);
+  document.getElementById('odds-blue').textContent = odds.blue.toFixed(2);
+  document.getElementById('legend-red').textContent = odds.red.toFixed(2);
+  document.getElementById('legend-blue').textContent = odds.blue.toFixed(2);
+}, 4000);
+
+/* Reloj de cierre */
+let secondsLeft = 12*60 + 45;
+function fmtClock(s){
+  const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+  return [h,m,sec].map(n => String(n).padStart(2,'0')).join(':');
+}
+setInterval(() => {
+  if(secondsLeft <= 0) return;
+  secondsLeft--;
+  document.getElementById('countdown').textContent = fmtClock(secondsLeft);
+  document.getElementById('countdown2').textContent = fmtClock(secondsLeft).slice(3);
+}, 1000);
+
+/* Contador de espectadores */
+setInterval(() => {
+  const el = document.getElementById('viewer-count');
+  const el2 = document.getElementById('chat-viewer-count');
+  const current = parseInt(el.textContent.replace(/,/g,''));
+  const next = Math.max(80, current + Math.floor(Math.random()*9) - 4);
+  el.textContent = next.toLocaleString('es-DO');
+  el2.textContent = next.toLocaleString('es-DO');
+}, 5000);
+
+/* Mute toggle del video */
+let muted = true;
+document.getElementById('mute-btn').addEventListener('click', () => {
+  muted = !muted;
+  const f = document.getElementById('live-iframe');
+  f.src = `https://www.youtube.com/embed/if_2f8as9RU?start=5&autoplay=1&mute=${muted?1:0}&loop=1&playlist=if_2f8as9RU&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3`;
+});
+
+/* ---------- Próximas peleas ---------- */
+const upcoming = [
+  { time:'HOY 2:00 PM', a:'El Moro', b:'El Cazador', oa:'1.70', ob:'2.10' },
+  { time:'HOY 3:30 PM', a:'El Fénix', b:'La Sombra', oa:'1.60', ob:'2.20' },
+  { time:'HOY 5:00 PM', a:'El Trueno', b:'El Comado', oa:'1.75', ob:'2.00' },
+  { time:'HOY 6:30 PM', a:'El Águila', b:'El Titán', oa:'1.90', ob:'1.90' },
+];
+const roosterIcon = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg>';
+document.getElementById('upcoming-grid').innerHTML = upcoming.map(f => `
+  <div class="upcoming-card">
+    <div class="upcoming-time">${f.time}</div>
+    <div class="upcoming-vs">
+      <span class="rooster-avatar red">${roosterIcon}</span>
+      <span class="vs-mini">VS</span>
+      <span class="rooster-avatar blue">${roosterIcon}</span>
+    </div>
+    <div class="upcoming-names"><span>${f.a}</span><span>${f.b}</span></div>
+    <div class="upcoming-odds"><span class="r">${f.oa}</span><span class="b">${f.ob}</span></div>
+  </div>
+`).join('');
+
+/* ---------- Chat en vivo ---------- */
+const chatMessages = document.getElementById('chat-messages');
+const avatarColors = ['#FF3B47','#2E7DFF','#00E676','#FFC107','#9C6BFF','#FF7A45'];
+function colorFor(name){
+  let h = 0; for(let i=0;i<name.length;i++) h = name.charCodeAt(i) + ((h<<5)-h);
+  return avatarColors[Math.abs(h) % avatarColors.length];
+}
+function addChat(user, text, time, vip){
+  const row = document.createElement('div');
+  row.className = 'chat-msg-row';
+  row.innerHTML = `
+    <div class="chat-avatar" style="background:${colorFor(user)};">${user.charAt(0).toUpperCase()}</div>
+    <div class="chat-msg-body">
+      <div class="chat-msg-head">
+        <span class="chat-username">${user}</span>
+        ${vip ? '<span class="vip-badge">VIP</span>' : ''}
+        <span class="chat-time">${time}</span>
+      </div>
+      <div class="chat-text"></div>
+    </div>`;
+  row.querySelector('.chat-text').textContent = text;
+  chatMessages.appendChild(row);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+addChat('GalloFan12', 'Vamos El Diablo! 🔥', '12:45:10');
+addChat('ApostadorRD', 'El Relámpago se ve fuerte hoy', '12:45:12');
+addChat('LaLeyenda', 'Ronda pareja hasta ahora', '12:45:15');
+addChat('GalleroVIP', 'Buenas peleas! 💪', '12:45:18', true);
+addChat('El Profesor', 'Cuidado con el pique de El Diablo', '12:45:21');
+addChat('CrackApuestas', 'Azul para llevarse la pelea', '12:45:25');
+addChat('GalleroVIP', 'Ese movimiento fue clave', '12:45:30', true);
+
+const chatPoolNames = ['Franklyn_RD','LaGalleraMoca','Yeimy88','ElCriollo','DonRafa','Perico23','TatoBets','LimaGallos','Wander_RD'];
+const chatPoolMsgs = ['Vamos Diablo, ese pico no falla','Cargando más al Azul 💪','La cuota está bajando rápido','Buena defensa del Rojo','Esto se pone bueno','Azul respondiendo bien'];
+setInterval(() => {
+  const name = chatPoolNames[Math.floor(Math.random()*chatPoolNames.length)];
+  const text = chatPoolMsgs[Math.floor(Math.random()*chatPoolMsgs.length)];
+  const now = new Date();
+  const time = [now.getHours(),now.getMinutes(),now.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':');
+  addChat(name, text, time);
+}, 4000);
+
+function sendChatMessage(){
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if(!text) return;
+  const now = new Date();
+  const time = [now.getHours(),now.getMinutes(),now.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':');
+  addChat('Tú', text, time);
+  input.value = '';
+}
+
+/* ---------- Top ganadores ---------- */
+const leaders = [
+  { rank:1, name:'GalleroVIP', amt:125430, cls:'gold' },
+  { rank:2, name:'ElCampeon', amt:98750 },
+  { rank:3, name:'ApuestaMaestra', amt:75300, cls:'bronze' },
+  { rank:4, name:'ReyDeLaPista', amt:63200 },
+];
+document.getElementById('leaderboard-list').innerHTML = leaders.map(l => `
+  <div class="lb-row">
+    <div class="lb-rank ${l.cls || ''}">${l.rank}</div>
+    <div class="lb-avatar" style="background:${colorFor(l.name)}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#fff;">${l.name.charAt(0)}</div>
+    <div class="lb-name">${l.name}</div>
+    <div class="lb-amt">RD$ ${l.amt.toLocaleString('es-DO')}.00</div>
+  </div>
+`).join('');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Billetera | Tu Norte — Peleas de Gallos</title>
+<link rel="stylesheet" href="styles.css?v=3">
+<script>
+  if(localStorage.getItem('gc_auth') !== '1'){ window.location.href = 'login.html?next=billetera.html'; }
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="plataforma.html" class="brand"><img src="assets/logo-tu-norte.webp" alt="Peleas de Gallos Tu Norte" class="brand-logo-img"></a>
+    <nav class="nav">
+      <a href="plataforma.html">Cartelera</a>
+      <a href="evento.html">Evento en vivo</a>
+      <a href="billetera.html">Billetera</a>
+      <span id="nav-guest" style="display:none;">
+        <a href="login.html" class="btn btn-outline" style="padding:8px 16px; font-size:14px;">Iniciar sesión</a>
+      </span>
+      <span id="nav-user" style="display:flex; gap:14px; align-items:center;">
+        <a href="billetera.html" class="balance-pill" id="balance-pill">RD$ 0</a>
+        <a href="#" onclick="logout(); return false;" style="color:var(--ink-soft); font-size:14px;">Salir</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap" style="padding-top:44px;">
+  <h1 style="font-size:32px;">Tu billetera</h1>
+
+  <div class="wallet-hero">
+    <div class="balance-card">
+      <div>
+        <div class="label">Saldo disponible</div>
+        <div class="amount" id="big-balance">RD$ 0</div>
+      </div>
+      <a href="evento.html" class="btn btn-outline btn-block">Ir a apostar</a>
+    </div>
+
+    <div class="deposit-card">
+      <h3>Cargar saldo</h3>
+      <div class="chip-row" id="deposit-chip-row"></div>
+      <input type="number" id="deposit-input" class="amount-input" placeholder="Monto a depositar (RD$)" min="100" step="100">
+      <button class="paypal-btn" onclick="fakeDeposit()">
+        <span class="pp-logo">PayPal</span> — Depositar
+      </button>
+      <div class="demo-note">Modo demostración: no se procesa dinero real. Puedes usar cualquier monto de prueba.</div>
+    </div>
+  </div>
+
+  <div class="section-head" style="margin-top:50px;">
+    <h2>Historial de apuestas</h2>
+  </div>
+
+  <table class="history-table">
+    <thead>
+      <tr><th>ID</th><th>Evento</th><th>Lado</th><th>Cuota</th><th>Fecha</th><th style="text-align:right;">Monto</th><th style="text-align:right;">Estado</th></tr>
+    </thead>
+    <tbody id="history-body"></tbody>
+  </table>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Tu Norte — Peleas de Gallos. Plataforma con licencia vigente. Prohibido para menores de 18 años.</div>
+    <div class="legal-badge">Juega con responsabilidad</div>
+  </div>
+</footer>
+
+<script src="app.js?v=3"></script>
+<script>
+const depChips = [500, 1000, 2500, 5000];
+document.getElementById('deposit-chip-row').innerHTML = depChips.map(c =>
+  `<div class="chip" onclick="document.getElementById('deposit-input').value=${c}">${money(c)}</div>`
+).join('');
+
+function refreshBalanceDisplay(){
+  document.getElementById('big-balance').textContent = money(Store.getBalance());
+}
+
+function fakeDeposit(){
+  const amt = parseFloat(document.getElementById('deposit-input').value) || 0;
+  if(amt < 100){ showToast('Monto mínimo de depósito: RD$ 100'); return; }
+  Store.addFunds(amt);
+  renderBalancePill();
+  refreshBalanceDisplay();
+  document.getElementById('deposit-input').value = '';
+  showToast(`Depósito simulado de ${money(amt)} acreditado`);
+}
+
+function pillClass(r){
+  if(r === 'win') return 'pill win';
+  if(r === 'loss') return 'pill loss';
+  return 'pill pending';
+}
+function pillLabel(r){
+  if(r === 'win') return 'Ganada';
+  if(r === 'loss') return 'Perdida';
+  return 'Pendiente';
+}
+
+function renderHistory(){
+  const rows = Store.getHistory();
+  document.getElementById('history-body').innerHTML = rows.map(r => `
+    <tr>
+      <td>${r.id}</td>
+      <td>${r.evento}</td>
+      <td>${r.lado}</td>
+      <td class="num">${r.cuota.toFixed(2)}</td>
+      <td>${r.fecha}</td>
+      <td class="num">${money(r.monto)}</td>
+      <td style="text-align:right;"><span class="${pillClass(r.resultado)}">${pillLabel(r.resultado)}</span></td>
+    </tr>
+  `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  refreshBalanceDisplay();
+  renderHistory();
+});
+</script>
+
+</body>
+</html>

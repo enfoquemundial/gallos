@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matador vs. Huracán — En vivo | Tu Norte</title>
+<link rel="stylesheet" href="styles.css?v=3">
+<script>
+  if(localStorage.getItem('gc_auth') !== '1'){ window.location.href = 'login.html?next=evento.html'; }
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="plataforma.html" class="brand"><img src="assets/logo-tu-norte.webp" alt="Peleas de Gallos Tu Norte" class="brand-logo-img"></a>
+    <nav class="nav">
+      <a href="plataforma.html">Cartelera</a>
+      <a href="evento.html">Evento en vivo</a>
+      <a href="billetera.html">Billetera</a>
+      <span id="nav-guest" style="display:none;">
+        <a href="login.html" class="btn btn-outline" style="padding:8px 16px; font-size:14px;">Iniciar sesión</a>
+      </span>
+      <span id="nav-user" style="display:flex; gap:14px; align-items:center;">
+        <a href="billetera.html" class="balance-pill" id="balance-pill">RD$ 0</a>
+        <a href="#" onclick="logout(); return false;" style="color:var(--ink-soft); font-size:14px;">Salir</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap event-head">
+  <div class="event-status"><span class="live-dot"></span> EN VIVO — Copa Espaillat, Bout 5 · cierra en <span id="countdown">4:00</span></div>
+  <h1 style="font-size:34px;">Gallo A <span style="color:var(--ink-soft); font-weight:400; font-size:22px;">vs</span> Gallo B</h1>
+
+  <div class="live-layout">
+    <div>
+      <div class="stream-wrap">
+        <div class="stream-live-badge"><span class="live-dot"></span> EN VIVO</div>
+        <iframe
+          src="https://www.youtube.com/embed/if_2f8as9RU?start=5&autoplay=1&mute=1&loop=1&playlist=if_2f8as9RU&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3"
+          title="Transmisión en vivo"
+          allow="autoplay; encrypted-media"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="stream-note">Video de demostración en bucle — este canvas se conectará al reproductor de Cloudflare Stream cuando esté lista la transmisión real.</div>
+    </div>
+
+    <div class="chat-panel">
+      <div class="chat-header"><span>Chat en vivo</span><span class="viewers" id="viewer-count">312 viendo</span></div>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input-row">
+        <input type="text" id="chat-input" placeholder="Escribe un mensaje..." maxlength="140" onkeydown="if(event.key==='Enter') sendChatMessage();">
+        <button onclick="sendChatMessage()">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="matchup-board">
+    <div class="corner red">
+      <div class="label">Gallo A</div>
+      <div class="name">Matador</div>
+      <div class="record">14 peleas · 11 victorias</div>
+      <div class="odds-big" id="odds-red">1.85</div>
+    </div>
+    <div class="vs-mark">VS</div>
+    <div class="corner green">
+      <div class="label">Gallo B</div>
+      <div class="name">Huracán</div>
+      <div class="record">9 peleas · 7 victorias</div>
+      <div class="odds-big" id="odds-green">1.95</div>
+    </div>
+  </div>
+
+  <div class="bet-panel">
+    <div>
+      <h3>Arma tu apuesta</h3>
+      <div class="side-toggle">
+        <div class="side-btn active red" id="btn-a" onclick="selectSide('a')">A · Matador</div>
+        <div class="side-btn green" id="btn-b" onclick="selectSide('b')">B · Huracán</div>
+      </div>
+
+      <div class="chip-row" id="chip-row">
+        ${''}
+      </div>
+
+      <input type="number" id="amount-input" class="amount-input" placeholder="Monto personalizado (RD$)" min="50" step="50">
+
+      <button class="btn btn-brass btn-block" id="place-bet-btn" onclick="placeBet()">Confirmar apuesta</button>
+    </div>
+
+    <div class="summary">
+      <div class="summary-row"><span>Lado elegido</span><strong id="sum-side">A — Matador</strong></div>
+      <div class="summary-row"><span>Cuota</span><strong id="sum-odds">1.85</strong></div>
+      <div class="summary-row"><span>Monto</span><strong id="sum-amount">RD$ 0</strong></div>
+      <div class="summary-total"><span>Ganancia potencial</span><span class="val" id="sum-payout">RD$ 0</span></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Tu Norte — Peleas de Gallos. Plataforma con licencia vigente. Prohibido para menores de 18 años.</div>
+    <div class="legal-badge">Juega con responsabilidad</div>
+  </div>
+</footer>
+
+<script src="app.js?v=3"></script>
+<script>
+let side = 'a';
+let odds = { a: 1.85, b: 1.95 };
+let chipAmount = 0;
+
+const chips = [100, 300, 500, 1000, 2000];
+document.getElementById('chip-row').innerHTML = chips.map(c =>
+  `<div class="chip" data-val="${c}" onclick="selectChip(${c})">${money(c)}</div>`
+).join('');
+
+function selectSide(s){
+  side = s;
+  document.getElementById('btn-a').classList.toggle('active', s==='a');
+  document.getElementById('btn-b').classList.toggle('active', s==='b');
+  document.getElementById('sum-side').textContent = s==='a' ? 'A — Matador' : 'B — Huracán';
+  document.getElementById('sum-odds').textContent = odds[s].toFixed(2);
+  updateSummary();
+}
+
+function selectChip(v){
+  chipAmount = v;
+  document.getElementById('amount-input').value = v;
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', parseInt(c.dataset.val)===v));
+  updateSummary();
+}
+
+document.getElementById('amount-input').addEventListener('input', (e) => {
+  chipAmount = parseFloat(e.target.value) || 0;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  updateSummary();
+});
+
+function updateSummary(){
+  const amt = chipAmount || 0;
+  document.getElementById('sum-amount').textContent = money(amt);
+  document.getElementById('sum-payout').textContent = money(amt * odds[side]);
+}
+
+function placeBet(){
+  const amt = chipAmount || 0;
+  if(amt < 50){ showToast('El monto mínimo es RD$ 50'); return; }
+  if(amt > Store.getBalance()){ showToast('Saldo insuficiente. Carga tu billetera.'); return; }
+
+  Store.setBalance(Store.getBalance() - amt);
+  Store.addBet({
+    id: 'AP-' + Math.floor(1000 + Math.random()*9000),
+    evento: 'Copa Espaillat — Bout 5',
+    lado: side === 'a' ? 'A' : 'B',
+    monto: amt,
+    cuota: odds[side],
+    resultado: 'pending',
+    fecha: 'Ahora'
+  });
+  renderBalancePill();
+  showToast(`Apuesta confirmada: ${money(amt)} a ${side === 'a' ? 'Matador' : 'Huracán'}`);
+  chipAmount = 0;
+  document.getElementById('amount-input').value = '';
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  updateSummary();
+}
+
+// Reloj de cierre simulado
+let secondsLeft = 240;
+setInterval(() => {
+  if(secondsLeft <= 0) return;
+  secondsLeft--;
+  const m = Math.floor(secondsLeft/60), s = secondsLeft%60;
+  document.getElementById('countdown').textContent = `${m}:${String(s).padStart(2,'0')}`;
+}, 1000);
+
+// Pequeña fluctuación de cuotas para sensación de "en vivo"
+setInterval(() => {
+  odds.a = +(1.85 + (Math.random()*0.1 - 0.05)).toFixed(2);
+  odds.b = +(1.95 + (Math.random()*0.1 - 0.05)).toFixed(2);
+  document.getElementById('odds-red').textContent = odds.a.toFixed(2);
+  document.getElementById('odds-green').textContent = odds.b.toFixed(2);
+  document.getElementById('sum-odds').textContent = odds[side].toFixed(2);
+  updateSummary();
+}, 4000);
+
+updateSummary();
+
+// ---- Chat en vivo (simulado) ----
+const chatNames = ['Franklyn_RD','LaGalleraMoca','ApostadorPro','Yeimy88','ElCriollo','DonRafa','Perico23','TatoBets','LimaGallos','Wander_RD'];
+const chatLinesA = ['Vamos Matador, ese pico no falla 🔥','Aposté 500 al A, confío en Matador','A se ve más rápido esta ronda','Matador dominando el centro'];
+const chatLinesB = ['Huracán va a resistir, cuidado con B','Cargando más a Huracán 💪','B tiene mejor resistencia','Esa cuota de B está buena todavía'];
+const chatMessages = document.getElementById('chat-messages');
+
+function addChatMsg(user, text, cls){
+  const row = document.createElement('div');
+  row.className = 'chat-msg';
+  const u = document.createElement('span');
+  u.className = 'user ' + cls;
+  u.textContent = user + ':';
+  const t = document.createElement('span');
+  t.textContent = ' ' + text;
+  row.appendChild(u);
+  row.appendChild(t);
+  chatMessages.appendChild(row);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+addChatMsg('Tu Norte', 'Bienvenidos al Bout 5 — cierre de apuestas en 4 minutos.', 'sys');
+addChatMsg('Franklyn_RD', 'Vamos Matador, ese pico no falla 🔥', 'a');
+addChatMsg('LimaGallos', 'Cargando a Huracán, se ve fuerte', 'b');
+addChatMsg('TatoBets', 'La cuota de B está subiendo, aprovechen', 'b');
+
+setInterval(() => {
+  const toA = Math.random() > 0.5;
+  const name = chatNames[Math.floor(Math.random()*chatNames.length)];
+  const text = toA
+    ? chatLinesA[Math.floor(Math.random()*chatLinesA.length)]
+    : chatLinesB[Math.floor(Math.random()*chatLinesB.length)];
+  addChatMsg(name, text, toA ? 'a' : 'b');
+}, 3500);
+
+setInterval(() => {
+  const el = document.getElementById('viewer-count');
+  const current = parseInt(el.textContent);
+  const delta = Math.floor(Math.random()*9) - 4;
+  el.textContent = Math.max(80, current + delta) + ' viendo';
+}, 5000);
+
+function sendChatMessage(){
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if(!text) return;
+  addChatMsg('Tú', text, 'me');
+  input.value = '';
+}
+</script>
+
+</body>
+</html>
