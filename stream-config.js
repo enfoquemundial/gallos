@@ -1,7 +1,6 @@
-/* CONFIGURACIÓN PÚBLICA DEL REPRODUCTOR — no incluir claves de emisión ni tokens secretos.
-   Sustituye el texto vacío por el identificador de reproducción (Live Input UID) de Cloudflare Stream.
-   El URL de emisión RTMPS y la clave privada se configuran SOLO en OBS, nunca aquí. */
+/* Identificador público del reproductor Cloudflare Stream.
+   Nunca colocar aquí la clave RTMPS ni credenciales de emisión. */
 window.TU_NORTE_STREAM = {
-  liveInputUid: '',
+  liveInputUid: '637d598b1efbea9f7a499c521cfd8910',
   titulo: 'Tu Norte — Cámara en vivo'
 };
