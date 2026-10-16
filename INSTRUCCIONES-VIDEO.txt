@@ -1,0 +1,28 @@
+TU NORTE - INTEGRACIÓN DEL REPRODUCTOR DE CLOUDFLARE STREAM
+
+YA INCLUIDO:
+- en-vivo.html: página pública para ver la transmisión, sin inicio de sesión.
+- evento.html y plataforma.html: sustitución de YouTube por reproductor de Cloudflare.
+- stream-config.js: configuración del Live Input UID.
+- stream-player.js: carga automática del reproductor o mensaje de espera.
+- styles.css: diseño del estado de espera.
+
+PARA ACTIVAR VIDEO REAL (PENDIENTE):
+1. En Cloudflare Stream, abre tu Live Input y copia su UID (identificador de reproducción).
+2. Abre stream-config.js y pega el UID entre comillas en liveInputUid: ''.
+3. Sube los archivos modificados a la rama de GitHub Pages.
+4. Comprueba la página /gallos/en-vivo.html en modo incógnito.
+5. En OBS, configura la URL RTMPS de publicación y la clave privada que Cloudflare
+   muestra para ESE Live Input; NO subas esas credenciales a GitHub.
+6. Configura la cámara Microseven para que OBS pueda recibir su señal RTSP.
+   Si la cámara y OBS están en redes diferentes, necesitas conectividad segura
+   (VPN/túnel o dispositivo/servidor intermedio). El reproductor web por sí solo
+   NO convierte RTSP ni enciende la cámara de forma remota.
+7. Inicia la emisión desde OBS. Espera unos segundos y prueba desde otro dispositivo.
+
+IMPORTANTE:
+- Sin UID y sin un emisor conectado a Cloudflare, NO habrá video real.
+- Para emitir sin dejar una PC encendida necesitas otro equipo o infraestructura
+  de retransmisión; no se ha configurado en este ZIP.
+- No publiques credenciales RTSP, RTMPS ni tokens API en GitHub Pages.
+- La web contiene otras funciones simuladas que este ZIP no modifica.

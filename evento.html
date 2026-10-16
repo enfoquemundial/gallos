@@ -35,16 +35,12 @@
 
   <div class="live-layout">
     <div>
-      <div class="stream-wrap">
+      <div class="stream-wrap" data-stream-container>
         <div class="stream-live-badge"><span class="live-dot"></span> EN VIVO</div>
-        <iframe
-          src="https://www.youtube.com/embed/if_2f8as9RU?start=5&autoplay=1&mute=1&loop=1&playlist=if_2f8as9RU&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3"
-          title="Transmisión en vivo"
-          allow="autoplay; encrypted-media"
-          allowfullscreen>
-        </iframe>
+        <iframe data-tu-norte-live title="Tu Norte — transmisión en vivo" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="stream-placeholder" data-stream-placeholder hidden>La transmisión se está preparando. Vuelve pronto.</div>
       </div>
-      <div class="stream-note">Video de demostración en bucle — este canvas se conectará al reproductor de Cloudflare Stream cuando esté lista la transmisión real.</div>
+      <div class="stream-note">Señal en directo de Tu Norte. Si no hay emisión activa, el reproductor puede mostrar una pantalla de espera.</div>
     </div>
 
     <div class="chat-panel">
@@ -239,5 +235,7 @@ function sendChatMessage(){
 }
 </script>
 
+<script src="stream-config.js"></script>
+<script src="stream-player.js"></script>
 </body>
 </html>

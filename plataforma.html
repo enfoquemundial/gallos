@@ -119,7 +119,7 @@
 
   <!-- ===== MAIN ===== -->
   <main>
-    <div class="video-panel">
+    <div class="video-panel" data-stream-container>
       <div class="video-watermark">
         <svg viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg>
         TU NORTE
@@ -141,10 +141,8 @@
           </button>
         </div>
       </div>
-      <iframe id="live-iframe"
-        src="https://www.youtube.com/embed/if_2f8as9RU?start=5&autoplay=1&mute=1&loop=1&playlist=if_2f8as9RU&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3"
-        title="Transmisión en vivo" allow="autoplay; encrypted-media" allowfullscreen>
-      </iframe>
+      <iframe id="live-iframe" data-tu-norte-live title="Tu Norte — transmisión en vivo" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      <div class="stream-placeholder" data-stream-placeholder hidden>La transmisión se está preparando. Vuelve pronto.</div>
     </div>
     <div class="video-caption">
       <span>ARENA LA NORTEÑA</span><span class="sep">·</span><span>RONDA 3</span><span class="sep">·</span><span>PESO 2.5 LBS</span><span class="sep">·</span><span>REGLAS CLÁSICAS</span>
@@ -347,13 +345,7 @@ setInterval(() => {
   el2.textContent = next.toLocaleString('es-DO');
 }, 5000);
 
-/* Mute toggle del video */
-let muted = true;
-document.getElementById('mute-btn').addEventListener('click', () => {
-  muted = !muted;
-  const f = document.getElementById('live-iframe');
-  f.src = `https://www.youtube.com/embed/if_2f8as9RU?start=5&autoplay=1&mute=${muted?1:0}&loop=1&playlist=if_2f8as9RU&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3`;
-});
+/* El reproductor Cloudflare incorpora controles propios de sonido. */
 
 /* ---------- Próximas peleas ---------- */
 const upcoming = [
@@ -446,5 +438,7 @@ document.getElementById('leaderboard-list').innerHTML = leaders.map(l => `
 `).join('');
 </script>
 
+<script src="stream-config.js"></script>
+<script src="stream-player.js"></script>
 </body>
 </html>

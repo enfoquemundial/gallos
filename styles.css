@@ -436,3 +436,10 @@ footer .wrap{ display:flex; justify-content:space-between; align-items:center; f
 .nav a:hover{ color: var(--ink); }
 .nav .balance-pill{ background: var(--panel); border:1px solid var(--border); border-radius:999px; padding:8px 14px; color: var(--green); font-weight:700; }
 @media (max-width:1180px){ .nav{ display:none; } }
+
+/* Reproductor Cloudflare Stream */
+.stream-wrap, .video-panel { position: relative; background: #090d15; }
+.stream-wrap iframe[data-tu-norte-live], .video-panel iframe[data-tu-norte-live] { width:100%; height:100%; border:0; }
+.stream-placeholder { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:28px; color:#e7eaf0; background:#0a101b; font-size:clamp(15px,2vw,22px); z-index:2; }
+.stream-placeholder[hidden] { display:none !important; }
+.stream-not-configured .stream-live-badge, .stream-not-configured .video-overlay-top { display:none; }
