@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-auth-pending>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tu Norte — Apuestas de Gallos en Vivo</title>
 <link rel="stylesheet" href="styles.css?v=3">
 
-</head>
+<style>html[data-auth-pending] body{visibility:hidden}</style></head>
 <body>
 
 <header class="topbar">
@@ -230,7 +230,7 @@
 
 <script src="app.js?v=4"></script>
 <script src="firebase-config.js"></script>
-<script src="auth.js?v=3"></script>
+<script src="auth.js?v=5"></script>
 <script src="account.js?v=1"></script>
 <script>
 /* ---------- Menú lateral (móvil) ---------- */
@@ -351,7 +351,7 @@ document.getElementById('leaderboard-list').innerHTML = leaders.map(l => `
 </script>
 
 <script src="stream-config.js"></script>
-<script src="stream-player.js"></script>
+<script src="stream-player.js?v=2"></script>
 <script src="live-presence.js?v=1"></script>
 </body>
 </html>
