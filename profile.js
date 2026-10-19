@@ -46,7 +46,6 @@ export function createProfileGate(app, signOut) {
       <button type="button" id="whatsapp-logout" style="margin-top:16px;background:transparent;color:inherit">Cerrar sesión</button>`;
     document.body.appendChild(dialog);
     dialog.addEventListener('cancel', event => event.preventDefault());
-    dialog.showModal();
     const state = { uid: user.uid, dialog };
     state.promise = new Promise(resolve => { state.resolve = resolve; });
     active = state;
@@ -75,11 +74,13 @@ export function createProfileGate(app, signOut) {
         number.value = data?.whatsapp || '';
         form.hidden = false;
         status.textContent = '';
+        if (!dialog.open) dialog.showModal();
         (name.value ? number : name).focus();
       } catch {
         if (!current()) return;
         status.textContent = 'No se pudo consultar tu perfil. Revisa tu conexión y vuelve a intentar. Si continúa, contacta con Tu Norte.';
         retry.hidden = false;
+        if (!dialog.open) dialog.showModal();
       }
     }
     retry.addEventListener('click', load);
