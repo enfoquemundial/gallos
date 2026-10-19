@@ -32,7 +32,7 @@
   <div class="event-status"><span class="live-dot"></span> EN VIVO — Copa Espaillat, Bout 5 · cierra en <span id="countdown">4:00</span></div>
   <h1 style="font-size:34px;">Gallo A <span style="color:var(--ink-soft); font-weight:400; font-size:22px;">vs</span> Gallo B</h1>
 
-  <div class="live-layout">
+  <div class="live-layout" style="grid-template-columns:1fr;">
     <div>
       <div class="stream-wrap" data-stream-container>
         <div class="stream-live-badge"><span class="live-dot"></span> EN VIVO</div>
@@ -42,14 +42,7 @@
       <div class="stream-note">Señal en directo de Tu Norte. Si no hay emisión activa, el reproductor puede mostrar una pantalla de espera.</div>
     </div>
 
-    <div class="chat-panel">
-      <div class="chat-header"><span>Chat en vivo</span><span class="viewers" id="viewer-count">312 viendo</span></div>
-      <div class="chat-messages" id="chat-messages"></div>
-      <div class="chat-input-row">
-        <input type="text" id="chat-input" placeholder="Escribe un mensaje..." maxlength="140" onkeydown="if(event.key==='Enter') sendChatMessage();">
-        <button onclick="sendChatMessage()">Enviar</button>
-      </div>
-    </div>
+    
   </div>
 
   <div class="matchup-board">
@@ -186,54 +179,6 @@ setInterval(() => {
 
 updateSummary();
 
-// ---- Chat en vivo (simulado) ----
-const chatNames = ['Franklyn_RD','LaGalleraMoca','ApostadorPro','Yeimy88','ElCriollo','DonRafa','Perico23','TatoBets','LimaGallos','Wander_RD'];
-const chatLinesA = ['Vamos Matador, ese pico no falla 🔥','Aposté 500 al A, confío en Matador','A se ve más rápido esta ronda','Matador dominando el centro'];
-const chatLinesB = ['Huracán va a resistir, cuidado con B','Cargando más a Huracán 💪','B tiene mejor resistencia','Esa cuota de B está buena todavía'];
-const chatMessages = document.getElementById('chat-messages');
-
-function addChatMsg(user, text, cls){
-  const row = document.createElement('div');
-  row.className = 'chat-msg';
-  const u = document.createElement('span');
-  u.className = 'user ' + cls;
-  u.textContent = user + ':';
-  const t = document.createElement('span');
-  t.textContent = ' ' + text;
-  row.appendChild(u);
-  row.appendChild(t);
-  chatMessages.appendChild(row);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-addChatMsg('Tu Norte', 'Bienvenidos al Bout 5 — cierre de apuestas en 4 minutos.', 'sys');
-addChatMsg('Franklyn_RD', 'Vamos Matador, ese pico no falla 🔥', 'a');
-addChatMsg('LimaGallos', 'Cargando a Huracán, se ve fuerte', 'b');
-addChatMsg('TatoBets', 'La cuota de B está subiendo, aprovechen', 'b');
-
-setInterval(() => {
-  const toA = Math.random() > 0.5;
-  const name = chatNames[Math.floor(Math.random()*chatNames.length)];
-  const text = toA
-    ? chatLinesA[Math.floor(Math.random()*chatLinesA.length)]
-    : chatLinesB[Math.floor(Math.random()*chatLinesB.length)];
-  addChatMsg(name, text, toA ? 'a' : 'b');
-}, 3500);
-
-setInterval(() => {
-  const el = document.getElementById('viewer-count');
-  const current = parseInt(el.textContent);
-  const delta = Math.floor(Math.random()*9) - 4;
-  el.textContent = Math.max(80, current + delta) + ' viendo';
-}, 5000);
-
-function sendChatMessage(){
-  const input = document.getElementById('chat-input');
-  const text = input.value.trim();
-  if(!text) return;
-  addChatMsg('Tú', text, 'me');
-  input.value = '';
-}
 </script>
 
 <script src="stream-config.js"></script>
