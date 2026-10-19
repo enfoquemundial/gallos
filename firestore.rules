@@ -12,7 +12,23 @@ service cloud.firestore {
           && d.uid == uid
           && d.displayName is string && d.displayName.size() > 0 && d.displayName.size() <= 100
           && d.email == request.auth.token.email
-          && d.whatsapp is string && d.whatsapp.matches('^[+][1-9][0-9]{7,14}$')
+          && d.whatsapp is string && d.whatsapp.matches('^([0-9]{7,15}|[+][1-9][0-9]{7,14}))
+          && d.notificationsConsent == true
+          && d.consentVersion == 'live-notifications-v1'
+          && d.consentAt == request.time && d.updatedAt == request.time;
+      }
+      allow get: if owner();
+      allow list, delete: if false;
+      allow create: if owner() && validProfile() && request.resource.data.createdAt == request.time;
+      allow update: if owner() && validProfile()
+        && request.resource.data.createdAt == resource.data.createdAt;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+)
           && d.notificationsConsent == true
           && d.consentVersion == 'live-notifications-v1'
           && d.consentAt == request.time && d.updatedAt == request.time;
