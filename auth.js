@@ -47,7 +47,7 @@
     const [appSdk, authSdk, profileSdk] = await Promise.all([
       import('https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js'),
       import('https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js'),
-      import('./profile.js?v=1')
+      import('./profile.js?v=2')
     ]);
     sdk = authSdk;
     const app = appSdk.initializeApp(config);
