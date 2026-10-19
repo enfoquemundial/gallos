@@ -1,5 +1,9 @@
-(function () {
+(async function () {
   'use strict';
+  if (['plataforma.html', 'en-vivo.html', 'evento.html'].includes(location.pathname.split('/').pop())) {
+    if (!await window.gcAuth?.ready || !window.gcAuth.user) return;
+    if (!await window.gcAuth.profileReady) return;
+  }
   const config = window.TU_NORTE_STREAM || {};
   const uid = (config.liveInputUid || '').trim();
   const valid = /^[a-zA-Z0-9_-]{12,128}$/.test(uid);
