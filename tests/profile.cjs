@@ -20,14 +20,15 @@ const user={uid:'alice',displayName:'Alice',email:'alice@example.com'};
 const full={whatsapp:'+18095550123',notificationsConsent:true,consentVersion:'live-notifications-v1'};
 (async()=>{
   let s=setup(); assert.equal(s.normalize(' +1 (809) 555-0123 '),'+18095550123');
-  for(const invalid of ['8095550123','+0123456789','+123','+1234567890123456','+1809abc0123']) assert.equal(s.normalize(invalid),null);
+  for(const invalid of ['abcdefg','123456','1234567890123456','+0123456789','+123','+1234567890123456','+1809abc0123']) assert.equal(s.normalize(invalid),null);
+  assert.equal(s.normalize('809 555-0123'),'8095550123'); assert.equal(s.normalize('01234567'),'01234567');
   assert.equal(s.complete(full),true); assert.equal(s.complete({...full,notificationsConsent:false}),false);
   s=setup({saved:full}); assert.equal(await s.gate.ensure(user),true); assert.equal(s.writes.length,0);
   s=setup(); let done=false; const promise=s.gate.ensure(user).then(value=>{done=value;return value;}); await tick();
   assert.equal(done,false); assert.equal(s.nodes.form.hidden,false); assert.equal(s.nodes['#whatsapp-name'].value,'Alice'); assert.equal(s.nodes['#whatsapp-consent'].checked,false);
-  s.nodes['#whatsapp-number'].value='+1 809 555 0123'; await s.nodes.form.events.submit({preventDefault(){}}); assert.equal(s.writes.length,0);
+  s.nodes['#whatsapp-number'].value='809 555 0123'; await s.nodes.form.events.submit({preventDefault(){}}); assert.equal(s.writes.length,0);
   s.nodes['#whatsapp-consent'].checked=true; await s.nodes.form.events.submit({preventDefault(){}}); assert.equal(await promise,true);
-  assert.equal(s.writes[0].ref.uid,'alice'); assert.equal(s.writes[0].data.whatsapp,'+18095550123'); assert.equal(s.writes[0].data.consentAt,'SERVER_TIME'); assert.equal(s.writes[0].data.createdAt,'SERVER_TIME');
+  assert.equal(s.writes[0].ref.uid,'alice'); assert.equal(s.writes[0].data.whatsapp,'8095550123'); assert.equal(s.writes[0].data.consentAt,'SERVER_TIME'); assert.equal(s.writes[0].data.createdAt,'SERVER_TIME');
   s=setup({saved:{createdAt:'ORIGINAL',displayName:'Alice'}}); const pending=s.gate.ensure(user); await tick();
   s.nodes['#whatsapp-number'].value='+18095550123'; s.nodes['#whatsapp-consent'].checked=true; await s.nodes.form.events.submit({preventDefault(){}}); assert.equal(await pending,true); assert.equal('createdAt' in s.writes[0].data,false);
   s=setup({readError:true}); const failed=s.gate.ensure(user); await tick(); assert.equal(s.nodes.form.hidden,true); assert.equal(s.nodes['#whatsapp-retry'].hidden,false); s.gate.cancel(); assert.equal(await failed,false);
