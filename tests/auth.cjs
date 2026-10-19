@@ -45,6 +45,14 @@ const tick = () => new Promise(resolve=>setImmediate(resolve));
   s=setup({fail:'auth/popup-closed-by-user'}); await s.window.gcAuth.ready; s.events.google(); await tick(); assert.match(s.elements['auth-status'].textContent,/cerró/); assert.equal(s.moves.length,0);
   s=setup(); await s.window.gcAuth.ready; s.events['reset-password:click'](); await tick(); assert(s.calls.some(x=>x[0]==='reset'&&x[2]==='https://enfoquemundial.github.io/gallos/login.html')); assert.match(s.elements['auth-status'].textContent,/Si existe/);
   s=setup({user:{uid:'test'}}); await s.window.gcAuth.ready; await s.window.gcAuth.logout(); assert.equal(s.window.gcAuth.user,null); assert.deepEqual(s.moves,['login.html']);
+  for (const page of ['plataforma.html', 'en-vivo.html']) {
+    s=setup({page}); await s.window.gcAuth.ready;
+    assert.deepEqual(s.moves,['login.html?next='+page]);
+  }
+  s=setup(); await s.window.gcAuth.ready; await s.window.gcAuth.openLive();
+  assert.deepEqual(s.moves,['login.html?next=plataforma.html']);
+  s=setup({user:{uid:'real'}}); await s.window.gcAuth.ready; await s.window.gcAuth.openLive();
+  assert.deepEqual(s.moves,['plataforma.html']);
   let finishProfile;
   s=setup({profileReady:new Promise(resolve=>{finishProfile=resolve;})});
   await s.window.gcAuth.ready;
@@ -52,7 +60,7 @@ const tick = () => new Promise(resolve=>setImmediate(resolve));
   finishProfile(true); await tick(); assert.deepEqual(s.moves,['index.html']);
   s=setup({profileReady:Promise.resolve(false)}); await s.window.gcAuth.ready;
   s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.equal(s.moves.length,0);
-  console.log('13 comprobaciones de autenticación y espera de perfil: OK (SDK simulado).');
+  console.log('17 comprobaciones de autenticación y espera de perfil: OK (SDK simulado).');
 })().catch(error=>{console.error(error);process.exitCode=1;});
 
 
