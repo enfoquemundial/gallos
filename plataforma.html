@@ -210,32 +210,10 @@
 
   <!-- ===== RIGHT SIDEBAR ===== -->
   <aside>
-    <div class="chat-card">
-      <div class="chat-card-head">
-        <span class="title">Chat en vivo</span>
-        <div style="display:flex; align-items:center; gap:12px;">
-          <span class="live-count"><span class="dot"></span><span id="chat-viewer-count">1,250</span></span>
-          <button class="more-btn" aria-label="Más opciones">
-            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="chat-msgs" id="chat-messages"></div>
-      <div class="chat-input-bar">
-        <div class="chat-input-wrap">
-          <input type="text" id="chat-input" placeholder="Escribe un mensaje..." maxlength="140" onkeydown="if(event.key==='Enter') sendChatMessage();">
-          <button class="emoji-btn" aria-label="Emoji" onclick="return false;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01" stroke-linecap="round"/><path d="M8.5 14.5c1 1.3 2.2 2 3.5 2s2.5-.7 3.5-2" stroke-linecap="round"/></svg>
-          </button>
-        </div>
-        <button class="send-btn" onclick="sendChatMessage()" aria-label="Enviar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-        </button>
-      </div>
-    </div>
+    
 
     <div class="leaderboard-card">
-      <div class="leaderboard-head"><span class="title">Top ganadores</span><span class="link">Ver todos</span></div>
+      <div class="leaderboard-head"><span class="title">Top ganadores</span></div>
       <div id="leaderboard-list"></div>
     </div>
 
@@ -363,57 +341,10 @@ document.getElementById('upcoming-grid').innerHTML = upcoming.map(f => `
   </div>
 `).join('');
 
-/* ---------- Chat en vivo ---------- */
-const chatMessages = document.getElementById('chat-messages');
 const avatarColors = ['#FF3B47','#2E7DFF','#00E676','#FFC107','#9C6BFF','#FF7A45'];
 function colorFor(name){
   let h = 0; for(let i=0;i<name.length;i++) h = name.charCodeAt(i) + ((h<<5)-h);
   return avatarColors[Math.abs(h) % avatarColors.length];
-}
-function addChat(user, text, time, vip){
-  const row = document.createElement('div');
-  row.className = 'chat-msg-row';
-  row.innerHTML = `
-    <div class="chat-avatar" style="background:${colorFor(user)};">${user.charAt(0).toUpperCase()}</div>
-    <div class="chat-msg-body">
-      <div class="chat-msg-head">
-        <span class="chat-username">${user}</span>
-        ${vip ? '<span class="vip-badge">VIP</span>' : ''}
-        <span class="chat-time">${time}</span>
-      </div>
-      <div class="chat-text"></div>
-    </div>`;
-  row.querySelector('.chat-text').textContent = text;
-  chatMessages.appendChild(row);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-addChat('GalloFan12', 'Vamos El Diablo! 🔥', '12:45:10');
-addChat('ApostadorRD', 'El Relámpago se ve fuerte hoy', '12:45:12');
-addChat('LaLeyenda', 'Ronda pareja hasta ahora', '12:45:15');
-addChat('GalleroVIP', 'Buenas peleas! 💪', '12:45:18', true);
-addChat('El Profesor', 'Cuidado con el pique de El Diablo', '12:45:21');
-addChat('CrackApuestas', 'Azul para llevarse la pelea', '12:45:25');
-addChat('GalleroVIP', 'Ese movimiento fue clave', '12:45:30', true);
-
-const chatPoolNames = ['Franklyn_RD','LaGalleraMoca','Yeimy88','ElCriollo','DonRafa','Perico23','TatoBets','LimaGallos','Wander_RD'];
-const chatPoolMsgs = ['Vamos Diablo, ese pico no falla','Cargando más al Azul 💪','La cuota está bajando rápido','Buena defensa del Rojo','Esto se pone bueno','Azul respondiendo bien'];
-setInterval(() => {
-  const name = chatPoolNames[Math.floor(Math.random()*chatPoolNames.length)];
-  const text = chatPoolMsgs[Math.floor(Math.random()*chatPoolMsgs.length)];
-  const now = new Date();
-  const time = [now.getHours(),now.getMinutes(),now.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':');
-  addChat(name, text, time);
-}, 4000);
-
-function sendChatMessage(){
-  const input = document.getElementById('chat-input');
-  const text = input.value.trim();
-  if(!text) return;
-  const now = new Date();
-  const time = [now.getHours(),now.getMinutes(),now.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':');
-  addChat('Tú', text, time);
-  input.value = '';
 }
 
 /* ---------- Top ganadores ---------- */
