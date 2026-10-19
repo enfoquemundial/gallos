@@ -25,6 +25,7 @@ export function createProfileGate(app, signOut) {
     if (active?.uid === user.uid) return active.promise;
     cancel();
     const dialog = document.createElement('dialog');
+    dialog.hidden = true;
     dialog.setAttribute('aria-labelledby', 'whatsapp-title');
     dialog.style.cssText = 'visibility:visible;position:fixed;inset:0;margin:auto;width:min(440px,calc(100% - 32px));max-height:90dvh;overflow:auto;border:1px solid #30394b;border-radius:18px;padding:28px;background:#111827;color:#e5e7eb;font-family:inherit;box-sizing:border-box;';
     dialog.innerHTML = `
@@ -32,7 +33,7 @@ export function createProfileGate(app, signOut) {
       <h1 id="whatsapp-title" style="font-size:25px;margin:0 0 12px">Completa tu registro</h1>
       <p>Tu WhatsApp se usará únicamente para enviarte notificaciones sobre próximos en vivo de Tu Norte.</p>
       <p>Podrás solicitar dejar de recibir estos avisos cuando quieras. Guardar el número no envía mensajes automáticamente.</p>
-      <p id="whatsapp-status" role="status" aria-live="polite">Comprobando tu perfil…</p>
+      <p id="whatsapp-status" role="status" aria-live="polite"></p>
       <form id="whatsapp-form" hidden>
         <label for="whatsapp-name">Nombre</label>
         <input id="whatsapp-name" type="text" autocomplete="name" maxlength="100" required>
@@ -64,7 +65,7 @@ export function createProfileGate(app, signOut) {
     }
     async function load() {
       retry.hidden = true;
-      status.textContent = 'Comprobando tu perfil…';
+      status.textContent = '';
       try {
         const snapshot = await getDocFromServer(reference);
         if (!current()) return;
@@ -74,12 +75,14 @@ export function createProfileGate(app, signOut) {
         number.value = data?.whatsapp || '';
         form.hidden = false;
         status.textContent = '';
+        dialog.hidden = false;
         if (!dialog.open) dialog.showModal();
         (name.value ? number : name).focus();
       } catch {
         if (!current()) return;
         status.textContent = 'No se pudo consultar tu perfil. Revisa tu conexión y vuelve a intentar. Si continúa, contacta con Tu Norte.';
         retry.hidden = false;
+        dialog.hidden = false;
         if (!dialog.open) dialog.showModal();
       }
     }
