@@ -22,12 +22,57 @@
   }
   document.querySelectorAll('[data-stream-container]').forEach(setup);
   const soundButton = document.getElementById('mute-btn');
-  if (soundButton) {
-    soundButton.addEventListener('click', function () {
-      // Cloudflare Stream incorpora su propio control de sonido en el reproductor.
-      const iframe = document.getElementById('live-iframe');
-      if (iframe && iframe.src) iframe.focus();
-      soundButton.title = 'Utiliza el control de volumen dentro del reproductor';
+  if (!soundButton || !valid) {
+    if (soundButton) soundButton.disabled = true;
+    return;
+  }
+  const iframe = document.getElementById('live-iframe');
+  if (!iframe) { soundButton.disabled = true; return; }
+  soundButton.disabled = true;
+  soundButton.title = 'Cargando controles de sonido…';
+  function loadPlayerSDK() {
+    if (typeof window.Stream === 'function') return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://embed.cloudflarestream.com/embed/sdk.latest.js';
+      script.async = true;
+      script.onload = () => typeof window.Stream === 'function' ? resolve() : reject(new Error('SDK unavailable'));
+      script.onerror = reject;
+      document.head.appendChild(script);
     });
   }
+  loadPlayerSDK().then(() => {
+    const player = window.Stream(iframe);
+    let muted = true;
+    const speaker = '<path d="M4 9v6h4l5 4V5L8 9H4z"/>';
+    function renderSound() {
+      soundButton.setAttribute('aria-label', muted ? 'Activar sonido' : 'Silenciar');
+      soundButton.setAttribute('aria-pressed', String(!muted));
+      soundButton.title = muted ? 'Activar sonido' : 'Silenciar';
+      soundButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + speaker +
+        (muted ? '<path d="m17 9 5 6m0-6-5 6"/>' : '<path d="M16 9a4 4 0 0 1 0 6m3-9a8 8 0 0 1 0 12"/>') + '</svg>';
+    }
+    player.muted = true;
+    renderSound();
+    soundButton.disabled = false;
+    player.addEventListener('volumechange', () => {
+      muted = !!player.muted;
+      renderSound();
+    });
+    soundButton.addEventListener('click', () => {
+      try {
+        muted = !muted;
+        if (!muted && player.volume === 0) player.volume = 1;
+        player.muted = muted;
+        renderSound();
+      } catch {
+        soundButton.title = 'No se pudo cambiar el sonido. Usa el control dentro del video.';
+        window.showToast?.('No se pudo cambiar el sonido. Usa el control dentro del video.');
+      }
+    });
+  }).catch(() => {
+    soundButton.disabled = true;
+    soundButton.title = 'Usa el control de sonido dentro del reproductor';
+    soundButton.setAttribute('aria-label', soundButton.title);
+  });
 })();
