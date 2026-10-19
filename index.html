@@ -427,8 +427,8 @@
                 max-width: none;
                 background: #fff;
                 min-height: 100vh;
-                margin-left: 72px;
-                padding-top: 72px;
+                margin-left: 0;
+                padding-top: 0;
             }
 
             /* Rejilla tipo mosaico */
@@ -453,33 +453,16 @@
 </head>
 <body>
 <div aria-label="Cuenta" style="display:flex;justify-content:flex-end;gap:12px;padding:12px 20px;align-items:center;flex-wrap:wrap;">
+<a href="login.html?next=plataforma.html" onclick="event.preventDefault(); window.gcAuth.openLive();" style="display:inline-flex;align-items:center;background:#e60023;color:#fff;padding:10px 16px;border-radius:24px;text-decoration:none;font-weight:700;">Ver en vivo</a>
 <a data-auth-login href="login.html" style="color:inherit;">Iniciar sesión</a>
 <a data-auth-login href="registro.html" style="color:inherit;">Crear cuenta</a>
 <span data-auth-name></span><button type="button" data-auth-logout hidden>Cerrar sesión</button></div>
 
     <!-- ===== Barra lateral (solo escritorio) ===== -->
-    <nav class="pin-sidebar">
-        <div class="pin-logo"><i class="fa-brands fa-pinterest-p"></i></div>
-        <button class="side-btn active" title="Inicio"><i class="fa-solid fa-house"></i></button>
-        <button class="side-btn" title="Explorar"><i class="fa-regular fa-compass"></i></button>
-        <button class="side-btn" title="Tableros"><i class="fa-regular fa-square"></i></button>
-        <button class="side-btn" title="Crear"><i class="fa-solid fa-plus"></i></button>
-        <button class="side-btn" title="Mensajes"><i class="fa-regular fa-comment-dots"></i></button>
-        <div class="side-spacer"></div>
-        <button class="side-btn" title="Ajustes"><i class="fa-solid fa-gear"></i></button>
-    </nav>
+    
 
     <!-- ===== Barra superior (solo escritorio) ===== -->
-    <header class="pin-topbar">
-        <a href="login.html?next=plataforma.html" onclick="event.preventDefault(); window.gcAuth.openLive();" style="display:inline-flex;align-items:center;justify-content:center;background:#e60023;color:white;padding:12px 18px;border-radius:24px;text-decoration:none;font-weight:700;white-space:nowrap;">Entrar al en vivo</a>
-        <div class="pin-search">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Buscar">
-            <i class="fa-solid fa-camera"></i>
-        </div>
-        <div class="pin-avatar">E</div>
-        <i class="fa-solid fa-chevron-down chev"></i>
-    </header>
+    
 
     <div class="phone-mockup">
         <!-- Top Image Card -->
