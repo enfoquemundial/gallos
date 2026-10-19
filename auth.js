@@ -11,9 +11,9 @@
   };
   function errorMessage(error) {
     return ({
-      'auth/invalid-credential': 'Correo o contraseña incorrectos.',
-      'auth/user-not-found': 'Correo o contraseña incorrectos.',
-      'auth/wrong-password': 'Correo o contraseña incorrectos.',
+      'auth/invalid-credential': 'Correo o contraseña incorrecta.',
+      'auth/user-not-found': 'Correo o contraseña incorrecta.',
+      'auth/wrong-password': 'Correo o contraseña incorrecta.',
       'auth/email-already-in-use': 'Este correo ya tiene una cuenta. Inicia sesión o recupera tu contraseña.',
       'auth/weak-password': 'Elige una contraseña más segura, de al menos 6 caracteres.',
       'auth/invalid-email': 'Ingresa un correo válido.',
@@ -103,11 +103,18 @@
     busy = true;
     const controls = [...document.querySelectorAll('form button, [data-google], #reset-password')];
     controls.forEach(el => { el.disabled = true; });
+    const loginError = document.getElementById('login-error');
+    if (loginError) loginError.textContent = '';
     if (status) status.textContent = 'Procesando…';
     try {
       await operation();
       if (navigate && await api.profileReady) location.assign(destination());
-    } catch (error) { message(errorMessage(error)); }
+    } catch (error) {
+      if (loginError && ['auth/invalid-credential', 'auth/user-not-found', 'auth/wrong-password'].includes(error.code)) {
+        loginError.textContent = 'Correo o contraseña incorrecta.';
+        if (status) status.textContent = '';
+      } else message(errorMessage(error));
+    }
     finally { busy = false; controls.forEach(el => { el.disabled = false; }); }
   }
   document.getElementById('login-form')?.addEventListener('submit', event => {
