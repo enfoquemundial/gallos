@@ -1,7 +1,7 @@
 /* Firebase Authentication. No se confía en marcas de localStorage. */
 (() => {
   'use strict';
-  const protectedPage = ['evento.html', 'billetera.html'].includes(location.pathname.split('/').pop());
+  const protectedPage = ['plataforma.html', 'en-vivo.html', 'evento.html', 'billetera.html'].includes(location.pathname.split('/').pop());
   const status = document.getElementById('auth-status');
   let auth, sdk, profileGate;
   const api = window.gcAuth = { user: null, error: null };
@@ -89,6 +89,13 @@
     if (!await api.ready) return;
     try { window.gcPresenceStop?.(); await sdk.signOut(auth); location.assign('login.html'); }
     catch (error) { message(errorMessage(error)); }
+  };
+  api.openLive = async () => {
+    if (!await api.ready || !api.user) {
+      location.assign('login.html?next=plataforma.html');
+      return;
+    }
+    if (await api.profileReady) location.assign('plataforma.html');
   };
   let busy = false;
   async function run(operation, navigate = true) {
