@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const source = fs.readFileSync(__dirname + '/../auth.js', 'utf8')
   .replace(/import\('https:\/\/www.gstatic.com\/firebasejs\/12.7.0\/firebase-app.js'\)/, 'Promise.resolve(mockApp)')
   .replace(/import\('https:\/\/www.gstatic.com\/firebasejs\/12.7.0\/firebase-auth.js'\)/, 'Promise.resolve(mockAuth)')
-  .replace("import('./profile.js?v=1')", 'Promise.resolve(mockProfile)');
+  .replace("import('./profile.js?v=2')", 'Promise.resolve(mockProfile)');
 function setup({page='login.html', search='', config=true, user=null, fail=null, profileReady=Promise.resolve(true)}={}) {
   const events = {}, calls = [], moves = [];
   const elements = {};
