@@ -452,6 +452,10 @@
     </style>
 </head>
 <body>
+<div aria-label="Cuenta" style="display:flex;justify-content:flex-end;gap:12px;padding:12px 20px;align-items:center;flex-wrap:wrap;">
+<a data-auth-login href="login.html" style="color:inherit;">Iniciar sesión</a>
+<a data-auth-login href="registro.html" style="color:inherit;">Crear cuenta</a>
+<span data-auth-name></span><button type="button" data-auth-logout hidden>Cerrar sesión</button></div>
 
     <!-- ===== Barra lateral (solo escritorio) ===== -->
     <nav class="pin-sidebar">
@@ -627,5 +631,7 @@
         </div>
     </div>
 
+<script src="firebase-config.js"></script>
+<script src="auth.js"></script>
 </body>
 </html>

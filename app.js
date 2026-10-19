@@ -48,14 +48,12 @@ function showToast(msg){
   window.__toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
 }
 
-// ---- Auth (simulado) ----
-function isAuthed(){ return localStorage.getItem('gc_auth') === '1'; }
-function login(){ localStorage.setItem('gc_auth', '1'); }
-function logout(){ localStorage.removeItem('gc_auth'); window.location.href = 'login.html'; }
-function requireAuth(){
-  if(!isAuthed()){
-    const next = location.pathname.split('/').pop();
-    window.location.href = 'login.html?next=' + encodeURIComponent(next);
+// El estado real se restaura de forma asíncrona desde Firebase.
+function isAuthed(){ return !!window.gcAuth?.user; }
+function logout(){ return window.gcAuth?.logout(); }
+async function requireAuth(){
+  if(!await window.gcAuth?.ready || !isAuthed()){
+    window.location.href = 'login.html?next=' + encodeURIComponent(location.pathname.split('/').pop());
   }
 }
 function renderNavAuth(){
