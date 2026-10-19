@@ -1,0 +1,17 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "livePresence": {
+      "main": {
+        ".read": "auth != null",
+        "$uid": {
+          "$connection": {
+            ".write": "auth != null && auth.uid === $uid",
+            ".validate": "newData.isBoolean() && newData.val() === true && !newData.hasChildren()"
+          }
+        }
+      }
+    }
+  }
+}
