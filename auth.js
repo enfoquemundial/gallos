@@ -87,7 +87,7 @@
   }
   api.logout = async () => {
     if (!await api.ready) return;
-    try { await sdk.signOut(auth); location.assign('login.html'); }
+    try { window.gcPresenceStop?.(); await sdk.signOut(auth); location.assign('login.html'); }
     catch (error) { message(errorMessage(error)); }
   };
   let busy = false;
