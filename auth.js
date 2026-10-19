@@ -3,7 +3,7 @@
   'use strict';
   const protectedPage = ['evento.html', 'billetera.html'].includes(location.pathname.split('/').pop());
   const status = document.getElementById('auth-status');
-  let auth, sdk;
+  let auth, sdk, profileGate;
   const api = window.gcAuth = { user: null, error: null };
   const message = (text) => {
     if (status) status.textContent = text;
@@ -44,19 +44,31 @@
     if (!config?.apiKey || !config?.authDomain || !config?.projectId || !config?.appId) {
       throw new Error('missing-config');
     }
-    const [appSdk, authSdk] = await Promise.all([
+    const [appSdk, authSdk, profileSdk] = await Promise.all([
       import('https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js'),
-      import('https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js')
+      import('https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js'),
+      import('./profile.js?v=1')
     ]);
     sdk = authSdk;
-    auth = sdk.getAuth(appSdk.initializeApp(config));
+    const app = appSdk.initializeApp(config);
+    auth = sdk.getAuth(app);
+    profileGate = profileSdk.createProfileGate(app, () => api.logout());
     auth.languageCode = 'es';
     await sdk.setPersistence(auth, sdk.browserLocalPersistence);
     await new Promise((resolve, reject) => {
       let first = true;
       sdk.onAuthStateChanged(auth, user => {
         api.user = user;
-        render();
+        if (user) {
+          api.profileReady = profileGate.ensure(user);
+          api.profileReady.then(complete => {
+            if (complete && api.user?.uid === user.uid) render();
+          });
+        } else {
+          profileGate.cancel();
+          api.profileReady = Promise.resolve(false);
+          render();
+        }
         if (first) { first = false; resolve(); }
       }, reject);
     });
@@ -80,14 +92,14 @@
   };
   let busy = false;
   async function run(operation, navigate = true) {
-    if (busy || !await api.ready) return;
+    if (busy || !await api.ready || busy) return;
     busy = true;
     const controls = [...document.querySelectorAll('form button, [data-google], #reset-password')];
     controls.forEach(el => { el.disabled = true; });
     if (status) status.textContent = 'Procesando…';
     try {
       await operation();
-      if (navigate) location.assign(destination());
+      if (navigate && await api.profileReady) location.assign(destination());
     } catch (error) { message(errorMessage(error)); }
     finally { busy = false; controls.forEach(el => { el.disabled = false; }); }
   }
