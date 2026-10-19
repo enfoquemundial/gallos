@@ -8,7 +8,7 @@ const source = fs.readFileSync(__dirname + '/../auth.js', 'utf8')
 function setup({page='login.html', search='', config=true, user=null, fail=null, profileReady=Promise.resolve(true)}={}) {
   const events = {}, calls = [], moves = [];
   const elements = {};
-  for (const id of ['auth-status','login-form','email','password','reset-password','fullname','age-confirm','terms-confirm']) {
+  for (const id of ['auth-status','login-error','login-form','email','password','reset-password','fullname','age-confirm','terms-confirm']) {
     elements[id] = {value:id==='email'?'test@example.com':'password123', textContent:'', reportValidity:()=>true, addEventListener:(event,fn)=>{events[id+':'+event]=fn;}};
   }
   if (page==='registro.html') { delete elements['login-form']; elements['signup-form']={addEventListener:(event,fn)=>{events['signup-form:'+event]=fn;}}; }
@@ -39,7 +39,7 @@ const tick = () => new Promise(resolve=>setImmediate(resolve));
   s=setup({page:'evento.html',user:{uid:'real'}}); await s.window.gcAuth.ready; assert.equal(s.window.gcAuth.user.uid,'real'); assert.equal(s.moves.length,0); assert(s.calls.some(x=>x[0]==='revealed'));
   s=setup({search:'?next=https://evil.example'}); await s.window.gcAuth.ready; s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.deepEqual(s.moves,['index.html']);
   s=setup({search:'?next=billetera.html'}); await s.window.gcAuth.ready; s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.deepEqual(s.moves,['billetera.html']); assert(s.calls.some(x=>x[0]==='persistence'&&x[1]==='local'));
-  s=setup({fail:'auth/invalid-credential'}); await s.window.gcAuth.ready; s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.match(s.elements['auth-status'].textContent,/incorrectos/); assert.equal(s.moves.length,0);
+  s=setup({fail:'auth/invalid-credential'}); await s.window.gcAuth.ready; s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.match(s.elements['login-error'].textContent,/incorrecta/); assert.equal(s.moves.length,0);
   s=setup({page:'registro.html'}); await s.window.gcAuth.ready; s.events['signup-form:submit']({preventDefault(){}}); await tick(); assert(s.calls.some(x=>x[0]==='signup')); assert(s.calls.some(x=>x[0]==='profile'));
   s=setup(); await s.window.gcAuth.ready; s.events.google(); await tick(); assert(s.calls.some(x=>x[0]==='google'));
   s=setup({fail:'auth/popup-closed-by-user'}); await s.window.gcAuth.ready; s.events.google(); await tick(); assert.match(s.elements['auth-status'].textContent,/cerró/); assert.equal(s.moves.length,0);
