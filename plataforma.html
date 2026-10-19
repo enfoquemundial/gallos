@@ -58,9 +58,10 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
           <span class="badge">3</span>
         </button>
-        <a href="#" onclick="logout(); return false;" class="icon-btn" aria-label="Cuenta">
+        <button type="button" data-account-open class="icon-btn" aria-label="Cuenta" title="Mi cuenta">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
-        </a>
+        </button>
+        <button type="button" onclick="logout()" class="btn btn-outline" style="padding:8px 12px;font-size:12px;">Cerrar sesión</button>
       </span>
     </div>
   </div>
@@ -106,13 +107,6 @@
       </div>
     </div>
 
-    <div class="promo-card">
-      <svg class="trophy" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="1.5"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M9 21h6"/><path d="M9.5 17h5l.5 4h-6l.5-4z"/></svg>
-      <div class="label">Bono de bienvenida</div>
-      <div class="big">100%</div>
-      <div class="sub">Hasta RD$5,000</div>
-      <a href="registro.html" class="btn btn-brass btn-block" style="font-size:13px; padding:11px;">Reclamar bono</a>
-    </div>
   </aside>
 
   <!-- ===== MAIN ===== -->
@@ -265,6 +259,7 @@
 <script src="app.js?v=4"></script>
 <script src="firebase-config.js"></script>
 <script src="auth.js"></script>
+<script src="account.js?v=1"></script>
 <script>
 /* ---------- Menú lateral (móvil) ---------- */
 function toggleSidebar(){
