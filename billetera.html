@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-auth-pending>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Billetera | Tu Norte — Peleas de Gallos</title>
 <link rel="stylesheet" href="styles.css?v=3">
-<script>
-  if(localStorage.getItem('gc_auth') !== '1'){ window.location.href = 'login.html?next=billetera.html'; }
-</script>
+
+<style>html[data-auth-pending] body{visibility:hidden}</style>
 </head>
 <body>
 
@@ -71,7 +70,9 @@
   </div>
 </footer>
 
-<script src="app.js?v=3"></script>
+<script src="app.js?v=4"></script>
+<script src="firebase-config.js"></script>
+<script src="auth.js"></script>
 <script>
 const depChips = [500, 1000, 2500, 5000];
 document.getElementById('deposit-chip-row').innerHTML = depChips.map(c =>

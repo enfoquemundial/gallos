@@ -1,5 +1,11 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Transmisión en vivo | Tu Norte</title><link rel="stylesheet" href="styles.css"><style>body{background:#0b1019;color:#fff;min-height:100vh}.live-public{max-width:1100px;margin:35px auto;padding:0 18px}.live-public h1{font-size:clamp(24px,4vw,40px);margin-bottom:18px}.stream-wrap{position:relative;aspect-ratio:16/9;background:#080b11;border-radius:14px;overflow:hidden}.stream-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.live-hint{color:#aeb8c8;margin-top:18px;line-height:1.6}.stream-placeholder{z-index:2}</style></head>
-<body><header class="topbar"><div class="wrap topbar-inner"><a href="index.html" class="brand"><img src="assets/logo-tu-norte.webp" alt="Tu Norte" class="brand-logo-img"></a><nav class="nav"><a href="index.html">Inicio</a><a href="en-vivo.html">Ver en vivo</a></nav></div></header>
+<body>
+<div aria-label="Cuenta" style="display:flex;justify-content:flex-end;gap:12px;padding:12px 20px;align-items:center;flex-wrap:wrap;">
+<a data-auth-login href="login.html" style="color:inherit;">Iniciar sesión</a>
+<a data-auth-login href="registro.html" style="color:inherit;">Crear cuenta</a>
+<span data-auth-name></span><button type="button" data-auth-logout hidden>Cerrar sesión</button></div><header class="topbar"><div class="wrap topbar-inner"><a href="index.html" class="brand"><img src="assets/logo-tu-norte.webp" alt="Tu Norte" class="brand-logo-img"></a><nav class="nav"><a href="index.html">Inicio</a><a href="en-vivo.html">Ver en vivo</a></nav></div></header>
 <main class="live-public"><h1>Transmisión en vivo</h1><div class="stream-wrap" data-stream-container><iframe data-tu-norte-live title="Transmisión en vivo de Tu Norte" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe><div class="stream-placeholder" data-stream-placeholder hidden>La transmisión se está preparando. Vuelve pronto.</div></div><p class="live-hint">Si la cámara todavía no está emitiendo, es posible que el reproductor muestre una pantalla de espera. No necesitas registrarte para abrir esta página.</p></main>
-<script src="stream-config.js"></script><script src="stream-player.js"></script></body></html>
+<script src="stream-config.js"></script><script src="stream-player.js"></script><script src="firebase-config.js"></script>
+<script src="auth.js"></script>
+</body></html>

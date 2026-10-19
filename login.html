@@ -17,39 +17,26 @@
     <form id="login-form">
       <div class="field">
         <label for="email">Correo electrónico</label>
-        <input type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
+        <input autocomplete="email" type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
       </div>
       <div class="field">
         <label for="password">Contraseña</label>
-        <input type="password" id="password" placeholder="••••••••" required>
+        <input minlength="6" autocomplete="current-password" type="password" id="password" placeholder="••••••••" required>
       </div>
       <button type="submit" class="btn btn-brass btn-block">Iniciar sesión</button>
     </form>
+<p id="auth-status" role="status" aria-live="polite" style="min-height:1.5em;margin-top:16px;"></p>
+<button type="button" data-google class="btn btn-outline btn-block" style="margin-top:12px;">Continuar con Google</button>
 
     <div class="auth-foot">
-      Acceso demo: <strong style="color:var(--ink);">cliente@demo.com</strong> / <strong style="color:var(--ink);">123456</strong>
+      <button id="reset-password" type="button" class="btn btn-outline">¿Olvidaste tu contraseña?</button><br><br>¿No tienes cuenta? <a href="registro.html">Crear cuenta</a>
     </div>
   </div>
 </div>
 
-<script src="app.js?v=3"></script>
-<script>
-document.getElementById('login-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const email = document.getElementById('email').value.trim().toLowerCase();
-  const password = document.getElementById('password').value;
-
-  if(email !== 'cliente@demo.com' || password !== '123456'){
-    showToast('Correo o contraseña incorrectos');
-    return;
-  }
-
-  login();
-  const params = new URLSearchParams(location.search);
-  const next = params.get('next');
-  window.location.href = next && next !== 'login.html' ? next : 'plataforma.html';
-});
-</script>
+<script src="app.js?v=4"></script>
+<script src="firebase-config.js"></script>
+<script src="auth.js"></script>
 
 </body>
 </html>
