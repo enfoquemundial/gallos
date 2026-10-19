@@ -17,12 +17,13 @@
     <form id="login-form">
       <div class="field">
         <label for="email">Correo electrónico</label>
-        <input autocomplete="email" type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
+        <input autocomplete="email" type="email" id="email" aria-describedby="login-error" placeholder="tucorreo@ejemplo.com" required>
       </div>
       <div class="field">
         <label for="password">Contraseña</label>
-        <input minlength="6" autocomplete="current-password" type="password" id="password" placeholder="••••••••" required>
+        <input minlength="6" autocomplete="current-password" type="password" id="password" aria-describedby="login-error" placeholder="••••••••" required>
       </div>
+      <p id="login-error" role="alert" aria-live="polite" style="color:#ff6b76;font-size:14px;line-height:1.4;margin:0 0 12px;"></p>
       <button type="submit" class="btn btn-brass btn-block">Iniciar sesión</button>
     </form>
 <p id="auth-status" role="status" aria-live="polite" style="min-height:1.5em;margin-top:16px;"></p>
@@ -36,7 +37,7 @@
 
 <script src="app.js?v=4"></script>
 <script src="firebase-config.js"></script>
-<script src="auth.js?v=5"></script>
+<script src="auth.js?v=6"></script>
 
 </body>
 </html>
