@@ -121,7 +121,7 @@
           <span class="live-badge"><span class="dot"></span>EN VIVO</span>
           <span class="video-meta-pill">
             <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span id="countdown">00:12:45</span></span>
-            <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><circle cx="17" cy="9" r="2.5"/></svg><span id="viewer-count">1,250</span></span>
+            <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><circle cx="17" cy="9" r="2.5"/></svg><span id="viewer-count">—</span></span>
           </span>
         </div>
         <div class="video-controls">
@@ -302,15 +302,7 @@ setInterval(() => {
   document.getElementById('countdown2').textContent = fmtClock(secondsLeft).slice(3);
 }, 1000);
 
-/* Contador de espectadores */
-setInterval(() => {
-  const el = document.getElementById('viewer-count');
-  const el2 = document.getElementById('chat-viewer-count');
-  const current = parseInt(el.textContent.replace(/,/g,''));
-  const next = Math.max(80, current + Math.floor(Math.random()*9) - 4);
-  el.textContent = next.toLocaleString('es-DO');
-  el2.textContent = next.toLocaleString('es-DO');
-}, 5000);
+/* El contador real se activará al configurar presencia en Firebase. */
 
 /* El reproductor Cloudflare incorpora controles propios de sonido. */
 
