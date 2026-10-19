@@ -2,7 +2,7 @@ import { getFirestore, doc, getDocFromServer, runTransaction, serverTimestamp } 
 
 export function normalizeWhatsapp(value) {
   const phone = value.trim().replace(/[\s().-]/g, '');
-  return /^\+[1-9][0-9]{7,14}$/.test(phone) ? phone : null;
+  return /^(?:[0-9]{7,15}|\+[1-9][0-9]{7,14})$/.test(phone) ? phone : null;
 }
 export function isCompleteProfile(data) {
   return !!data && typeof data.whatsapp === 'string' && !!normalizeWhatsapp(data.whatsapp)
@@ -36,9 +36,9 @@ export function createProfileGate(app, signOut) {
       <form id="whatsapp-form" hidden>
         <label for="whatsapp-name">Nombre</label>
         <input id="whatsapp-name" type="text" autocomplete="name" maxlength="100" required>
-        <label for="whatsapp-number">WhatsApp con código de país</label>
-        <input id="whatsapp-number" type="tel" autocomplete="tel" inputmode="tel" maxlength="32" placeholder="Ejemplo: +1 809 555 0123" aria-describedby="whatsapp-hint" required>
-        <p id="whatsapp-hint">Incluye + y el código de tu país. No verificamos el número mediante un código.</p>
+        <label for="whatsapp-number">Número de WhatsApp</label>
+        <input id="whatsapp-number" type="tel" autocomplete="tel" inputmode="tel" maxlength="32" placeholder="Tu número de WhatsApp" aria-describedby="whatsapp-hint" required>
+        <p id="whatsapp-hint">Escribe tu número como lo usas habitualmente.</p>
         <label style="display:flex;gap:10px;align-items:flex-start;margin:20px 0"><input id="whatsapp-consent" type="checkbox" required> <span>Acepto recibir únicamente notificaciones de próximos en vivo de Tu Norte en este WhatsApp.</span></label>
         <button type="submit">Guardar y continuar</button>
       </form>
@@ -91,7 +91,7 @@ export function createProfileGate(app, signOut) {
       event.preventDefault();
       if (!form.reportValidity()) return;
       const whatsapp = normalizeWhatsapp(number.value);
-      if (!whatsapp) { status.textContent = 'Ingresa un número válido con + y código de país.'; number.focus(); return; }
+      if (!whatsapp) { status.textContent = 'Ingresa un número válido de entre 7 y 15 dígitos.'; number.focus(); return; }
       const displayName = name.value.trim();
       if (!displayName) { status.textContent = 'Ingresa tu nombre.'; name.focus(); return; }
       const button = form.querySelector('button');
