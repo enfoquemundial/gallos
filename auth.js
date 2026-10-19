@@ -83,7 +83,7 @@
   });
   function destination() {
     const next = new URLSearchParams(location.search).get('next');
-    return ['plataforma.html', 'evento.html', 'billetera.html', 'en-vivo.html', 'index.html'].includes(next) ? next : 'plataforma.html';
+    return ['plataforma.html', 'evento.html', 'billetera.html', 'en-vivo.html', 'index.html'].includes(next) ? next : 'index.html';
   }
   api.logout = async () => {
     if (!await api.ready) return;
