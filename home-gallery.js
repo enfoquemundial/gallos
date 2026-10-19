@@ -3,14 +3,17 @@
   const home = document.querySelector('.phone-mockup');
   const photos = [...document.querySelectorAll('.feed-grid .card-image')].map(image => ({src:image.getAttribute('src'),alt:image.alt}));
   if (!home || !photos.length) return;
+  const theme = getComputedStyle(document.body);
+  const background = theme.backgroundColor;
+  const foreground = theme.color;
   const style = document.createElement('style');
   style.textContent = `
     .gallery-detail[hidden],.phone-mockup[hidden]{display:none!important}
     .gallery-open{display:block;cursor:zoom-in}.gallery-open:focus-visible{outline:3px solid #e60023;outline-offset:3px;border-radius:16px}
-    .gallery-detail{width:100%;min-height:100vh;background:#fff;color:#171717;padding:16px clamp(12px,4vw,48px) 40px;box-sizing:border-box}
+    .gallery-detail{width:100%;min-height:100vh;background:var(--gallery-background,#000);color:var(--gallery-foreground,#fff);padding:16px clamp(12px,4vw,48px) 40px;box-sizing:border-box}
     .gallery-detail nav{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:20px}
     .gallery-back,.gallery-live{border:0;border-radius:24px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none}
-    .gallery-back{background:#eee;color:#171717}.gallery-live{background:#e60023;color:#fff}
+    .gallery-back{background:var(--gallery-button-background,#242424);color:inherit}.gallery-live{background:#e60023;color:#fff}
     .gallery-main{margin:0 auto 28px;max-width:860px;text-align:center}
     .gallery-main img{display:block;max-width:100%;width:auto;height:auto;max-height:76vh;object-fit:contain;margin:auto;border-radius:20px;box-shadow:0 6px 24px #0002}
     .gallery-detail h2{text-align:center;font-size:20px;margin:24px 0}
@@ -24,6 +27,9 @@
   document.head.appendChild(style);
   const detail = document.createElement('main');
   detail.className = 'gallery-detail';
+  detail.style.setProperty('--gallery-background', background);
+  detail.style.setProperty('--gallery-foreground', foreground);
+  detail.style.setProperty('--gallery-button-background', 'color-mix(in srgb, ' + foreground + ' 12%, ' + background + ')');
   detail.hidden = true;
   detail.innerHTML = `<nav aria-label="Navegación de imagen"><button type="button" class="gallery-back">← Volver</button><a class="gallery-live" href="login.html?next=plataforma.html">Ver en vivo</a></nav><figure class="gallery-main"><img alt=""><p role="status" hidden>No se pudo cargar esta imagen.</p></figure><h2>Más imágenes</h2><div class="gallery-related"></div>`;
   document.body.appendChild(detail);
