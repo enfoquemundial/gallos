@@ -25,9 +25,10 @@ function setup({page='login.html', search='', config=true, user=null, fail=null,
     signOut:async()=>{calls.push(['logout']); observer(null);},
     sendPasswordResetEmail:async (_,email,options)=>calls.push(['reset',email,options.url])
   };
-  const document = {getElementById:id=>elements[id]||null, querySelectorAll:selector=>selector==='[data-google]'?[google]:[], documentElement:{removeAttribute:()=>calls.push(['revealed'])}};
-  const location={pathname:'/gallos/'+page, search, href:'https://enfoquemundial.github.io/gallos/'+page+search, assign:url=>moves.push(url), replace:url=>moves.push(url)};
-  const window={TU_NORTE_FIREBASE_CONFIG:config?{apiKey:'public',projectId:'test',authDomain:'test.firebaseapp.com',appId:'test'}:null};
+  const frame={src:'live',removeAttribute:()=>calls.push(['stream-stopped'])};
+  const document = {getElementById:id=>elements[id]||null, querySelectorAll:selector=>selector==='[data-google]'?[google]:selector==='iframe[data-tu-norte-live]'?[frame]:[], documentElement:{setAttribute:()=>calls.push(['locked']),removeAttribute:()=>calls.push(['revealed'])}};
+  const location={pathname:'/gallos/'+page, search, href:'https://enfoquemundial.github.io/gallos/'+page+search, assign:url=>moves.push(url), replace:url=>moves.push(url),reload:()=>moves.push('__reload__')};
+  const window={addEventListener:(event,fn)=>{events['window:'+event]=fn;},TU_NORTE_FIREBASE_CONFIG:config?{apiKey:'public',projectId:'test',authDomain:'test.firebaseapp.com',appId:'test'}:null};
   vm.runInNewContext(source, {window, document, location, URL, URLSearchParams, mockApp:{initializeApp:()=>({})}, mockAuth:authSdk,
     mockProfile:{createProfileGate:()=>({ensure:()=>profileReady,cancel:()=>{}})}});
   return {window,events,calls,moves,elements,observer:()=>observer};
@@ -60,7 +61,19 @@ const tick = () => new Promise(resolve=>setImmediate(resolve));
   finishProfile(true); await tick(); assert.deepEqual(s.moves,['index.html']);
   s=setup({profileReady:Promise.resolve(false)}); await s.window.gcAuth.ready;
   s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.equal(s.moves.length,0);
-  console.log('17 comprobaciones de autenticación y espera de perfil: OK (SDK simulado).');
+
+  s=setup({page:'plataforma.html',user:{uid:'real'}}); await s.window.gcAuth.ready;
+  s.events['window:pagehide']();
+  assert.equal(s.window.gcAuth.accessSuspended,true); assert(s.calls.some(x=>x[0]==='stream-stopped'));
+  s.events['window:pageshow']({persisted:true}); assert(s.moves.includes('__reload__'));
+  s=setup({page:'plataforma.html',user:{uid:'real'}}); await s.window.gcAuth.ready;
+  s.events['window:pageshow']({persisted:false}); assert.equal(s.moves.length,0);
+  s.events['window:storage']({key:'tu_norte_logout',newValue:'1'}); assert.deepEqual(s.moves,['login.html']);
+  s=setup({page:'plataforma.html',user:{uid:'real'}}); await s.window.gcAuth.ready; await s.window.gcAuth.logout();
+  assert.equal(s.window.gcAuth.user,null); assert.equal(s.window.gcAuth.accessSuspended,true);
+  assert.deepEqual(s.moves,['login.html']); assert(s.calls.some(x=>x[0]==='stream-stopped'));
+
+  console.log('Autenticación, cierre de sesión, historial y sincronización entre pestañas: de autenticación y espera de perfil: OK (SDK simulado).');
 })().catch(error=>{console.error(error);process.exitCode=1;});
 
 
