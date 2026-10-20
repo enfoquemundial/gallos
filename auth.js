@@ -5,6 +5,38 @@
   const status = document.getElementById('auth-status');
   let auth, sdk, profileGate;
   const api = window.gcAuth = { user: null, error: null };
+  let pageLeaving = false;
+  function lockProtectedPage() {
+    if (!protectedPage) return;
+    api.accessSuspended = true;
+    document.documentElement.setAttribute('data-auth-pending', '');
+    document.querySelectorAll('iframe[data-tu-norte-live]').forEach(frame => {
+      frame.src = 'about:blank';
+      frame.removeAttribute('src');
+    });
+    document.querySelectorAll('video, audio').forEach(media => media.pause());
+    window.gcPresenceStop?.();
+  }
+  if (protectedPage) {
+    window.addEventListener('pagehide', () => {
+      pageLeaving = true;
+      lockProtectedPage();
+    });
+    window.addEventListener('pageshow', event => {
+      if (event.persisted) {
+        pageLeaving = true;
+        lockProtectedPage();
+        location.reload();
+      }
+    });
+    window.addEventListener('storage', event => {
+      if (event.key === 'tu_norte_logout' && event.newValue) {
+        pageLeaving = true;
+        lockProtectedPage();
+        location.replace('login.html');
+      }
+    });
+  }
   const message = (text) => {
     if (status) status.textContent = text;
     else if (window.showToast) window.showToast(text);
@@ -29,6 +61,7 @@
     })[error?.code] || 'No se pudo completar la operación. Inténtalo de nuevo.';
   }
   function render() {
+    if (pageLeaving) return;
     window.renderNavAuth?.();
     document.querySelectorAll('[data-auth-name]').forEach(el => {
       el.textContent = api.user?.displayName || api.user?.email || '';
@@ -36,8 +69,12 @@
     document.querySelectorAll('[data-auth-logout]').forEach(el => { el.hidden = !api.user; });
     document.querySelectorAll('[data-auth-login]').forEach(el => { el.hidden = !!api.user; });
     if (protectedPage && !api.user) {
+      lockProtectedPage();
       location.replace('login.html?next=' + encodeURIComponent(location.pathname.split('/').pop()));
-    } else document.documentElement.removeAttribute('data-auth-pending');
+    } else {
+      api.accessSuspended = false;
+      document.documentElement.removeAttribute('data-auth-pending');
+    }
   }
   api.ready = (async () => {
     const config = window.TU_NORTE_FIREBASE_CONFIG;
@@ -87,8 +124,18 @@
   }
   api.logout = async () => {
     if (!await api.ready) return;
-    try { window.gcPresenceStop?.(); await sdk.signOut(auth); location.assign('login.html'); }
-    catch (error) { message(errorMessage(error)); }
+    pageLeaving = protectedPage;
+    lockProtectedPage();
+    try {
+      window.gcPresenceStop?.();
+      await sdk.signOut(auth);
+      api.user = null;
+      try { window.localStorage?.setItem('tu_norte_logout', String(Date.now())); } catch {}
+      location.replace('login.html');
+    } catch (error) {
+      message(errorMessage(error));
+      if (protectedPage) location.reload();
+    }
   };
   api.openLive = async () => {
     if (!await api.ready || !api.user) {
