@@ -2,7 +2,7 @@
   'use strict';
   if (['plataforma.html', 'en-vivo.html', 'evento.html'].includes(location.pathname.split('/').pop())) {
     if (!await window.gcAuth?.ready || !window.gcAuth.user) return;
-    if (!await window.gcAuth.profileReady) return;
+    if (!await window.gcAuth.profileReady || !window.gcAuth.user || window.gcAuth.accessSuspended) return;
   }
   const config = window.TU_NORTE_STREAM || {};
   const uid = (config.liveInputUid || '').trim();
@@ -46,6 +46,7 @@
     });
   }
   loadPlayerSDK().then(() => {
+    if (!window.gcAuth?.user || window.gcAuth.accessSuspended) return;
     const player = window.Stream(iframe);
     let muted = true;
     const speaker = '<path d="M4 9v6h4l5 4V5L8 9H4z"/>';
