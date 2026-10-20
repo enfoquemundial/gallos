@@ -459,6 +459,33 @@
             .btn-apostar { width:100%; padding:12px 6px; font-size:14px; letter-spacing:0; white-space:nowrap; }
             .top-image-container, .top-image, .feed-grid { max-width:100%; }
         }
+    
+        /* Botones principales de la portada */
+        .action-row {
+            width:100%; max-width:720px; margin:0 auto;
+            grid-template-columns:minmax(0,1fr) minmax(0,1.6fr) minmax(0,1.25fr);
+            gap:10px; padding:20px 12px 18px;
+        }
+        .left-actions { width:100%; }
+        .action-row .btn-hoy, .action-row .btn-promo {
+            width:100%; min-width:0; justify-content:center;
+            border-radius:999px; padding:11px 8px;
+            font-size:clamp(11px,3.4vw,15px); white-space:nowrap;
+            background:#e32636; color:#fff; border:1px solid #f33b49;
+        }
+        .action-row .btn-apostar {
+            width:100%; min-width:0; padding:14px 8px;
+            border-radius:999px; background:#1a1a1a;
+            border:2px solid #ff4a5c; color:#fff; font-size:16px;
+            text-shadow:0 0 8px rgba(255,255,255,.25);
+            box-shadow:0 0 5px #ff4055,0 0 16px rgba(255,45,70,.7),inset 0 0 7px rgba(255,45,70,.25);
+            animation:portada-neon 2.4s ease-in-out infinite;
+        }
+        @keyframes portada-neon {
+            0%,100% {box-shadow:0 0 5px #ff4055,0 0 14px rgba(255,45,70,.65),inset 0 0 7px rgba(255,45,70,.22);}
+            50% {box-shadow:0 0 8px #ff6373,0 0 23px rgba(255,45,70,.85),inset 0 0 10px rgba(255,45,70,.3);}
+        }
+        @media(prefers-reduced-motion:reduce){.action-row .btn-apostar{animation:none;}}
     </style>
 </head>
 <body>
@@ -483,18 +510,18 @@
             <div class="left-actions">
                 <!-- Botón de la izquierda: HOY -->
                 <button class="btn-action-text btn-hoy">
-                    Hoy
+                    Gratis
                 </button>
             </div>
 
             <!-- Botón del medio: APOSTAR -->
             <button class="btn-apostar" onclick="window.gcAuth.openLive()">
-                Ver en vivo
+                Apostar
             </button>
 
             <!-- Botón de la derecha: PROMO -->
             <button class="btn-promo">
-                Promo
+                Tu promoción
             </button>
         </div>
 
