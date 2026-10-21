@@ -6,7 +6,12 @@
 <title>Tu Norte — Apuestas de Gallos en Vivo</title>
 <link rel="stylesheet" href="styles.css?v=4">
 
-<style>html[data-auth-pending] body{visibility:hidden}</style></head>
+<style>html[data-auth-pending] body{visibility:hidden}</style><style>
+.gallos-poster{position:absolute;inset:0;z-index:2;background:#090d14;pointer-events:none}
+.gallos-poster[hidden]{display:none}
+.gallos-poster img{width:100%;height:100%;object-fit:contain;display:block}
+.gallos-poster span{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);max-width:90%;padding:8px 16px;border-radius:20px;background:rgba(5,10,18,.85);color:#fff;font-size:12px;text-align:center}
+</style></head>
 <body>
 
 <header class="topbar">
@@ -112,6 +117,7 @@
   <!-- ===== MAIN ===== -->
   <main>
     <div class="video-panel" data-stream-container>
+      <div class="gallos-poster" data-stream-poster><img src="assets/portada-original-horizontal.jpg" alt="Dos gallos y el logo de Tu Norte"><span>Preparando la transmisión</span></div>
       <div class="video-watermark">
         <svg viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg>
         TU NORTE
@@ -351,7 +357,7 @@ document.getElementById('leaderboard-list').innerHTML = leaders.map(l => `
 </script>
 
 <script src="stream-config.js"></script>
-<script src="stream-player.js?v=3"></script>
+<script src="stream-player.js?v=4"></script>
 <script src="live-presence.js?v=1"></script>
 </body>
 </html>

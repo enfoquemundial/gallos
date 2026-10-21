@@ -48,6 +48,15 @@
   loadPlayerSDK().then(() => {
     if (!window.gcAuth?.user || window.gcAuth.accessSuspended) return;
     const player = window.Stream(iframe);
+    const poster = iframe.closest('[data-stream-container]')?.querySelector('[data-stream-poster]');
+    player.addEventListener('playing', () => { if (poster) poster.hidden = true; });
+    player.addEventListener('error', () => {
+      if (poster && window.gcAuth?.user && !window.gcAuth.accessSuspended) {
+        poster.hidden = false;
+        const label = poster.querySelector('span');
+        if (label) label.textContent = 'La transmisión se está preparando. Vuelve pronto.';
+      }
+    });
     let muted = true;
     const speaker = '<path d="M4 9v6h4l5 4V5L8 9H4z"/>';
     function renderSound() {
