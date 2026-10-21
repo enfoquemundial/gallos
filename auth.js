@@ -1,7 +1,7 @@
 /* Firebase Authentication. No se confía en marcas de localStorage. */
 (() => {
   'use strict';
-  const protectedPage = ['plataforma.html', 'en-vivo.html', 'evento.html', 'billetera.html'].includes(location.pathname.split('/').pop());
+  const protectedPage = ['plataforma.html', 'en-vivo.html', 'evento.html', 'billetera.html', 'deportes.html'].includes(location.pathname.split('/').pop());
   const status = document.getElementById('auth-status');
   let auth, sdk, profileGate;
   const api = window.gcAuth = { user: null, error: null };
@@ -70,7 +70,7 @@
     document.querySelectorAll('[data-auth-login]').forEach(el => { el.hidden = !!api.user; });
     if (protectedPage && !api.user) {
       lockProtectedPage();
-      location.replace('login.html?next=' + encodeURIComponent(location.pathname.split('/').pop()));
+      location.replace('login.html?next=' + encodeURIComponent(location.pathname.split('/').pop() + (location.pathname.endsWith('/deportes.html') && /^#(futbol|beisbol|baloncesto|boxeo)$/.test(location.hash) ? location.hash : '')));
     } else {
       api.accessSuspended = false;
       document.documentElement.removeAttribute('data-auth-pending');
@@ -120,7 +120,8 @@
   });
   function destination() {
     const next = new URLSearchParams(location.search).get('next');
-    return ['plataforma.html', 'evento.html', 'billetera.html', 'en-vivo.html', 'index.html'].includes(next) ? next : 'index.html';
+    if (/^deportes\.html#(futbol|beisbol|baloncesto|boxeo)$/.test(next || '')) return next;
+    return ['plataforma.html', 'evento.html', 'billetera.html', 'en-vivo.html', 'index.html', 'deportes.html'].includes(next) ? next : 'index.html';
   }
   api.logout = async () => {
     if (!await api.ready) return;
