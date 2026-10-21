@@ -443,3 +443,15 @@ footer .wrap{ display:flex; justify-content:space-between; align-items:center; f
 .stream-placeholder { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:28px; color:#e7eaf0; background:#0a101b; font-size:clamp(15px,2vw,22px); z-index:2; }
 .stream-placeholder[hidden] { display:none !important; }
 .stream-not-configured .stream-live-badge, .stream-not-configured .video-overlay-top { display:none; }
+
+/* Cada deporte ocupa una fila completa, también en el menú móvil. */
+.sports-list { width:100%; min-width:0; }
+.sports-list > .side-link { width:100%; min-width:0; box-sizing:border-box; }
+.sports-list > .sports-pending {
+  display:grid; grid-template-columns:18px minmax(0,1fr); align-items:center;
+  column-gap:10px; min-height:58px; cursor:default;
+}
+.sports-pending .sports-copy { display:flex; flex-direction:column; min-width:0; gap:3px; }
+.sports-pending .sports-name { white-space:normal; overflow-wrap:anywhere; line-height:1.3; }
+.sports-pending .sports-status { color:#ff5964; font-size:10px; font-weight:700; line-height:1.3; white-space:normal; }
+.sports-list > .sports-pending:hover { background:transparent; color:var(--ink-soft); }
