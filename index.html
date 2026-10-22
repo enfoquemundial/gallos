@@ -494,7 +494,23 @@
             50% {box-shadow:0 0 8px #ff6373,0 0 23px rgba(255,45,70,.85),inset 0 0 10px rgba(255,45,70,.3);}
         }
         @media(prefers-reduced-motion:reduce){.action-row .btn-apostar,.action-row .btn-hoy,.action-row .btn-promo{animation:none;}}
-    </style>
+    
+/* Portada: acción principal y categorías destacadas */
+.action-row .btn-hoy,.action-row .btn-promo{animation:none;box-shadow:0 0 5px #e43851,0 0 10px rgba(255,45,70,.35),inset 0 0 7px rgba(255,45,70,.15)}
+.action-row .btn-apostar{position:relative;isolation:isolate;overflow:hidden;border:2px solid #ffb0b9;background:linear-gradient(150deg,#45202a,#21151d 45%,#371820);text-shadow:0 0 12px #fff8,0 0 24px #ff557a;animation:apostar-beacon 2.8s ease-in-out infinite}
+.action-row .btn-apostar::after{content:"";position:absolute;inset:-60% -25%;z-index:-1;background:linear-gradient(105deg,transparent 38%,#ffffff38 48%,#ffffff85 50%,transparent 62%);transform:translateX(-100%);animation:apostar-sweep 4.8s ease-in-out infinite;pointer-events:none}
+.action-row .btn-apostar:hover{filter:brightness(1.14)}
+@keyframes apostar-beacon{0%,100%{box-shadow:0 0 6px #ff9aa9,0 0 22px #ff3359bb,0 0 40px #ff204740,inset 0 0 16px #ff46633d}50%{box-shadow:0 0 10px #ffc2cb,0 0 30px #ff3359ee,0 0 52px #ff204766,inset 0 0 24px #ff466366}}
+@keyframes apostar-sweep{0%,45%{transform:translateX(-100%)}80%,100%{transform:translateX(100%)}}
+.featured-pair{column-span:all;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:10px}
+.featured-pair .feed-card{margin:0;background:#121212}
+.featured-pair .card-image{height:clamp(225px,38vw,390px);border-radius:16px}
+.feature-label{position:absolute;top:12px;left:10px;right:10px;z-index:2;display:flex;align-items:center;gap:9px;width:fit-content;max-width:calc(100% - 20px);padding:10px 12px;border:1px solid #ffffff4d;border-radius:14px;background:linear-gradient(135deg,#11151be8,#20242acf);backdrop-filter:blur(12px);color:#fff;box-shadow:0 6px 22px #0005;pointer-events:none;font-size:clamp(10px,2.5vw,13px);line-height:1.25;letter-spacing:.15px}
+.feature-label strong{font-size:clamp(15px,3.6vw,21px);font-weight:800}
+.feature-mark{display:grid;place-items:center;width:27px;height:27px;flex-shrink:0;border-radius:9px;background:#ff385724;color:#ff8295;font-size:15px;border:1px solid #ff637650}
+@media(min-width:768px){.featured-pair{max-width:900px;margin:0 auto 24px;gap:18px}.featured-pair .card-image{height:370px}}
+@media(prefers-reduced-motion:reduce){.action-row .btn-apostar,.action-row .btn-apostar::after{animation:none}}
+</style>
 </head>
 <body>
 
@@ -538,14 +554,15 @@
 
         <!-- Feed Grid Section (Bottom red circles from image) -->
         <div class="feed-grid">
+<div class="featured-pair">
             <!-- Left Grid Item -->
             <div class="feed-card">
                 <div class="card-image-wrap">
                     <!-- Botón abajo a la izquierda: MEJOR GALLERO -->
-                    <button class="btn-overlay-mejor-gallero">Mejor gallero</button>
+                    <span class="feature-label"><span class="feature-mark" aria-hidden="true">★</span><span>Los mejores<br><strong>galleros</strong></span></span>
                     
                     <!-- Botón en el medio abajo: Sin nombre (para configurar) -->
-                    <button class="btn-overlay-custom-mid" title="Configuración"><i class="fa-solid fa-plus"></i></button>
+                    
 
                     <img src="https://images.unsplash.com/photo-1545251765-6aad90d25972?q=80&w=400&auto=format&fit=crop" class="card-image" alt="Gallo blanco de pelea">
                     <span class="card-more-btn"><i class="fa-solid fa-ellipsis"></i></span>
@@ -556,13 +573,14 @@
             <div class="feed-card">
                 <div class="card-image-wrap">
                     <!-- Botón a la derecha abajo: Sin nombre (para configurar) -->
-                    <button class="btn-overlay-custom-right" title="Configuración"><i class="fa-solid fa-plus"></i></button>
+                    <span class="feature-label"><span class="feature-mark" aria-hidden="true">◆</span><span>Mejores<br><strong>criaderos</strong></span></span>
 
                     <img src="https://images.unsplash.com/photo-1583510383754-35fc1d1eb598?q=80&w=400&auto=format&fit=crop" class="card-image" alt="Gallo de pelea rojo en primer plano">
                     <span class="card-more-btn"><i class="fa-solid fa-ellipsis"></i></span>
                 </div>
             </div>
 
+</div>
             <!-- Reemplazo del banner de texto por imagen de gallo -->
             <div class="feed-card tall">
                 <div class="card-image-wrap">
