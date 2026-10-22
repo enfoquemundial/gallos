@@ -540,6 +540,12 @@
 .feed-video-dialog:not([open]){display:none}
 .feed-video-tap:focus-visible,.feed-video-close:focus-visible{outline:3px solid #ff4968;outline-offset:-3px}
 @media(max-width:767px){.feed-video-card{margin-top:14px;margin-bottom:18px;border-radius:18px}}
+
+@media(max-width:767px){
+.home-hero{width:100%;background:#24170f url('assets/portada-extendida-botones.webp') center/100% 100% no-repeat}
+.home-hero .top-image-container{background:transparent;border-radius:0;overflow:visible}
+.home-hero .action-row{position:relative;z-index:1}
+}
 </style>
 </head>
 <body>
@@ -552,6 +558,7 @@
     
 
     <div class="phone-mockup">
+        <section class="home-hero" aria-label="Tu Norte">
         <!-- Top Image Card -->
         <div class="top-image-container">
             
@@ -575,6 +582,7 @@
             <button class="btn-promo"><span style="display:block;line-height:1.1;text-align:center;">TU<br>PROMOCIÓN</span></button>
         </div>
 
+        </section>
         <!-- User Information -->
         
 
