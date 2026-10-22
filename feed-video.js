@@ -8,7 +8,7 @@ let previousOverflow='';
 tap.addEventListener('click',()=>{
 if(dialog.open)return;
 previousOverflow=document.body.style.overflow;dialog.showModal();document.body.style.overflow='hidden';
-full.src='assets/pesas-ligero.mp4';full.muted=false;full.volume=1;full.load();
+full.src='assets/pesas-ligero.mp4?v=2';full.muted=false;full.volume=1;full.load();
 const result=full.play();if(result?.catch)result.catch(()=>{/* Los controles permiten iniciar si el navegador bloquea el sonido. */});
 close.focus();
 });

@@ -1,2 +1,45 @@
 *{box-sizing:border-box}body{margin:0;background:#090d14;color:#eef2f8;font:15px/1.6 system-ui,sans-serif}a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:transparent;border:1px solid #303947;border-radius:10px;padding:9px 15px;cursor:pointer}header{min-height:90px;display:flex;align-items:center;gap:24px;padding:14px 4%;border-bottom:1px solid #202938;background:#101622}.brand{margin-right:auto}.brand img{width:155px;max-height:65px;object-fit:contain}.return{color:#afbbcd}.layout{max-width:1600px;margin:auto;display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:40px 4%}aside{align-self:start;background:#111825;border:1px solid #222e40;border-radius:20px;padding:24px 18px}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(30px,4vw,46px);line-height:1.1;margin-bottom:0}aside h2{font-size:23px;line-height:1.25}nav{display:grid;gap:8px}nav a{padding:13px 12px;border-radius:10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}nav a:hover{background:#1b2638}nav a[aria-current=page]{background:#12382d;color:#29e6a0;box-shadow:inset 3px 0 #29e6a0}.available{font-size:10px;color:#29e6a0}.eyebrow{font-size:10px;letter-spacing:1.8px;font-weight:750;color:#95a6bd;margin-bottom:13px}.heading{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:24px}.soon{font-size:10px;font-weight:800;letter-spacing:1px;color:#ff7583;border:1px solid #64323d;background:#2a1822;padding:7px 11px;border-radius:30px;white-space:nowrap}.screen{position:relative;aspect-ratio:16/9;overflow:hidden;border:1px solid #2c3644;border-radius:20px;background:#121d2d;isolation:isolate}.screen>img{position:absolute;width:100%;height:100%;object-fit:cover;z-index:-2}.shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,8,15,.85),rgba(4,8,15,.45) 65%,rgba(4,8,15,.6));z-index:-1}.screen-label,.screen-bottom{position:absolute;left:25px;font-size:10px;letter-spacing:1.4px;color:#d0d7e2}.screen-label{top:22px}.screen-bottom{bottom:19px}.announcement{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 22px}.signal{font-size:30px;color:#ff5b70;margin-bottom:8px}.announcement .eyebrow{color:#e4dfe4;font-size:9px}.announcement h2{font-size:clamp(28px,4.3vw,65px);line-height:1.05;letter-spacing:-1.5px;margin-bottom:18px}.announcement>p:last-child{font-size:clamp(12px,1.2vw,17px);color:#d7deea;max-width:430px;margin-bottom:0}.below{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;margin-top:32px}.below h2{font-size:25px;line-height:1.25}.below p{color:#9aaac1}.notice{padding:25px;border:1px solid #263246;border-radius:16px;background:#111825}.notice h3{margin:20px 0 8px;font-size:17px}.notice p{margin:0}.credit{font-size:11px;color:#8796aa;margin-top:25px}.credit a{text-decoration:underline}a:focus-visible,button:focus-visible{outline:2px solid #29e6a0;outline-offset:3px}@media(max-width:850px){.layout{grid-template-columns:1fr;padding:22px 16px;gap:22px}aside{padding:14px}aside>.eyebrow,aside>h2{display:none}nav{display:flex;overflow-x:auto;gap:6px}nav a{flex-shrink:0;white-space:nowrap;padding:9px 12px;font-size:13px}.available{display:none}header{gap:12px;min-height:75px;padding:10px 16px}.brand img{width:115px}.return{font-size:12px}button{font-size:12px;padding:8px}.below{gap:20px}.heading{margin-bottom:18px}.screen{border-radius:14px}}@media(max-width:520px){.below{grid-template-columns:1fr}.screen{aspect-ratio:4/3}.screen-label,.screen-bottom{left:16px;font-size:8px}.announcement h2{font-size:35px}.announcement .eyebrow{font-size:7px;letter-spacing:1px}.signal{font-size:24px}.heading .soon{font-size:8px;padding:6px 8px}.announcement>p:last-child{font-size:12px}.return{max-width:65px;line-height:1.3}}
 main{min-width:0}.betting-section,.editorial{margin-top:36px}.section-heading{display:flex;justify-content:space-between;gap:12px;align-items:center}.section-heading h2,.editorial h2{font-size:clamp(22px,2.8vw,32px);line-height:1.2;margin-bottom:10px}.muted,.bet-note{color:#9aaac1}.match-cards{display:grid;grid-template-columns:minmax(0,1fr) 90px minmax(0,1fr);gap:18px;margin-top:24px;align-items:center}.bet-card{background:#121a28;border:1px solid #29364a;border-top:3px solid var(--team);padding:25px;border-radius:18px;min-width:0}.red{--team:#ff3b50}.blue{--team:#408bff}.corner{font-size:11px;letter-spacing:2px;font-weight:800;color:var(--team)}.bet-card h3{font-size:22px;margin:18px 0 5px}.odds{font-size:42px;font-weight:800;color:var(--team);line-height:1.3}.bet-card p{font-size:12px;color:#91a0b6}.chips{display:flex;gap:6px;flex-wrap:wrap;margin:20px 0}.chips span{font-size:11px;border:1px solid #344055;border-radius:7px;padding:6px 9px;color:#9daac0}.bet-card button{width:100%;background:#263545;border:0;color:#9eacbd;cursor:not-allowed;font-weight:700}.versus{text-align:center;display:grid;gap:6px}.versus strong{font-size:30px;color:#56647b}.versus span{font-size:10px;color:#9aaac1}.bet-note{font-size:12px;margin-top:14px}.editorial{border-top:1px solid #243044;padding-top:32px}.topic-tags{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.topic-tags span{border:1px solid #344254;border-radius:30px;padding:5px 12px;color:#8edbbf;font-size:11px}.guides{display:grid;gap:10px}.guides details{border:1px solid #263246;border-radius:12px;background:#111825;padding:18px 20px}.guides summary{cursor:pointer;font-weight:650}.guides p{color:#a7b6ca;margin:15px 0 0;max-width:760px}.guides details[open]{border-color:#3a6659}.guides summary:focus-visible{outline:2px solid #29e6a0;outline-offset:5px}@media(max-width:600px){.match-cards{gap:10px;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch}.versus{display:none}.bet-card{padding:16px 12px}.bet-card h3{font-size:17px}.chips{gap:5px}.chips span{font-size:9px;padding:5px}.bet-card button{font-size:11px;padding:10px 5px}.section-heading{align-items:flex-start}.section-heading .soon{font-size:8px}.guides details{padding:16px}.guides summary{font-size:14px}}
+
+/* Mantener todas las columnas dentro del ancho real del teléfono. */
+html{width:100%;overflow-x:clip}
+body{width:100%;min-width:0;margin:0}
+header,.layout,aside,main,nav,.heading,.section-heading,.below,.match-cards{min-width:0;max-width:100%}
+.layout{grid-template-columns:240px minmax(0,1fr)}
+@media(max-width:850px){
+.layout{grid-template-columns:minmax(0,1fr);width:100%;padding:22px 16px}
+aside{width:100%;min-width:0}
+nav{width:100%;max-width:100%;min-width:0;display:flex;flex-wrap:wrap;overflow:visible}
+nav a{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;flex:1 1 120px;justify-content:center;text-align:center}
+header{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,90px) auto;width:100%;gap:10px}
+.brand{min-width:0;margin-right:0}.brand img{max-width:100%;height:auto}
+.return{min-width:0;max-width:none}
+header button{min-width:0;max-width:100%;white-space:normal}
+.screen{width:100%}.screen>img{inset:0}
+.heading,.section-heading{flex-wrap:wrap}
+.heading>div,.section-heading>div{min-width:0;flex:1 1 180px}
+.announcement h2{font-size:clamp(28px,7vw,48px)}
+}
+@media(max-width:520px){
+.layout{padding:18px 12px;gap:20px}
+aside{padding:10px}
+nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+nav a{font-size:12px;padding:9px 6px}
+nav a:last-child{grid-column:1/-1}
+header{padding:10px 12px;grid-template-columns:minmax(0,1fr) 66px auto;gap:8px}
+.brand img{width:104px}
+header button{padding:8px;font-size:11px}.return{font-size:11px}
+.heading h1{font-size:30px}
+.heading .eyebrow{font-size:9px;letter-spacing:1.2px}
+.screen{aspect-ratio:4/3}
+.announcement{padding:42px 14px}
+.announcement h2{font-size:clamp(26px,8.2vw,38px);margin-bottom:12px}
+.announcement .eyebrow{font-size:7px;letter-spacing:.6px}
+.announcement>p:last-child{font-size:11px}
+.signal{font-size:20px;margin-bottom:5px}
+.screen-label{top:14px}.screen-bottom{bottom:12px}
+.section-heading h2{font-size:23px}
+.bet-card{padding:14px 10px}
+.bet-card button{white-space:normal;line-height:1.4}
+.chips{gap:4px}.chips span{padding:5px;font-size:9px}
+}
