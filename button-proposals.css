@@ -1,0 +1,96 @@
+/* Selector de propuestas para revisión. */
+.proposal-shell{position:relative;width:100%;max-width:760px;margin:0 auto;padding:32px 20px 0}
+.proposal-label{position:absolute;top:6px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px;white-space:nowrap;color:#fff;font-size:9px;font-weight:600;letter-spacing:.8px;text-shadow:0 1px 8px #000}
+.proposal-label b{font-size:13px;font-variant-numeric:tabular-nums}
+.proposal-label small{font-size:8px;opacity:.65}
+.proposal-arrow{position:absolute;top:50%;z-index:4;display:grid;place-items:center;width:27px;height:44px;border:0;padding:0;background:transparent;color:#fffc;cursor:pointer;border-radius:8px;transition:background .2s,color .2s}
+.proposal-arrow:hover{background:#ffffff12;color:#fff}.proposal-arrow:active{background:#ffffff26}
+.proposal-arrow svg{width:18px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.proposal-prev{left:0}.proposal-next{right:0}
+.proposal-arrow:focus-visible{outline:2px solid #fff;outline-offset:-2px}
+.proposal-shell .action-row{max-width:720px}
+.proposal-shell[data-design]:not([data-design="1"]) .action-row button{position:relative;isolation:isolate;overflow:hidden;box-sizing:border-box;margin:0;cursor:default;animation:none;box-shadow:none;text-shadow:none;border:0;letter-spacing:0;transform:none;filter:none;transition:background .25s,color .25s,transform .25s,box-shadow .25s,border-color .25s}
+.proposal-shell[data-design]:not([data-design="1"]) .action-row button::after{content:none}
+.proposal-shell[data-design]:not([data-design="1"]) .btn-hoy,.proposal-shell[data-design]:not([data-design="1"]) .btn-promo{height:48px;min-height:48px;font-size:clamp(9px,2.4vw,12px);padding:7px 5px}
+.proposal-shell[data-design]:not([data-design="1"]) .btn-apostar{height:78px;min-height:78px;font-size:clamp(20px,5.8vw,32px);padding:10px 4px;font-weight:800}
+.proposal-shell[data-design]:not([data-design="1"]) .action-row{gap:8px;min-height:110px;align-items:center}
+.proposal-shell .action-row button:focus-visible{outline:2px solid #fff;outline-offset:4px}
+/* 02: bloque deportivo, verde ácido y negro. */
+.proposal-shell[data-design="2"] .action-row button{border-radius:7px;background:#171c17;color:#d0d5cd}
+.proposal-shell[data-design="2"] .action-row .btn-apostar{background:#c8f34a;color:#14180d;height:72px;min-height:72px;letter-spacing:-1px}
+.proposal-shell[data-design="2"] .action-row button:hover{transform:translateY(-3px)}
+/* 03: tipografía editorial, hueso y tinta. */
+.proposal-shell[data-design="3"] .action-row button{border-radius:0;background:#e8e2d5;color:#26231f;font-family:Georgia,serif;font-weight:400}
+.proposal-shell[data-design="3"] .action-row .btn-apostar{height:66px;min-height:66px;font-family:Georgia,serif;font-style:italic;font-weight:400;border-bottom:4px solid #b93425}
+.proposal-shell[data-design="3"] .action-row button:hover{background:#fff9ee}
+/* 04: cápsulas azules. */
+.proposal-shell[data-design="4"] .action-row button{border-radius:999px;background:#152749;color:#c5d8fb;border:1px solid #476692!important}
+.proposal-shell[data-design="4"] .action-row .btn-apostar{background:#2465dd;color:white;height:82px;min-height:82px;box-shadow:0 8px 24px #061c6155}
+.proposal-shell[data-design="4"] .action-row button:hover{box-shadow:0 0 0 4px #80adff30}
+/* 05: metal cepillado, bordes biselados. */
+.proposal-shell[data-design="5"] .action-row button{border-radius:9px;background:linear-gradient(#54565b,#25262b);color:#fafafa;border:1px solid #9a9b9f!important;box-shadow:inset 0 1px #ffffff70,0 4px 0 #111!important}
+.proposal-shell[data-design="5"] .action-row .btn-apostar{background:linear-gradient(#e6e8eb,#91969e);color:#1e2229;font-weight:900}
+.proposal-shell[data-design="5"] .action-row button:hover{transform:translateY(2px)}
+/* 06: módulos monoespaciados naranja. */
+.proposal-shell[data-design="6"] .action-row button{border-radius:0;background:#17130e;color:#f4a757;font-family:Consolas,monospace;border:1px solid #b27032!important}
+.proposal-shell[data-design="6"] .action-row .btn-apostar{height:64px;min-height:64px;background:#f28c28;color:#18110b;font-family:Consolas,monospace;font-size:clamp(18px,5vw,28px)}
+.proposal-shell[data-design="6"] .action-row button:hover{border-color:#ffe0b8!important;transform:translateX(2px)}
+/* 07: cristal ahumado, un único borde iluminado. */
+.proposal-shell[data-design="7"] .action-row button{border-radius:18px;background:#131e248a;color:white;backdrop-filter:blur(14px);border:1px solid #ffffff50!important}
+.proposal-shell[data-design="7"] .action-row .btn-apostar{background:#153b458c;border-top:2px solid #a5f0f4!important}
+.proposal-shell[data-design="7"] .action-row button:hover{background:#1e4b57bd}
+/* 08: rojo sólido, cortes de competición. */
+.proposal-shell[data-design="8"] .action-row button{border-radius:0;background:#241418;color:#eee;clip-path:polygon(9px 0,100% 0,calc(100% - 9px) 100%,0 100%)}
+.proposal-shell[data-design="8"] .action-row .btn-apostar{background:#e6333c;color:white;height:88px;min-height:88px;font-style:italic}
+.proposal-shell[data-design="8"] .action-row button:hover{background:#f34a51;color:#fff}
+/* 09: deportivo universitario. */
+.proposal-shell[data-design="9"] .action-row button{border-radius:6px;background:#182719;color:#f6ead0;border:2px solid #9d9868!important}
+.proposal-shell[data-design="9"] .action-row .btn-apostar{background:#f6ead0;color:#223d29;outline:1px solid #f6ead0;outline-offset:3px;font-family:Georgia,serif}
+.proposal-shell[data-design="9"] .action-row button:hover{transform:scale(1.025)}
+/* 10: ultracompacto monocromo. */
+.proposal-shell[data-design="10"] .action-row button{border-radius:4px;background:#fff;color:#111;height:40px!important;min-height:40px!important}
+.proposal-shell[data-design="10"] .action-row .btn-apostar{background:#111;color:#fff;border:1px solid #fff!important;font-size:clamp(17px,4.7vw,25px)}
+.proposal-shell[data-design="10"] .action-row button:hover{background:#c5c5c5;color:#111}
+/* 11: cobre con relieve bajo. */
+.proposal-shell[data-design="11"] .action-row button{border-radius:13px;background:#3c2520;color:#edc9b5;border:1px solid #bb8066!important;box-shadow:0 5px 0 #21140f!important}
+.proposal-shell[data-design="11"] .action-row .btn-apostar{background:#b87959;color:#1d120e;height:70px;min-height:70px}
+.proposal-shell[data-design="11"] .action-row button:hover{transform:translateY(3px);box-shadow:0 2px 0 #21140f!important}
+/* 12: señalética amarilla. */
+.proposal-shell[data-design="12"] .action-row button{border-radius:2px;background:#202020;color:#ffdc43;border-bottom:3px solid #ffdc43!important}
+.proposal-shell[data-design="12"] .action-row .btn-apostar{background:#ffdc43;color:#161616;height:82px;min-height:82px;letter-spacing:-1.5px}
+.proposal-shell[data-design="12"] .action-row button:hover{transform:skewX(-3deg)}
+/* 13: contornos lavanda. */
+.proposal-shell[data-design="13"] .action-row button{border-radius:999px;background:#201b30;color:#ddd2fb;border:1px solid #a591d5!important}
+.proposal-shell[data-design="13"] .action-row .btn-apostar{background:#d4c4f5;color:#292035;height:64px;min-height:64px;font-weight:600;font-size:clamp(19px,5vw,28px)}
+.proposal-shell[data-design="13"] .action-row button:hover{box-shadow:0 6px 22px #bd9eff55!important;transform:translateY(-2px)}
+/* 14: etiquetas azules con canto contrastado. */
+.proposal-shell[data-design="14"] .action-row button{border-radius:0 16px 16px 0;background:#142036;color:#d3e2fc;border-left:4px solid #82aaff!important}
+.proposal-shell[data-design="14"] .action-row .btn-apostar{border-radius:0 24px 24px 0;background:#e8eef8;color:#18233a;border-left:6px solid #2f67db!important}
+.proposal-shell[data-design="14"] .action-row button:hover{padding-left:10px}
+/* 15: azul petróleo, centro circular. */
+.proposal-shell[data-design="15"] .action-row{grid-template-columns:minmax(0,1fr) 90px minmax(0,1fr)}
+.proposal-shell[data-design="15"] .action-row button{border-radius:12px;background:#103f43;color:#cef1e6;border:1px solid #3b9184!important}
+.proposal-shell[data-design="15"] .action-row .btn-apostar{width:90px;height:90px;min-height:90px;border-radius:50%;background:#b8e4d2;color:#17382f;font-size:17px}
+.proposal-shell[data-design="15"] .action-row button:hover{transform:rotate(-2deg)}
+/* 16: magenta sobre berenjena. */
+.proposal-shell[data-design="16"] .action-row button{border-radius:10px;background:#281a29;color:#e9cae2;border:1px solid #8e4681!important}
+.proposal-shell[data-design="16"] .action-row .btn-apostar{background:#da4baf;color:#170e16;height:86px;min-height:86px;border-radius:24px 7px 24px 7px;letter-spacing:-.8px}
+.proposal-shell[data-design="16"] .action-row button:hover{border-radius:7px 24px 7px 24px}
+/* 17: contraste de líneas, sin relleno central. */
+.proposal-shell[data-design="17"] .action-row button{border-radius:0;background:#171717b0;color:#fff;border-bottom:1px solid #ffffff70!important;backdrop-filter:blur(6px)}
+.proposal-shell[data-design="17"] .action-row .btn-apostar{background:#15151575;border-top:1px solid #fff!important;border-bottom:1px solid #fff!important;height:70px;min-height:70px;letter-spacing:2px;font-size:clamp(16px,4.8vw,27px);font-weight:500}
+.proposal-shell[data-design="17"] .action-row button:hover{background:#ffffff26}
+/* 18: naranja y crema, volumen redondeado. */
+.proposal-shell[data-design="18"] .action-row button{border-radius:17px;background:#f2e0c8;color:#643522;box-shadow:0 4px 0 #8f5b3d!important}
+.proposal-shell[data-design="18"] .action-row .btn-apostar{background:#f57442;color:#35170e;height:76px;min-height:76px;border-radius:23px;font-weight:900}
+.proposal-shell[data-design="18"] .action-row button:hover{transform:translateY(-4px)}
+/* 19: azul eléctrico, escalón asimétrico. */
+.proposal-shell[data-design="19"] .action-row button{border-radius:8px 8px 0 0;background:#13223c;color:#cbd8f1;border-bottom:3px solid #467bde!important}
+.proposal-shell[data-design="19"] .action-row .btn-apostar{background:#145af0;color:#fff;height:92px;min-height:92px;border-radius:24px 24px 5px 5px}
+.proposal-shell[data-design="19"] .action-row button:hover{box-shadow:inset 0 -7px #ffffff20!important}
+/* 20: carbón y oro mate. */
+.proposal-shell[data-design="20"] .action-row button{border-radius:8px;background:#191815;color:#d6c39d;border:1px solid #8b7956!important}
+.proposal-shell[data-design="20"] .action-row .btn-apostar{background:#c8ad76;color:#211c13;height:68px;min-height:68px;letter-spacing:1px;font-weight:600}
+.proposal-shell[data-design="20"] .action-row button:hover{background:#e3ce9f;color:#211c13}
+@media(max-width:360px){.proposal-shell{padding-left:15px;padding-right:15px}.proposal-arrow{width:22px}.proposal-label{font-size:8px}.proposal-label small{display:none}.proposal-shell[data-design="15"] .action-row{grid-template-columns:minmax(0,1fr) 78px minmax(0,1fr)}.proposal-shell[data-design="15"] .action-row .btn-apostar{width:78px;height:78px;min-height:78px;font-size:15px}}
+@media(prefers-reduced-motion:reduce){.proposal-shell .action-row button,.proposal-shell .action-row button::after{animation:none!important;transition:none!important}.proposal-arrow{transition:none}}
