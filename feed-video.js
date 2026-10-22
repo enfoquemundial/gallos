@@ -14,7 +14,7 @@ close.focus();
 });
 close.addEventListener('click',()=>dialog.close());
 dialog.addEventListener('close',()=>{full.pause();full.removeAttribute('src');full.load();document.body.style.overflow=previousOverflow;tap.focus({preventScroll:true})});
-preview.addEventListener('error',()=>{document.getElementById('feed-video-error').hidden=false});
+preview.addEventListener('error',()=>{preview.src.endsWith('pesas-poster.webp') || (preview.src='assets/pesas-poster.webp')});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)full.pause()});
 window.addEventListener('pagehide',()=>full.pause());
 })();

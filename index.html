@@ -527,7 +527,7 @@
 @media(min-width:768px){.category-cards{max-width:948px;margin:0 auto 22px;padding:0 24px;gap:16px}}
 
 .feed-video-card{column-span:all;max-width:760px;width:100%;margin:18px auto 26px;break-inside:avoid;background:#101014;color:#fff;border-radius:20px;overflow:hidden}
-.feed-video-stage{position:relative;isolation:isolate;background:#000}
+.feed-video-stage{position:relative;isolation:isolate;background:#000 url('assets/pesas-poster.webp') center/contain no-repeat}
 .feed-video-stage img{display:block;width:100%;height:auto;max-height:75svh;object-fit:contain}
 .feed-video-tap{position:absolute;inset:0;border:0;background:transparent;color:#fff;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;padding:18px;font:inherit}
 .video-tap-hint{padding:8px 14px;border:1px solid #ffffff35;border-radius:30px;background:#101014cf;backdrop-filter:blur(8px);font-size:12px}
@@ -635,7 +635,7 @@
 
             <div class="feed-card"><div class="card-image-wrap"><img src="https://images.unsplash.com/photo-1669839140857-f3925c9c06f9?auto=format&amp;fm=webp&amp;fit=crop&amp;w=600&amp;q=80" class="card-image" alt="Gallo de plumaje marrón sobre la hierba" loading="lazy"><span class="card-more-btn"><i class="fa-solid fa-ellipsis"></i></span></div></div>
 <article class="feed-video-card" aria-label="Video de gallo con pesas">
-<div class="feed-video-stage"><img id="feed-pesas" src="assets/pesas-preview-fluido.webp" alt="Gallo con pesas en movimiento; toca para abrir el video" width="240" height="427" loading="lazy" decoding="async"><button type="button" class="feed-video-tap" aria-label="Abrir video completo con sonido"><span class="video-sound-icon" aria-hidden="true">▶</span><span class="video-tap-hint">Toca para ver el video completo</span></button></div><p class="feed-video-caption">Tu Norte <span>· Video</span></p><p id="feed-video-error" hidden>No se pudo reproducir. <a href="assets/pesas-ligero.mp4">Abrir video</a></p>
+<div class="feed-video-stage"><img id="feed-pesas" src="assets/pesas-preview-compatible.gif?v=1" alt="Gallo con pesas en movimiento; toca para abrir el video" width="240" height="317" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/pesas-poster.webp'"><button type="button" class="feed-video-tap" aria-label="Abrir video completo con sonido"><span class="video-sound-icon" aria-hidden="true">▶</span><span class="video-tap-hint">Toca para ver el video completo</span></button></div><p class="feed-video-caption">Tu Norte <span>· Video</span></p><p id="feed-video-error" hidden>No se pudo reproducir. <a href="assets/pesas-ligero.mp4">Abrir video</a></p>
 </article>
 <div class="feed-card tall">
                 <div class="card-image-wrap">
@@ -699,6 +699,6 @@
 <script src="firebase-config.js"></script>
 <script src="auth.js?v=7"></script>
 <script src="home-gallery.js?v=2"></script>
-<script src="feed-video.js?v=2"></script>
+<script src="feed-video.js?v=3"></script>
 </body>
 </html>
