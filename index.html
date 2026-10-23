@@ -552,6 +552,7 @@
 .home-hero{border-radius:16px;overflow:hidden;margin-bottom:10px}
 }
 </style>
+<link rel="stylesheet" href="featured-stories.css?v=1">
 </head>
 <body>
 
@@ -597,8 +598,8 @@
 
         <!-- Feed Grid Section (Bottom red circles from image) -->
         <section class="category-cards" aria-label="Destacados de Tu Norte">
-<article class="category-card galleros"><span class="category-index">01 / TU NORTE</span><span class="category-art"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 8h18v10a9 9 0 0 1-18 0V8ZM15 11H8v5a8 8 0 0 0 9 8M33 11h7v5a8 8 0 0 1-9 8M24 27v9M16 40h16M19 36h10"/></svg></span><h2>Los mejores<br><strong>galleros</strong></h2><span class="category-line" aria-hidden="true"></span></article>
-<article class="category-card criaderos"><span class="category-index">02 / TU NORTE</span><span class="category-art"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M24 40V21M24 31C9 32 7 22 8 15c10-1 16 5 16 16ZM24 24C24 10 32 6 41 7c0 11-6 18-17 17Z"/><path d="m13 21 11 10m0-7L35 13"/></svg></span><h2>Mejores<br><strong>criaderos</strong></h2><span class="category-line" aria-hidden="true"></span></article>
+<article class="category-card galleros" role="button" tabindex="0" data-story-gallery="galleros" aria-haspopup="dialog" aria-label="Ver seis fotos: Los mejores galleros"><span class="category-index">01 / TU NORTE</span><span class="category-art"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 8h18v10a9 9 0 0 1-18 0V8ZM15 11H8v5a8 8 0 0 0 9 8M33 11h7v5a8 8 0 0 1-9 8M24 27v9M16 40h16M19 36h10"/></svg></span><h2>Los mejores<br><strong>galleros</strong></h2><span class="category-line" aria-hidden="true"></span></article>
+<article class="category-card criaderos" role="button" tabindex="0" data-story-gallery="criaderos" aria-haspopup="dialog" aria-label="Ver seis fotos: Mejores criaderos"><span class="category-index">02 / TU NORTE</span><span class="category-art"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M24 40V21M24 31C9 32 7 22 8 15c10-1 16 5 16 16ZM24 24C24 10 32 6 41 7c0 11-6 18-17 17Z"/><path d="m13 21 11 10m0-7L35 13"/></svg></span><h2>Mejores<br><strong>criaderos</strong></h2><span class="category-line" aria-hidden="true"></span></article>
 </section>
 <div class="feed-grid">
             <!-- Left Grid Item -->
@@ -709,9 +710,17 @@
     </div>
 
 <dialog class="feed-video-dialog" aria-label="Video completo"><button type="button" class="feed-video-close" aria-label="Cerrar video">✕</button><video controls playsinline preload="none" poster="assets/pesas-poster.webp"></video></dialog>
+<dialog class="featured-stories" aria-labelledby="stories-title">
+<div class="stories-panel">
+<div class="stories-progress" aria-label="Fotos de la galería"></div>
+<header class="stories-header"><div><span class="stories-brand">TU NORTE</span><h2 id="stories-title"></h2></div><button type="button" class="stories-toggle" aria-label="Pausar presentación">Ⅱ</button><button type="button" class="stories-close" aria-label="Cerrar galería">✕</button></header>
+<div class="stories-stage"><img class="stories-image" alt="" decoding="async"><p class="stories-status" role="status">Cargando foto…</p><button type="button" class="stories-prev" aria-label="Foto anterior">‹</button><button type="button" class="stories-next" aria-label="Foto siguiente">›</button></div>
+<div class="stories-caption"><span class="stories-counter">1 / 6</span><h3 class="stories-name"></h3><p class="stories-detail"></p><small>Imágenes ilustrativas · Nombres y ciudades de ejemplo</small></div>
+</div></dialog>
 <script src="firebase-config.js"></script>
 <script src="auth.js?v=7"></script>
 <script src="home-gallery.js?v=2"></script>
 <script src="feed-video.js?v=4"></script>
+<script src="featured-stories.js?v=1"></script>
 </body>
 </html>
