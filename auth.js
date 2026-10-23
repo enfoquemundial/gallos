@@ -1,7 +1,7 @@
 /* Firebase Authentication. No se confía en marcas de localStorage. */
 (() => {
   'use strict';
-  const protectedPage = ['plataforma.html', 'en-vivo.html', 'evento.html', 'billetera.html', 'deportes.html'].includes(location.pathname.split('/').pop());
+  const protectedPage = ['plataforma.html', 'en-vivo.html', 'evento.html', 'billetera.html', 'deportes.html', 'ciudades.html'].includes(location.pathname.split('/').pop());
   const status = document.getElementById('auth-status');
   let auth, sdk, profileGate;
   const api = window.gcAuth = { user: null, error: null };
@@ -119,9 +119,7 @@
     return false;
   });
   function destination() {
-    const next = new URLSearchParams(location.search).get('next');
-    if (/^deportes\.html#(futbol|beisbol|baloncesto|boxeo)$/.test(next || '')) return next;
-    return ['plataforma.html', 'evento.html', 'billetera.html', 'en-vivo.html', 'index.html', 'deportes.html'].includes(next) ? next : 'index.html';
+    return 'ciudades.html';
   }
   api.logout = async () => {
     if (!await api.ready) return;
@@ -140,10 +138,10 @@
   };
   api.openLive = async () => {
     if (!await api.ready || !api.user) {
-      location.assign('login.html?next=plataforma.html');
+      location.assign('login.html?next=ciudades.html');
       return;
     }
-    if (await api.profileReady) location.assign('plataforma.html');
+    if (await api.profileReady) location.assign('ciudades.html');
   };
   let busy = false;
   async function run(operation, navigate = true) {

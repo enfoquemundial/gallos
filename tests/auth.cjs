@@ -38,27 +38,27 @@ const tick = () => new Promise(resolve=>setImmediate(resolve));
   let s=setup({config:false}); assert.equal(await s.window.gcAuth.ready,false); assert.match(s.elements['auth-status'].textContent,/preparación/);
   s=setup({page:'evento.html'}); await s.window.gcAuth.ready; assert.deepEqual(s.moves,['login.html?next=evento.html']);
   s=setup({page:'evento.html',user:{uid:'real'}}); await s.window.gcAuth.ready; assert.equal(s.window.gcAuth.user.uid,'real'); assert.equal(s.moves.length,0); assert(s.calls.some(x=>x[0]==='revealed'));
-  s=setup({search:'?next=https://evil.example'}); await s.window.gcAuth.ready; s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.deepEqual(s.moves,['index.html']);
-  s=setup({search:'?next=billetera.html'}); await s.window.gcAuth.ready; s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.deepEqual(s.moves,['billetera.html']); assert(s.calls.some(x=>x[0]==='persistence'&&x[1]==='local'));
+  s=setup({search:'?next=https://evil.example'}); await s.window.gcAuth.ready; s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.deepEqual(s.moves,['ciudades.html']);
+  s=setup({search:'?next=billetera.html'}); await s.window.gcAuth.ready; s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.deepEqual(s.moves,['ciudades.html']); assert(s.calls.some(x=>x[0]==='persistence'&&x[1]==='local'));
   s=setup({fail:'auth/invalid-credential'}); await s.window.gcAuth.ready; s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.match(s.elements['login-error'].textContent,/incorrecta/); assert.equal(s.moves.length,0);
   s=setup({page:'registro.html'}); await s.window.gcAuth.ready; s.events['signup-form:submit']({preventDefault(){}}); await tick(); assert(s.calls.some(x=>x[0]==='signup')); assert(s.calls.some(x=>x[0]==='profile'));
   s=setup(); await s.window.gcAuth.ready; s.events.google(); await tick(); assert(s.calls.some(x=>x[0]==='google'));
   s=setup({fail:'auth/popup-closed-by-user'}); await s.window.gcAuth.ready; s.events.google(); await tick(); assert.match(s.elements['auth-status'].textContent,/cerró/); assert.equal(s.moves.length,0);
   s=setup(); await s.window.gcAuth.ready; s.events['reset-password:click'](); await tick(); assert(s.calls.some(x=>x[0]==='reset'&&x[2]==='https://enfoquemundial.github.io/gallos/login.html')); assert.match(s.elements['auth-status'].textContent,/Si existe/);
   s=setup({user:{uid:'test'}}); await s.window.gcAuth.ready; await s.window.gcAuth.logout(); assert.equal(s.window.gcAuth.user,null); assert.deepEqual(s.moves,['login.html']);
-  for (const page of ['plataforma.html', 'en-vivo.html']) {
+  for (const page of ['plataforma.html', 'en-vivo.html', 'ciudades.html']) {
     s=setup({page}); await s.window.gcAuth.ready;
     assert.deepEqual(s.moves,['login.html?next='+page]);
   }
   s=setup(); await s.window.gcAuth.ready; await s.window.gcAuth.openLive();
-  assert.deepEqual(s.moves,['login.html?next=plataforma.html']);
+  assert.deepEqual(s.moves,['login.html?next=ciudades.html']);
   s=setup({user:{uid:'real'}}); await s.window.gcAuth.ready; await s.window.gcAuth.openLive();
-  assert.deepEqual(s.moves,['plataforma.html']);
+  assert.deepEqual(s.moves,['ciudades.html']);
   let finishProfile;
   s=setup({profileReady:new Promise(resolve=>{finishProfile=resolve;})});
   await s.window.gcAuth.ready;
   s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.equal(s.moves.length,0);
-  finishProfile(true); await tick(); assert.deepEqual(s.moves,['index.html']);
+  finishProfile(true); await tick(); assert.deepEqual(s.moves,['ciudades.html']);
   s=setup({profileReady:Promise.resolve(false)}); await s.window.gcAuth.ready;
   s.events['login-form:submit']({preventDefault(){}}); await tick(); assert.equal(s.moves.length,0);
 
@@ -73,6 +73,12 @@ const tick = () => new Promise(resolve=>setImmediate(resolve));
   assert.equal(s.window.gcAuth.user,null); assert.equal(s.window.gcAuth.accessSuspended,true);
   assert.deepEqual(s.moves,['login.html']); assert(s.calls.some(x=>x[0]==='stream-stopped'));
 
+  s=setup({page:'ciudades.html',user:{uid:'real'}}); await s.window.gcAuth.ready;
+  assert.equal(s.moves.length,0); assert(s.calls.some(x=>x[0]==='revealed'));
+  s.events['window:pagehide'](); assert.equal(s.window.gcAuth.accessSuspended,true);
+  s.events['window:pageshow']({persisted:true}); assert(s.moves.includes('__reload__'));
+  s=setup({page:'ciudades.html',user:{uid:'real'}}); await s.window.gcAuth.ready;
+  s.events['window:storage']({key:'tu_norte_logout',newValue:'1'}); assert.deepEqual(s.moves,['login.html']);
   console.log('Autenticación, cierre de sesión, historial y sincronización entre pestañas: de autenticación y espera de perfil: OK (SDK simulado).');
 })().catch(error=>{console.error(error);process.exitCode=1;});
 
