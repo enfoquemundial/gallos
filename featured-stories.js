@@ -37,4 +37,29 @@ pause.addEventListener('click',()=>{paused=!paused;last=null;updatePause()});
 dialog.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();show(index+(event.key==='ArrowRight'?1:-1))}});
 document.addEventListener('visibilitychange',()=>{last=null});
 window.addEventListener('pagehide',()=>{if(dialog.open)dialog.close()});
+
+/* Las tarjetas anticipan las seis fotos de su propia galería. */
+document.querySelectorAll('[data-story-gallery]').forEach(card=>{
+const collection=galleries[card.dataset.storyGallery];if(!collection)return;
+const layers=[document.createElement('img'),document.createElement('img')];
+layers.forEach(img=>{img.className='category-photo';img.alt='';img.setAttribute('aria-hidden','true');img.decoding='async';card.prepend(img)});
+let position=0,front=0,visible=!('IntersectionObserver' in window),timer=null,version=0;
+const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+function stop(){clearTimeout(timer);timer=null;++version}
+function schedule(){clearTimeout(timer);if(visible&&!document.hidden&&!reduced)timer=setTimeout(advance,3000)}
+async function advance(){
+const ticket=++version,next=(position+1)%collection.items.length;
+try{await preload(collection.items[next].src);if(ticket!==version||!visible||document.hidden)return;
+const back=1-front;layers[back].src=collection.items[next].src;layers[back].classList.add('is-visible');layers[front].classList.remove('is-visible');front=back;position=next;
+preload(collection.items[(position+1)%collection.items.length].src).catch(()=>{});schedule();
+}catch{schedule()}
+}
+layers[0].src=collection.items[0].src;layers[0].classList.add('is-visible');
+preload(collection.items[0].src).then(()=>{if(visible){preload(collection.items[1].src).catch(()=>{});schedule()}}).catch(()=>{});
+if('IntersectionObserver' in window)new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)schedule();else stop()},{threshold:.15}).observe(card);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else schedule()});
+window.addEventListener('pagehide',stop);
+window.addEventListener('pageshow',schedule);
+});
+
 })();
