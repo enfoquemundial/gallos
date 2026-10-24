@@ -4,7 +4,18 @@
     if (!await window.gcAuth?.ready || !window.gcAuth.user) return;
     if (!await window.gcAuth.profileReady || !window.gcAuth.user || window.gcAuth.accessSuspended) return;
   }
-  const config = window.TU_NORTE_STREAM || {};
+  let managed = null;
+  try {
+    const [{getApps},fs] = await Promise.all([import('https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js'),import('https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js')]);
+    managed = await new Promise(resolve => { let first=true; fs.onSnapshot(fs.doc(fs.getFirestore(getApps()[0]),'liveEvents','main'),snap=>{
+      const data=snap.data();if(first){first=false;resolve(data||null)}else if(data)location.reload();
+    },()=>resolve(null));setTimeout(()=>resolve(null),5000) });
+  } catch {}
+  const config = managed ? {liveInputUid: managed.state === 'live' ? managed.liveInputUid : ''} : (window.TU_NORTE_STREAM || {});
+  if(managed){document.querySelectorAll('.live-badge').forEach(el=>el.textContent=managed.state==='live'?'EN VIVO':managed.state==='ended'?'FINALIZADO':'PRÓXIMAMENTE');document.querySelectorAll('[data-stream-poster] span,[data-stream-placeholder]').forEach(el=>el.textContent=managed.state==='ended'?'La transmisión ha finalizado.':'Preparando la transmisión');
+    document.querySelectorAll('[data-event-title]').forEach(el=>el.textContent=managed.title);
+    document.querySelectorAll('[data-event-location]').forEach(el=>el.textContent=[managed.venue,managed.city].filter(Boolean).join(' · '));
+  }
   const uid = (config.liveInputUid || '').trim();
   const valid = /^[a-zA-Z0-9_-]{12,128}$/.test(uid);
   function setup(container) {
@@ -90,3 +101,4 @@
     soundButton.setAttribute('aria-label', soundButton.title);
   });
 })();
+

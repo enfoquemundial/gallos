@@ -1,0 +1,378 @@
+[
+  {
+    "id": "photo-001",
+    "group": "Portada y mosaico",
+    "label": "Peleas de Gallos Tu Norte",
+    "src": "assets/portada-original-horizontal.jpg",
+    "kind": "image",
+    "alt": "Peleas de Gallos Tu Norte"
+  },
+  {
+    "id": "photo-002",
+    "group": "Portada y mosaico",
+    "label": "Gallo blanco de pelea",
+    "src": "https://images.unsplash.com/photo-1545251765-6aad90d25972?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Gallo blanco de pelea"
+  },
+  {
+    "id": "photo-003",
+    "group": "Portada y mosaico",
+    "label": "Gallo de pelea rojo en primer plano",
+    "src": "https://images.unsplash.com/photo-1583510383754-35fc1d1eb598?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Gallo de pelea rojo en primer plano"
+  },
+  {
+    "id": "photo-004",
+    "group": "Portada y mosaico",
+    "label": "Gallo negro y amarillo",
+    "src": "https://images.unsplash.com/photo-1554740760-5db7aca3ec66?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Gallo negro y amarillo"
+  },
+  {
+    "id": "photo-005",
+    "group": "Portada y mosaico",
+    "label": "Cabeza de gallo amarillo y rojo",
+    "src": "https://images.unsplash.com/photo-1588164950715-6aa49568dd80?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Cabeza de gallo amarillo y rojo"
+  },
+  {
+    "id": "photo-006",
+    "group": "Portada y mosaico",
+    "label": "Gallo rojo negro y marrón",
+    "src": "https://images.unsplash.com/photo-1605490552919-bb0a239812c1?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Gallo rojo negro y marrón"
+  },
+  {
+    "id": "photo-007",
+    "group": "Portada y mosaico",
+    "label": "Gallo de plumaje marrón sobre la hierba",
+    "src": "https://images.unsplash.com/photo-1669839140857-f3925c9c06f9?auto=format&fm=webp&fit=crop&w=600&q=80",
+    "kind": "image",
+    "alt": "Gallo de plumaje marrón sobre la hierba"
+  },
+  {
+    "id": "photo-008",
+    "group": "Portada y mosaico",
+    "label": "Gallo con pesas en movimiento; toca para abrir el video",
+    "src": "assets/pesas-preview-fluido.webp?v=2",
+    "kind": "image",
+    "alt": "Gallo con pesas en movimiento; toca para abrir el video"
+  },
+  {
+    "id": "photo-009",
+    "group": "Portada y mosaico",
+    "label": "Gallo marrón y blanco",
+    "src": "https://images.unsplash.com/photo-1672620003939-f82a45cb5adc?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Gallo marrón y blanco"
+  },
+  {
+    "id": "photo-010",
+    "group": "Portada y mosaico",
+    "label": "Gallo de pie sobre hierba",
+    "src": "https://images.unsplash.com/photo-1706456134122-a0702ce76de7?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Gallo de pie sobre hierba"
+  },
+  {
+    "id": "photo-011",
+    "group": "Portada y mosaico",
+    "label": "Gallo sobre mesa de madera",
+    "src": "https://images.unsplash.com/photo-1689697373821-b1b201830e84?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Gallo sobre mesa de madera"
+  },
+  {
+    "id": "photo-012",
+    "group": "Portada y mosaico",
+    "label": "Gallo negro y marrón sobre piso de concreto",
+    "src": "https://images.unsplash.com/photo-1623662795461-4d282ec436a2?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Gallo negro y marrón sobre piso de concreto"
+  },
+  {
+    "id": "photo-013",
+    "group": "Portada y mosaico",
+    "label": "Gallo sobre plataforma de madera",
+    "src": "https://images.unsplash.com/photo-1656744638362-3d2672eaac01?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Gallo sobre plataforma de madera"
+  },
+  {
+    "id": "photo-014",
+    "group": "Portada y mosaico",
+    "label": "Gallo marrón blanco y negro sobre pasto",
+    "src": "https://images.unsplash.com/photo-1579088092239-0f893322cfdc?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Gallo marrón blanco y negro sobre pasto"
+  },
+  {
+    "id": "photo-015",
+    "group": "Portada y mosaico",
+    "label": "Gallo caminando sobre hierba",
+    "src": "https://images.unsplash.com/photo-1643299812896-431b89343951?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Gallo caminando sobre hierba"
+  },
+  {
+    "id": "photo-016",
+    "group": "Portada y mosaico",
+    "label": "Gallo con cabeza roja y cola azul",
+    "src": "https://images.unsplash.com/photo-1715689236234-13773aca8e8b?q=80&w=400&auto=format&fit=crop",
+    "kind": "image",
+    "alt": "Gallo con cabeza roja y cola azul"
+  },
+  {
+    "id": "photo-017",
+    "group": "Ciudades",
+    "label": "Tu Norte",
+    "src": "assets/logo-tu-norte.webp",
+    "kind": "image",
+    "alt": "Tu Norte"
+  },
+  {
+    "id": "photo-018",
+    "group": "Ciudades",
+    "label": "Ciudades · Imagen 1",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "photo-019",
+    "group": "Ciudades",
+    "label": "Ciudades · Imagen 2",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "photo-020",
+    "group": "Ciudades",
+    "label": "Ciudades · Imagen 3",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "photo-021",
+    "group": "Ciudades",
+    "label": "Ciudades · Imagen 4",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "photo-022",
+    "group": "Ciudades",
+    "label": "Ciudades · Imagen 5",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "photo-023",
+    "group": "Ciudades",
+    "label": "Ciudades · Imagen 6",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "photo-024",
+    "group": "Ciudades",
+    "label": "Ciudades · Imagen 7",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "photo-025",
+    "group": "Plataforma",
+    "label": "Dos gallos y el logo de Tu Norte",
+    "src": "assets/gallos-en-vivo-panoramica.webp",
+    "kind": "image",
+    "alt": "Dos gallos y el logo de Tu Norte"
+  },
+  {
+    "id": "photo-026",
+    "group": "Acceso",
+    "label": "Acceso · Imagen 1",
+    "src": "https://developers.google.com/static/identity/images/g-logo.png",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "galleros-0",
+    "group": "Los mejores galleros",
+    "label": "Rafael Méndez",
+    "src": "assets/destacados/galleros-1.jpg",
+    "kind": "image",
+    "alt": "Hombre con polo azul sosteniendo un gallo fino rojinegro",
+    "name": "Rafael Méndez",
+    "detail": "Gallero · Perfil de ejemplo"
+  },
+  {
+    "id": "galleros-1",
+    "group": "Los mejores galleros",
+    "label": "Miguel Rosario",
+    "src": "assets/destacados/galleros-2.jpg",
+    "kind": "image",
+    "alt": "Hombre con camisa verde sosteniendo un gallo fino dorado",
+    "name": "Miguel Rosario",
+    "detail": "Gallero · Perfil de ejemplo"
+  },
+  {
+    "id": "galleros-2",
+    "group": "Los mejores galleros",
+    "label": "Antonio Peña",
+    "src": "assets/destacados/galleros-3.jpg",
+    "kind": "image",
+    "alt": "Hombre con sombrero sosteniendo un gallo fino caoba",
+    "name": "Antonio Peña",
+    "detail": "Gallero · Perfil de ejemplo"
+  },
+  {
+    "id": "galleros-3",
+    "group": "Los mejores galleros",
+    "label": "Carlos Batista",
+    "src": "assets/destacados/galleros-4.jpg",
+    "kind": "image",
+    "alt": "Hombre con camiseta blanca sosteniendo un gallo fino plateado",
+    "name": "Carlos Batista",
+    "detail": "Gallero · Perfil de ejemplo"
+  },
+  {
+    "id": "galleros-4",
+    "group": "Los mejores galleros",
+    "label": "José Ventura",
+    "src": "assets/destacados/galleros-5.jpg",
+    "kind": "image",
+    "alt": "Hombre con camisa azul de cuadros sosteniendo un gallo fino oscuro",
+    "name": "José Ventura",
+    "detail": "Gallero · Perfil de ejemplo"
+  },
+  {
+    "id": "galleros-5",
+    "group": "Los mejores galleros",
+    "label": "Manuel Cabrera",
+    "src": "assets/destacados/galleros-6.jpg",
+    "kind": "image",
+    "alt": "Hombre con camisa vino sosteniendo un gallo fino cobrizo",
+    "name": "Manuel Cabrera",
+    "detail": "Gallero · Perfil de ejemplo"
+  },
+  {
+    "id": "criaderos-0",
+    "group": "Mejores criaderos",
+    "label": "Traba La Palma",
+    "src": "assets/destacados/criaderos-1.jpg",
+    "kind": "image",
+    "alt": "Interior de un criadero con corrales individuales y techo de madera",
+    "name": "Traba La Palma",
+    "detail": "Santiago de los Caballeros"
+  },
+  {
+    "id": "criaderos-1",
+    "group": "Mejores criaderos",
+    "label": "Traba El Mango",
+    "src": "assets/destacados/criaderos-2.jpg",
+    "kind": "image",
+    "alt": "Criadero tropical con corrales a ambos lados de un camino arbolado",
+    "name": "Traba El Mango",
+    "detail": "La Vega"
+  },
+  {
+    "id": "criaderos-2",
+    "group": "Mejores criaderos",
+    "label": "Traba Vista Verde",
+    "src": "assets/destacados/criaderos-3.jpg",
+    "kind": "image",
+    "alt": "Gallo fino rojinegro en un corral limpio de un criadero",
+    "name": "Traba Vista Verde",
+    "detail": "Moca"
+  },
+  {
+    "id": "criaderos-3",
+    "group": "Mejores criaderos",
+    "label": "Traba El Roble",
+    "src": "assets/destacados/criaderos-4.jpg",
+    "kind": "image",
+    "alt": "Área de cría con aves jóvenes y nidales de madera",
+    "name": "Traba El Roble",
+    "detail": "San Francisco de Macorís"
+  },
+  {
+    "id": "criaderos-4",
+    "group": "Mejores criaderos",
+    "label": "Traba Los Pinos",
+    "src": "assets/destacados/criaderos-5.jpg",
+    "kind": "image",
+    "alt": "Instalaciones rurales de un criadero con corrales ventilados",
+    "name": "Traba Los Pinos",
+    "detail": "Bonao"
+  },
+  {
+    "id": "criaderos-5",
+    "group": "Mejores criaderos",
+    "label": "Traba La Ceiba",
+    "src": "assets/destacados/criaderos-6.jpg",
+    "kind": "image",
+    "alt": "Área de cuidado de un criadero con gallo fino dorado",
+    "name": "Traba La Ceiba",
+    "detail": "Puerto Plata"
+  },
+  {
+    "id": "sport-futbol",
+    "group": "Deportes",
+    "label": "Fútbol",
+    "kind": "image",
+    "src": "https://images.unsplash.com/photo-1544366981-43d8d59eeba9?auto=format&fm=webp&fit=crop&w=1920&q=80",
+    "alt": "Fútbol"
+  },
+  {
+    "id": "sport-beisbol",
+    "group": "Deportes",
+    "label": "Béisbol",
+    "kind": "image",
+    "src": "https://images.unsplash.com/photo-1584480917877-ef5d04fb1a4e?auto=format&fm=webp&fit=crop&w=1920&q=80",
+    "alt": "Béisbol"
+  },
+  {
+    "id": "sport-baloncesto",
+    "group": "Deportes",
+    "label": "Baloncesto",
+    "kind": "image",
+    "src": "https://images.unsplash.com/photo-1674327175233-51f4d1430eac?auto=format&fm=webp&fit=crop&w=1920&q=80",
+    "alt": "Baloncesto"
+  },
+  {
+    "id": "sport-boxeo",
+    "group": "Deportes",
+    "label": "Boxeo",
+    "kind": "image",
+    "src": "https://images.unsplash.com/photo-1560191647-8655ba3a2839?auto=format&fm=webp&fit=crop&w=1920&q=80",
+    "alt": "Boxeo"
+  },
+  {
+    "id": "hero-extension",
+    "group": "Portada y mosaico",
+    "label": "Fondo detrás de los botones",
+    "kind": "image",
+    "src": "assets/portada-extendida-botones.webp",
+    "alt": ""
+  },
+  {
+    "id": "feed-video",
+    "group": "Portada y mosaico",
+    "label": "Video completo del mosaico",
+    "kind": "video",
+    "src": "assets/pesas-ligero.mp4?v=2",
+    "alt": ""
+  }
+]

@@ -8,3 +8,4 @@ window.TU_NORTE_FIREBASE_CONFIG = {
   messagingSenderId: "403714792204",
   appId: "1:403714792204:web:306fd61b963b3126514729"
 };
+

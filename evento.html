@@ -12,7 +12,7 @@
 
 <header class="topbar">
   <div class="wrap topbar-inner">
-    <a href="plataforma.html" class="brand"><img src="assets/logo-tu-norte.webp" alt="Peleas de Gallos Tu Norte" class="brand-logo-img"></a>
+    <a href="plataforma.html" class="brand"><img data-cms-key="photo-017" src="assets/logo-tu-norte.webp" alt="Peleas de Gallos Tu Norte" class="brand-logo-img"></a>
     <nav class="nav">
       <a href="plataforma.html">Cartelera</a>
       <a href="evento.html">Evento en vivo</a>
@@ -35,7 +35,7 @@
   <p style="color:var(--ink-soft);margin:12px 0;"><span data-live-count>—</span> En vivo</p>
   <div class="live-layout" style="grid-template-columns:1fr;">
     <div>
-      <div class="stream-wrap" data-stream-container>
+      <p data-event-title></p><p data-event-location></p><div class="stream-wrap" data-stream-container>
         <div class="stream-live-badge"><span class="live-dot"></span> EN VIVO</div>
         <iframe data-tu-norte-live title="Tu Norte — transmisión en vivo" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         <div class="stream-placeholder" data-stream-placeholder hidden>La transmisión se está preparando. Vuelve pronto.</div>
@@ -98,6 +98,7 @@
 <script src="app.js?v=4"></script>
 <script src="firebase-config.js"></script>
 <script src="auth.js?v=9"></script>
+<script src="site-content.js?v=1"></script>
 <script>
 let side = 'a';
 let odds = { a: 1.85, b: 1.95 };
@@ -183,7 +184,8 @@ updateSummary();
 </script>
 
 <script src="stream-config.js"></script>
-<script src="stream-player.js?v=3"></script>
+<script src="stream-player.js?v=5"></script>
 <script src="live-presence.js?v=1"></script>
 </body>
 </html>
+

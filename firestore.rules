@@ -1,6 +1,67 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    function teamRole() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/adminRoles/$(request.auth.uid))
+        && get(/databases/$(database)/documents/adminRoles/$(request.auth.uid)).data.active == true
+        ? get(/databases/$(database)/documents/adminRoles/$(request.auth.uid)).data.role : '';
+    }
+    function ownerAdmin() { return teamRole() == 'owner'; }
+    function editorAdmin() { return teamRole() in ['owner', 'editor']; }
+    function operatorAdmin() { return teamRole() in ['owner', 'operator']; }
+    function stamp() { return request.resource.data.updatedBy == request.auth.uid && request.resource.data.updatedAt == request.time; }
+    match /adminRoles/{uid} {
+      allow get: if request.auth != null && (request.auth.uid == uid || ownerAdmin());
+      allow list: if ownerAdmin();
+      allow create, update: if ownerAdmin() && request.auth.uid != uid
+        && request.resource.data.keys().hasOnly(['email','role','active','updatedBy','updatedAt'])
+        && request.resource.data.role in ['owner','editor','operator']
+        && request.resource.data.active is bool
+        && request.resource.data.email is string
+        && request.resource.data.email == get(/databases/$(database)/documents/users/$(uid)).data.email
+        && stamp();
+      allow delete: if false;
+    }
+    match /siteContent/main {
+      function validContent() {
+        return request.resource.data.keys().hasOnly(['media','version','updatedBy','updatedAt'])
+          && request.resource.data.media is map && request.resource.data.media.size() <= 150
+          && request.resource.data.version is int && stamp();
+      }
+      allow get: if true;
+      allow list, delete: if false;
+      allow create: if editorAdmin() && validContent() && request.resource.data.version == 1;
+      allow update: if editorAdmin() && validContent() && request.resource.data.version == resource.data.version + 1;
+    }
+    match /liveEvents/main {
+      function validEvent() {
+        let d = request.resource.data;
+        return d.keys().hasOnly(['title','city','venue','startsAt','liveInputUid','state','version','updatedBy','updatedAt'])
+          && d.title is string && d.title.size() > 0 && d.title.size() <= 120
+          && d.city is string && d.city.size() <= 80
+          && d.venue is string && d.venue.size() <= 120
+          && d.startsAt is string && d.startsAt.size() <= 40
+          && d.state in ['scheduled','live','ended'] && d.liveInputUid is string
+          && (d.liveInputUid == '' || d.liveInputUid.matches('^[a-zA-Z0-9_-]{12,128}$'))
+          && (d.state != 'live' || d.liveInputUid.size() >= 12)
+          && d.version is int && stamp();
+      }
+      allow get: if request.auth != null;
+      allow list, delete: if false;
+      allow create: if operatorAdmin() && validEvent() && request.resource.data.version == 1;
+      allow update: if operatorAdmin() && validEvent() && request.resource.data.version == resource.data.version + 1;
+    }
+    match /adminAudit/{id} {
+      allow read: if teamRole() in ['owner','editor','operator'];
+      allow create: if teamRole() in ['owner','editor','operator']
+        && request.resource.data.keys().hasOnly(['actor','action','target','createdAt'])
+        && request.resource.data.actor == request.auth.uid
+        && request.resource.data.action is string && request.resource.data.action.size() <= 160
+        && request.resource.data.target is string && request.resource.data.target.size() <= 160
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
     match /users/{uid} {
       function owner() {
         return request.auth != null && request.auth.uid == uid;
@@ -29,15 +90,15 @@ service cloud.firestore {
         && d.consentAt == request.time
         && d.updatedAt == request.time;
       }
-      allow get: if owner();
-      allow list, delete: if false;
+      allow get: if owner() || ownerAdmin();
+      allow list: if ownerAdmin();
+      allow delete: if false;
       allow create: if owner() && validProfile()
         && request.resource.data.createdAt == request.time;
       allow update: if owner() && validProfile()
         && request.resource.data.createdAt == resource.data.createdAt;
     }
-    match /{document=**} {
-      allow read, write: if false;
-    }
+    match /{document=**} { allow read, write: if false; }
   }
 }
+
