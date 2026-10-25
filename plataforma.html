@@ -12,6 +12,26 @@
 .video-panel[data-stream-container]{aspect-ratio:1751/898}
 .gallos-poster img{width:100%;height:100%;object-fit:contain;display:block}
 .gallos-poster span{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);max-width:90%;padding:8px 16px;border-radius:20px;background:rgba(5,10,18,.85);color:#fff;font-size:12px;text-align:center}
+
+/* Montos enfrentados: ambos lados permanecen juntos, incluso en móvil. */
+.matchup-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.matchup-row .vs-panel{grid-column:1/-1;grid-row:1;order:0;padding:14px;flex-direction:row;flex-wrap:wrap;gap:12px}
+.matchup-row .vs-panel .ring-icon{display:none}
+.matchup-row .side-card.red{grid-column:1;grid-row:2}
+.matchup-row .side-card.blue{grid-column:2;grid-row:2}
+.matchup-row .side-card{min-width:0;padding:18px;display:grid;grid-template-rows:48px 58px 52px auto auto;align-content:start}
+.matchup-row .side-card .name{font-size:clamp(15px,2.4vw,21px);line-height:1.2;margin:12px 0 0;overflow-wrap:anywhere}
+.matchup-row .side-card .odds-val{font-size:24px;margin:6px 0 12px}
+.matchup-row .quick-chips{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}
+.matchup-row .quick-chip{display:block;width:100%;height:46px;min-width:0;font:700 14px inherit;cursor:pointer;border:1px solid #ffffff20}
+.matchup-row .quick-chip:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.matchup-row .bet-btn{min-height:50px;font-size:11px;padding:10px 4px;white-space:normal}
+.available-bets{margin-top:18px;padding:20px;border:1px solid var(--border);border-radius:var(--radius);background:var(--panel)}
+.available-bets h2{font-size:18px;margin:0 0 8px}
+.available-bets p{font-size:13px;color:var(--ink-soft);margin:0;line-height:1.5}
+.available-bets .pending-label{display:inline-block;font-size:10px;color:#ffc46b;border:1px solid #ffc46b55;border-radius:20px;padding:4px 9px;margin-bottom:12px}
+#bet-selection{margin-top:12px;color:var(--ink);font-size:13px;line-height:1.5}
+@media(max-width:600px){.matchup-row{gap:10px}.matchup-row .side-card{padding:13px 10px;grid-template-rows:38px 58px 44px auto auto}.matchup-row .rooster-avatar{width:30px;height:30px;flex-shrink:0}.matchup-row .side-tag{font-size:11px;padding:5px 7px}.matchup-row .side-card-top{gap:5px}.matchup-row .quick-chip{font-size:13px}.matchup-row .vs-panel .vs-mark{font-size:22px}.available-bets{padding:16px}}
 </style></head>
 <body>
 
@@ -148,6 +168,7 @@
       <span>ARENA LA NORTEÑA</span><span class="sep">·</span><span>RONDA 3</span><span class="sep">·</span><span>PESO 2.5 LBS</span><span class="sep">·</span><span>REGLAS CLÁSICAS</span>
     </div>
 
+    <section class="available-bets" aria-labelledby="available-bets-title"><span class="pending-label">EN PREPARACIÓN</span><h2 id="available-bets-title">Apuestas disponibles</h2><p>Cuando se habilite el sistema, aquí podrás aceptar una apuesta del lado contrario por el mismo monto.</p><p id="bet-selection" role="status" aria-live="polite">Selecciona un lado y un monto para preparar tu apuesta.</p></section>
     <div class="matchup-row">
       <div class="side-card red">
         <div class="side-card-top">
@@ -155,9 +176,9 @@
           <span class="rooster-avatar red"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg></span>
         </div>
         <div class="name">El Diablo</div>
-        <div class="odds-val" id="odds-red">1.85</div>
+        <div class="odds-val" id="odds-red">1 a 1</div>
         <div class="quick-chips" id="chip-row-red"></div>
-        <button class="bet-btn" onclick="placeBet('red')">Apostar ahora</button>
+        <button class="bet-btn" disabled>Publicar · Próximamente</button>
       </div>
 
       <div class="vs-panel">
@@ -174,40 +195,10 @@
           <span class="rooster-avatar blue"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg></span>
         </div>
         <div class="name">El Relámpago</div>
-        <div class="odds-val" id="odds-blue">1.95</div>
+        <div class="odds-val" id="odds-blue">1 a 1</div>
         <div class="quick-chips" id="chip-row-blue"></div>
-        <button class="bet-btn" onclick="placeBet('blue')">Apostar ahora</button>
+        <button class="bet-btn" disabled>Publicar · Próximamente</button>
       </div>
-    </div>
-
-    <div class="chart-panel">
-      <div class="chart-head">
-        <span class="title">Movimiento de cuotas</span>
-        <div class="chart-legend">
-          <span><span class="dot red"></span>El Diablo <b id="legend-red" class="mono">1.85</b></span>
-          <span><span class="dot blue"></span>El Relámpago <b id="legend-blue" class="mono">1.95</b></span>
-        </div>
-      </div>
-      <svg class="chart-svg" viewBox="0 0 640 170" preserveAspectRatio="none">
-        <line x1="50" y1="10" x2="620" y2="10" stroke="rgba(255,255,255,0.06)"/>
-        <line x1="50" y1="42.5" x2="620" y2="42.5" stroke="rgba(255,255,255,0.06)"/>
-        <line x1="50" y1="75" x2="620" y2="75" stroke="rgba(255,255,255,0.06)"/>
-        <line x1="50" y1="107.5" x2="620" y2="107.5" stroke="rgba(255,255,255,0.06)"/>
-        <line x1="50" y1="140" x2="620" y2="140" stroke="rgba(255,255,255,0.06)"/>
-        <text x="4" y="14" fill="#5C6478" font-size="10">2.20</text>
-        <text x="4" y="46.5" fill="#5C6478" font-size="10">2.00</text>
-        <text x="4" y="79" fill="#5C6478" font-size="10">1.80</text>
-        <text x="4" y="111.5" fill="#5C6478" font-size="10">1.60</text>
-        <text x="4" y="144" fill="#5C6478" font-size="10">1.40</text>
-        <polyline points="50,34 164,51 278,59 392,62 506,70 600,67" fill="none" stroke="#FF3B47" stroke-width="2"/>
-        <polyline points="50,99 164,83 278,75 392,67 506,56 600,51" fill="none" stroke="#2E7DFF" stroke-width="2"/>
-        <text x="42" y="162" fill="#5C6478" font-size="10">-5:00</text>
-        <text x="150" y="162" fill="#5C6478" font-size="10">-4:00</text>
-        <text x="264" y="162" fill="#5C6478" font-size="10">-3:00</text>
-        <text x="378" y="162" fill="#5C6478" font-size="10">-2:00</text>
-        <text x="492" y="162" fill="#5C6478" font-size="10">-1:00</text>
-        <text x="580" y="162" fill="#5C6478" font-size="10">AHORA</text>
-      </svg>
     </div>
 
     <div class="upcoming-panel" id="proximas">
@@ -254,49 +245,17 @@ let selected = { red: 0, blue: 0 };
 const chipVals = [100, 500, 1000];
 
 function buildChips(side){
-  const row = document.getElementById('chip-row-' + side);
-  row.innerHTML = chipVals.map(v => `<div class="quick-chip" data-val="${v}" onclick="selectChip('${side}', ${v})">RD$${v}</div>`).join('');
+ const row=document.getElementById('chip-row-'+side);
+ row.replaceChildren(...chipVals.map(value=>{const button=document.createElement('button');button.type='button';button.className='quick-chip';button.dataset.val=value;button.textContent='RD$ '+value.toLocaleString('es-DO');button.setAttribute('aria-pressed','false');button.setAttribute('aria-label',value+' pesos al '+(side==='red'?'rojo':'azul'));button.addEventListener('click',()=>selectChip(side,value));return button}));
 }
-buildChips('red'); buildChips('blue');
-
-function selectChip(side, val){
-  selected[side] = val;
-  document.querySelectorAll('#chip-row-' + side + ' .quick-chip').forEach(c => {
-    c.classList.toggle('active', parseInt(c.dataset.val) === val);
-  });
+buildChips('red');buildChips('blue');
+function selectChip(side,value){
+ if(!['red','blue'].includes(side)||!chipVals.includes(value))return;
+ selected.red=0;selected.blue=0;selected[side]=value;
+ for(const color of ['red','blue'])document.querySelectorAll('#chip-row-'+color+' .quick-chip').forEach(button=>{const active=color===side&&Number(button.dataset.val)===value;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
+ document.getElementById('bet-selection').textContent='Selección: '+(side==='red'?'ROJO':'AZUL')+' · RD$ '+value.toLocaleString('es-DO')+' contra RD$ '+value.toLocaleString('es-DO')+'. La publicación compartida todavía no está habilitada.';
 }
-
-function placeBet(side){
-  const amt = selected[side];
-  if(!amt){ showToast('Selecciona un monto rápido primero'); return; }
-  if(!isAuthed()){ window.location.href = 'login.html?next=plataforma.html'; return; }
-  if(amt > Store.getBalance()){ showToast('Saldo insuficiente. Carga tu billetera.'); return; }
-
-  Store.setBalance(Store.getBalance() - amt);
-  Store.addBet({
-    id: 'AP-' + Math.floor(1000 + Math.random()*9000),
-    evento: 'Arena La Norteña — Ronda 3',
-    lado: side === 'red' ? 'Rojo' : 'Azul',
-    monto: amt,
-    cuota: odds[side],
-    resultado: 'pending',
-    fecha: 'Ahora'
-  });
-  renderBalancePill();
-  showToast(`Apuesta confirmada: ${money(amt)} al ${side === 'red' ? 'Rojo (El Diablo)' : 'Azul (El Relámpago)'}`);
-  selected[side] = 0;
-  document.querySelectorAll('#chip-row-' + side + ' .quick-chip').forEach(c => c.classList.remove('active'));
-}
-
-/* Fluctuación de cuotas en vivo */
-setInterval(() => {
-  odds.red = +(1.85 + (Math.random()*0.06 - 0.03)).toFixed(2);
-  odds.blue = +(1.95 + (Math.random()*0.06 - 0.03)).toFixed(2);
-  document.getElementById('odds-red').textContent = odds.red.toFixed(2);
-  document.getElementById('odds-blue').textContent = odds.blue.toFixed(2);
-  document.getElementById('legend-red').textContent = odds.red.toFixed(2);
-  document.getElementById('legend-blue').textContent = odds.blue.toFixed(2);
-}, 4000);
+/* No se descuenta saldo ni se simula confirmación de apuestas. */
 
 /* Reloj de cierre */
 let secondsLeft = 12*60 + 45;
