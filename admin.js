@@ -11,7 +11,7 @@ function message(text){notice.textContent=text}function errorText(e){if(e?.code=
 function el(tag,text,cls){const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(cls)node.className=cls;return node}
 async function perform(button,fn){if(button.disabled)return;button.disabled=true;try{await fn()}catch(e){message(errorText(e))}finally{button.disabled=false}}
 function lock(){unsub.forEach(fn=>fn());unsub=[];workspace.hidden=true;access.hidden=false;role='';content={};eventData={};cursor=null;$('#users-list').replaceChildren();$('#team-list').replaceChildren();$('#history-list').replaceChildren();$('#media-list').replaceChildren()}
-async function readCatalog(){const response=await fetch('content-catalog.json?v=1');if(!response.ok)throw Error('No se pudo cargar el catálogo de contenido.');return response.json()}
+async function readCatalog(){const response=await fetch('content-catalog.json?v=2');if(!response.ok)throw Error('No se pudo cargar el catálogo de contenido.');return response.json()}
 catalog=await readCatalog().catch(e=>{accessStatus.textContent=e.message;return []});
 await setPersistence(auth,browserSessionPersistence).catch(()=>{});
 auth.languageCode='es';

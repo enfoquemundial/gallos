@@ -1,5 +1,13 @@
 [
   {
+    "id": "photo-017",
+    "group": "Identidad de la plataforma",
+    "label": "Tu Norte",
+    "src": "assets/logo-tu-norte.webp",
+    "kind": "image",
+    "alt": "Tu Norte"
+  },
+  {
     "id": "photo-001",
     "group": "Portada y mosaico",
     "label": "Peleas de Gallos Tu Norte",
@@ -126,70 +134,6 @@
     "src": "https://images.unsplash.com/photo-1715689236234-13773aca8e8b?q=80&w=400&auto=format&fit=crop",
     "kind": "image",
     "alt": "Gallo con cabeza roja y cola azul"
-  },
-  {
-    "id": "photo-017",
-    "group": "Ciudades",
-    "label": "Tu Norte",
-    "src": "assets/logo-tu-norte.webp",
-    "kind": "image",
-    "alt": "Tu Norte"
-  },
-  {
-    "id": "photo-018",
-    "group": "Ciudades",
-    "label": "Ciudades · Imagen 1",
-    "src": "assets/ciudades/gallera-1.webp",
-    "kind": "image",
-    "alt": ""
-  },
-  {
-    "id": "photo-019",
-    "group": "Ciudades",
-    "label": "Ciudades · Imagen 2",
-    "src": "assets/ciudades/gallera-2.webp",
-    "kind": "image",
-    "alt": ""
-  },
-  {
-    "id": "photo-020",
-    "group": "Ciudades",
-    "label": "Ciudades · Imagen 3",
-    "src": "assets/ciudades/gallera-3.webp",
-    "kind": "image",
-    "alt": ""
-  },
-  {
-    "id": "photo-021",
-    "group": "Ciudades",
-    "label": "Ciudades · Imagen 4",
-    "src": "assets/ciudades/gallera-4.webp",
-    "kind": "image",
-    "alt": ""
-  },
-  {
-    "id": "photo-022",
-    "group": "Ciudades",
-    "label": "Ciudades · Imagen 5",
-    "src": "assets/ciudades/gallera-5.webp",
-    "kind": "image",
-    "alt": ""
-  },
-  {
-    "id": "photo-023",
-    "group": "Ciudades",
-    "label": "Ciudades · Imagen 6",
-    "src": "assets/ciudades/gallera-6.webp",
-    "kind": "image",
-    "alt": ""
-  },
-  {
-    "id": "photo-024",
-    "group": "Ciudades",
-    "label": "Ciudades · Imagen 7",
-    "src": "assets/ciudades/gallera-7.webp",
-    "kind": "image",
-    "alt": ""
   },
   {
     "id": "photo-025",
@@ -373,6 +317,750 @@
     "label": "Video completo del mosaico",
     "kind": "video",
     "src": "assets/pesas-ligero.mp4?v=2",
+    "alt": ""
+  },
+  {
+    "id": "province-azua",
+    "group": "Provincias",
+    "label": "Azua",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-azua-1",
+    "group": "Galleras",
+    "label": "Azua · Gallera 1",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-azua-2",
+    "group": "Galleras",
+    "label": "Azua · Gallera 2",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-baoruco",
+    "group": "Provincias",
+    "label": "Baoruco",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-baoruco-1",
+    "group": "Galleras",
+    "label": "Baoruco · Gallera 1",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-baoruco-2",
+    "group": "Galleras",
+    "label": "Baoruco · Gallera 2",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-barahona",
+    "group": "Provincias",
+    "label": "Barahona",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-barahona-1",
+    "group": "Galleras",
+    "label": "Barahona · Gallera 1",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-barahona-2",
+    "group": "Galleras",
+    "label": "Barahona · Gallera 2",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-dajabon",
+    "group": "Provincias",
+    "label": "Dajabón",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-dajabon-1",
+    "group": "Galleras",
+    "label": "Dajabón · Gallera 1",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-dajabon-2",
+    "group": "Galleras",
+    "label": "Dajabón · Gallera 2",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-duarte",
+    "group": "Provincias",
+    "label": "Duarte",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-duarte-1",
+    "group": "Galleras",
+    "label": "Duarte · Gallera 1",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-duarte-2",
+    "group": "Galleras",
+    "label": "Duarte · Gallera 2",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-elias-pina",
+    "group": "Provincias",
+    "label": "Elías Piña",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-elias-pina-1",
+    "group": "Galleras",
+    "label": "Elías Piña · Gallera 1",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-elias-pina-2",
+    "group": "Galleras",
+    "label": "Elías Piña · Gallera 2",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-el-seibo",
+    "group": "Provincias",
+    "label": "El Seibo",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-el-seibo-1",
+    "group": "Galleras",
+    "label": "El Seibo · Gallera 1",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-el-seibo-2",
+    "group": "Galleras",
+    "label": "El Seibo · Gallera 2",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-espaillat",
+    "group": "Provincias",
+    "label": "Espaillat",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-espaillat-1",
+    "group": "Galleras",
+    "label": "Espaillat · Gallera 1",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-espaillat-2",
+    "group": "Galleras",
+    "label": "Espaillat · Gallera 2",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-hato-mayor",
+    "group": "Provincias",
+    "label": "Hato Mayor",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-hato-mayor-1",
+    "group": "Galleras",
+    "label": "Hato Mayor · Gallera 1",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-hato-mayor-2",
+    "group": "Galleras",
+    "label": "Hato Mayor · Gallera 2",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-hermanas-mirabal",
+    "group": "Provincias",
+    "label": "Hermanas Mirabal",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-hermanas-mirabal-1",
+    "group": "Galleras",
+    "label": "Hermanas Mirabal · Gallera 1",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-hermanas-mirabal-2",
+    "group": "Galleras",
+    "label": "Hermanas Mirabal · Gallera 2",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-independencia",
+    "group": "Provincias",
+    "label": "Independencia",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-independencia-1",
+    "group": "Galleras",
+    "label": "Independencia · Gallera 1",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-independencia-2",
+    "group": "Galleras",
+    "label": "Independencia · Gallera 2",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-la-altagracia",
+    "group": "Provincias",
+    "label": "La Altagracia",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-la-altagracia-1",
+    "group": "Galleras",
+    "label": "La Altagracia · Gallera 1",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-la-altagracia-2",
+    "group": "Galleras",
+    "label": "La Altagracia · Gallera 2",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-la-romana",
+    "group": "Provincias",
+    "label": "La Romana",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-la-romana-1",
+    "group": "Galleras",
+    "label": "La Romana · Gallera 1",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-la-romana-2",
+    "group": "Galleras",
+    "label": "La Romana · Gallera 2",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-la-vega",
+    "group": "Provincias",
+    "label": "La Vega",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-la-vega-1",
+    "group": "Galleras",
+    "label": "La Vega · Gallera 1",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-la-vega-2",
+    "group": "Galleras",
+    "label": "La Vega · Gallera 2",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-maria-trinidad-sanchez",
+    "group": "Provincias",
+    "label": "María Trinidad Sánchez",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-maria-trinidad-sanchez-1",
+    "group": "Galleras",
+    "label": "María Trinidad Sánchez · Gallera 1",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-maria-trinidad-sanchez-2",
+    "group": "Galleras",
+    "label": "María Trinidad Sánchez · Gallera 2",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-monsenor-nouel",
+    "group": "Provincias",
+    "label": "Monseñor Nouel",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-monsenor-nouel-1",
+    "group": "Galleras",
+    "label": "Monseñor Nouel · Gallera 1",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-monsenor-nouel-2",
+    "group": "Galleras",
+    "label": "Monseñor Nouel · Gallera 2",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-monte-cristi",
+    "group": "Provincias",
+    "label": "Monte Cristi",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-monte-cristi-1",
+    "group": "Galleras",
+    "label": "Monte Cristi · Gallera 1",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-monte-cristi-2",
+    "group": "Galleras",
+    "label": "Monte Cristi · Gallera 2",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-monte-plata",
+    "group": "Provincias",
+    "label": "Monte Plata",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-monte-plata-1",
+    "group": "Galleras",
+    "label": "Monte Plata · Gallera 1",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-monte-plata-2",
+    "group": "Galleras",
+    "label": "Monte Plata · Gallera 2",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-pedernales",
+    "group": "Provincias",
+    "label": "Pedernales",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-pedernales-1",
+    "group": "Galleras",
+    "label": "Pedernales · Gallera 1",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-pedernales-2",
+    "group": "Galleras",
+    "label": "Pedernales · Gallera 2",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-peravia",
+    "group": "Provincias",
+    "label": "Peravia",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-peravia-1",
+    "group": "Galleras",
+    "label": "Peravia · Gallera 1",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-peravia-2",
+    "group": "Galleras",
+    "label": "Peravia · Gallera 2",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-puerto-plata",
+    "group": "Provincias",
+    "label": "Puerto Plata",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-puerto-plata-1",
+    "group": "Galleras",
+    "label": "Puerto Plata · Gallera 1",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-puerto-plata-2",
+    "group": "Galleras",
+    "label": "Puerto Plata · Gallera 2",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-samana",
+    "group": "Provincias",
+    "label": "Samaná",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-samana-1",
+    "group": "Galleras",
+    "label": "Samaná · Gallera 1",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-samana-2",
+    "group": "Galleras",
+    "label": "Samaná · Gallera 2",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-san-cristobal",
+    "group": "Provincias",
+    "label": "San Cristóbal",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-san-cristobal-1",
+    "group": "Galleras",
+    "label": "San Cristóbal · Gallera 1",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-san-cristobal-2",
+    "group": "Galleras",
+    "label": "San Cristóbal · Gallera 2",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-san-jose-de-ocoa",
+    "group": "Provincias",
+    "label": "San José de Ocoa",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-san-jose-de-ocoa-1",
+    "group": "Galleras",
+    "label": "San José de Ocoa · Gallera 1",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-san-jose-de-ocoa-2",
+    "group": "Galleras",
+    "label": "San José de Ocoa · Gallera 2",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-san-juan",
+    "group": "Provincias",
+    "label": "San Juan",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-san-juan-1",
+    "group": "Galleras",
+    "label": "San Juan · Gallera 1",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-san-juan-2",
+    "group": "Galleras",
+    "label": "San Juan · Gallera 2",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-san-pedro-de-macoris",
+    "group": "Provincias",
+    "label": "San Pedro de Macorís",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-san-pedro-de-macoris-1",
+    "group": "Galleras",
+    "label": "San Pedro de Macorís · Gallera 1",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-san-pedro-de-macoris-2",
+    "group": "Galleras",
+    "label": "San Pedro de Macorís · Gallera 2",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-sanchez-ramirez",
+    "group": "Provincias",
+    "label": "Sánchez Ramírez",
+    "src": "assets/ciudades/gallera-6.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-sanchez-ramirez-1",
+    "group": "Galleras",
+    "label": "Sánchez Ramírez · Gallera 1",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-sanchez-ramirez-2",
+    "group": "Galleras",
+    "label": "Sánchez Ramírez · Gallera 2",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-santiago",
+    "group": "Provincias",
+    "label": "Santiago",
+    "src": "assets/ciudades/gallera-7.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-santiago-1",
+    "group": "Galleras",
+    "label": "Santiago · Gallera 1",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-santiago-2",
+    "group": "Galleras",
+    "label": "Santiago · Gallera 2",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-santiago-rodriguez",
+    "group": "Provincias",
+    "label": "Santiago Rodríguez",
+    "src": "assets/ciudades/gallera-1.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-santiago-rodriguez-1",
+    "group": "Galleras",
+    "label": "Santiago Rodríguez · Gallera 1",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-santiago-rodriguez-2",
+    "group": "Galleras",
+    "label": "Santiago Rodríguez · Gallera 2",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-santo-domingo",
+    "group": "Provincias",
+    "label": "Santo Domingo",
+    "src": "assets/ciudades/gallera-2.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-santo-domingo-1",
+    "group": "Galleras",
+    "label": "Santo Domingo · Gallera 1",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-santo-domingo-2",
+    "group": "Galleras",
+    "label": "Santo Domingo · Gallera 2",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "province-valverde",
+    "group": "Provincias",
+    "label": "Valverde",
+    "src": "assets/ciudades/gallera-3.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-valverde-1",
+    "group": "Galleras",
+    "label": "Valverde · Gallera 1",
+    "src": "assets/ciudades/gallera-4.webp",
+    "kind": "image",
+    "alt": ""
+  },
+  {
+    "id": "gallera-valverde-2",
+    "group": "Galleras",
+    "label": "Valverde · Gallera 2",
+    "src": "assets/ciudades/gallera-5.webp",
+    "kind": "image",
     "alt": ""
   }
 ]
