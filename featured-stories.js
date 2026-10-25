@@ -42,7 +42,8 @@ dialog.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key
 document.addEventListener('visibilitychange',()=>{last=null});
 window.addEventListener('pagehide',()=>{if(dialog.open)dialog.close()});
 
-/* Las tarjetas anticipan las seis fotos de su propia galería. */
+/* Carruseles independientes; ninguna transición comienza junto a la otra. */
+let lastCardSlide=-Infinity;
 document.querySelectorAll('[data-story-gallery]').forEach(card=>{
 const collection=galleries[card.dataset.storyGallery];if(!collection)return;
 const layers=[document.createElement('img'),document.createElement('img')];
@@ -50,11 +51,23 @@ layers.forEach(img=>{img.className='category-photo';img.alt='';img.setAttribute(
 let position=0,front=0,visible=!('IntersectionObserver' in window),timer=null,version=0;
 const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 function stop(){clearTimeout(timer);timer=null;++version}
-function schedule(){clearTimeout(timer);if(visible&&!document.hidden&&!reduced)timer=setTimeout(advance,3000)}
+const interval=card.dataset.storyGallery==='galleros'?3600:5300;
+function schedule(delay=interval){clearTimeout(timer);if(visible&&!document.hidden&&!reduced)timer=setTimeout(advance,delay)}
 async function advance(){
 const ticket=++version,next=(position+1)%collection.items.length;
 try{await preload(collection.items[next].src);if(ticket!==version||!visible||document.hidden)return;
-const back=1-front;layers[back].src=collection.items[next].src;layers[back].classList.add('is-visible');layers[front].classList.remove('is-visible');front=back;position=next;
+const gap=performance.now()-lastCardSlide;
+if(gap<1100){schedule(1100-gap+100);return}
+lastCardSlide=performance.now();
+const back=1-front;
+layers.forEach(layer=>layer.classList.remove('is-entering','is-leaving'));
+layers[back].src=collection.items[next].src;
+layers[back].classList.remove('is-visible');
+void layers[back].offsetWidth;
+layers[back].classList.add('is-visible','is-entering');
+layers[front].classList.remove('is-visible');
+layers[front].classList.add('is-leaving');
+front=back;position=next;
 preload(collection.items[(position+1)%collection.items.length].src).catch(()=>{});schedule();
 }catch{schedule()}
 }
@@ -63,7 +76,7 @@ preload(collection.items[0].src).then(()=>{if(visible){preload(collection.items[
 if('IntersectionObserver' in window)new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)schedule();else stop()},{threshold:.15}).observe(card);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else schedule()});
 window.addEventListener('pagehide',stop);
-window.addEventListener('pageshow',schedule);
+window.addEventListener('pageshow',()=>schedule());
 });
 
 })();
