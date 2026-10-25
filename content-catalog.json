@@ -1062,5 +1062,13 @@
     "src": "assets/ciudades/gallera-5.webp",
     "kind": "image",
     "alt": ""
+  },
+  {
+    "id": "province-header-logo",
+    "group": "Identidad de la plataforma",
+    "label": "Logo claro de provincias",
+    "src": "assets/logo-provincias-claro.webp",
+    "kind": "image",
+    "alt": "Peleas de Gallos Tu Norte"
   }
 ]
