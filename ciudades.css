@@ -15,3 +15,17 @@
 .gallera-profile .city-circle{width:min(100%,166px)}
 .gallera-profile .city-name{font-size:17px}
 @media(max-width:600px){.gallera-grid{gap:22px}.gallera-profile .city-circle{width:min(100%,130px)}.gallera-profile .city-name{font-size:15px}.province-search{margin-bottom:28px}}
+
+.province-top-block{margin:0 0 34px;padding:20px 12px 26px;border:1px solid #ffffff14;border-radius:20px;background:linear-gradient(135deg,#d8b65f0d,#11151b)}
+.province-top-heading{text-align:center;margin-bottom:26px}
+.province-top-heading h2{margin:0 0 6px;font-size:16px;letter-spacing:3px;color:#e7c778}
+.province-top-heading>span{font-size:11px;color:#9097a3}
+.city-grid.province-top-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;max-width:650px;margin:auto}
+.top-province{position:relative;padding-bottom:0}
+.top-province .city-circle{border:3px solid var(--rank-color);box-shadow:0 0 0 5px var(--rank-halo)}
+.top-province.rank-1{--rank-color:#e5c36a;--rank-halo:#e5c36a10}
+.top-province.rank-2{--rank-color:#c9d1dc;--rank-halo:#c9d1dc10}
+.top-province.rank-3{--rank-color:#cc9974;--rank-halo:#cc997410}
+.province-rank{margin-top:-27px;z-index:2;min-width:34px;padding:3px 10px;border-radius:30px;background:var(--rank-color);color:#14171d;font-size:13px;font-weight:800;border:3px solid #101319}
+.top-province .city-name{color:#e9edf4;font-weight:650}
+@media(max-width:600px){.province-top-block{padding:18px 9px 20px;margin-bottom:28px}.province-top-heading{margin-bottom:23px}.province-top-heading>span{font-size:9px}.city-grid.province-top-grid{gap:10px}.province-rank{font-size:11px;margin-top:-24px;min-width:30px;padding:2px 8px}.top-province .city-circle{width:min(100%,89px)}}

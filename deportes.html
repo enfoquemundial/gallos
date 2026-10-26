@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="es" data-auth-pending><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deportes | Tu Norte</title><link rel="stylesheet" href="deportes.css?v=3"><style>html[data-auth-pending] body{visibility:hidden}</style></head>
+<html lang="es" data-auth-pending><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deportes | Tu Norte</title><link rel="stylesheet" href="deportes.css?v=3"><style>html[data-auth-pending] body{visibility:hidden}</style><style>
+/* Esquina blanca a la izquierda, azul a la derecha. */
+:root{--white:#f5f7fb}
+.side-card.white{border-top:3px solid #f5f7fb}
+.side-tag.white{background:#f5f7fb18;color:#f5f7fb}
+.rooster-avatar.white{background:#f5f7fb12;border-color:#f5f7fb}
+.rooster-avatar.white svg{color:#f5f7fb}
+.side-card.white .odds-val,.side-card.white .quick-chip.active,.upcoming-odds .r{color:#f5f7fb}
+.corner.white{border-color:#f5f7fb;color:#f5f7fb}
+.corner.blue{border-color:#2e7dff;color:#2e7dff}
+.side-btn.white{color:#f5f7fb;border-color:#f5f7fb55}
+.side-btn.white.active{background:#f5f7fb18;border-color:#f5f7fb}
+.side-btn.blue{color:#2e7dff;border-color:#2e7dff55}
+.side-btn.blue.active{background:#2e7dff18;border-color:#2e7dff}
+.bet-card.white{border-top-color:#f5f7fb}
+.bet-card.white .corner{color:#f5f7fb}
+</style></head>
 <body><header><a class="brand" href="index.html"><img data-cms-key="photo-017" src="assets/logo-tu-norte.webp" alt="Tu Norte"></a><a class="return" href="plataforma.html">Peleas de gallos</a><button data-auth-logout type="button">Cerrar sesión</button></header>
 <div class="layout"><aside><p class="eyebrow">TU NORTE / DEPORTES</p><h2>Elige tu pasión.</h2><nav aria-label="Deportes"><a href="#futbol" data-sport="futbol">Fútbol</a><a href="#beisbol" data-sport="beisbol">Béisbol</a><a href="#baloncesto" data-sport="baloncesto">Baloncesto</a><a href="#boxeo" data-sport="boxeo">Boxeo</a><a href="plataforma.html">Peleas de gallos <span class="available">Disponible</span></a></nav></aside>
 <main><div class="heading"><div><p class="eyebrow">TRANSMISIONES TU NORTE</p><h1 id="sport-title">Fútbol</h1></div><span class="soon">PRÓXIMAMENTE</span></div>
 <section class="screen" aria-label="Próxima transmisión"><img id="sport-image" alt="Estadio de fútbol" width="1920" height="1080"><div class="shade"></div><span class="screen-label">TU NORTE · DEPORTES</span><div class="announcement"><span class="signal" aria-hidden="true">◉</span><p class="eyebrow">ESTAMOS PREPARANDO EL ESCENARIO</p><h2>Próximamente<br>en vivo</h2><p id="sport-description"></p></div><span class="screen-bottom">Transmisión aún no disponible</span></section>
-<section class="betting-section" aria-labelledby="betting-title"><div class="section-heading"><div><p class="eyebrow">ELIGE TU LADO</p><h2 id="betting-title">Apuestas del encuentro</h2></div><span class="soon">PRÓXIMAMENTE</span></div><p class="muted">Se habilitarán cuando haya un evento confirmado y cuotas disponibles.</p><div class="match-cards"><article class="bet-card red"><span class="corner">ROJO</span><h3 id="participant-a">Local</h3><div class="odds">—</div><p>Cuota por confirmar</p><div class="chips"><span>RD$ 100</span><span>RD$ 500</span><span>RD$ 1,000</span></div><button disabled>Apostar · Próximamente</button></article><div class="versus"><strong>VS</strong><span>Esperando evento</span></div><article class="bet-card blue"><span class="corner">AZUL</span><h3 id="participant-b">Visitante</h3><div class="odds">—</div><p>Cuota por confirmar</p><div class="chips"><span>RD$ 100</span><span>RD$ 500</span><span>RD$ 1,000</span></div><button disabled>Apostar · Próximamente</button></article></div><p class="bet-note">No hay apuestas abiertas. No se descontará saldo.</p></section>
+<section class="betting-section" aria-labelledby="betting-title"><div class="section-heading"><div><p class="eyebrow">ELIGE TU LADO</p><h2 id="betting-title">Apuestas del encuentro</h2></div><span class="soon">PRÓXIMAMENTE</span></div><p class="muted">Se habilitarán cuando haya un evento confirmado y cuotas disponibles.</p><div class="match-cards"><article class="bet-card white"><span class="corner">BLANCO</span><h3 id="participant-a">Local</h3><div class="odds">—</div><p>Cuota por confirmar</p><div class="chips"><span>USD 100</span><span>USD 500</span><span>USD 1,000</span></div><button disabled>Apostar · Próximamente</button></article><div class="versus"><strong>VS</strong><span>Esperando evento</span></div><article class="bet-card blue"><span class="corner">AZUL</span><h3 id="participant-b">Visitante</h3><div class="odds">—</div><p>Cuota por confirmar</p><div class="chips"><span>USD 100</span><span>USD 500</span><span>USD 1,000</span></div><button disabled>Apostar · Próximamente</button></article></div><p class="bet-note">No hay apuestas abiertas. No se descontará saldo.</p></section>
 <section class="editorial"><p class="eyebrow">MÁS ALLÁ DEL MARCADOR</p><h2 id="editorial-title"></h2><div class="topic-tags" id="topic-tags"></div><div id="sport-guides" class="guides"></div></section>
 <div class="below"><section><p class="eyebrow">LO MEJOR ESTÁ POR VENIR</p><h2>Un nuevo lugar para vivir el deporte.</h2><p>Estamos preparando esta sección. Aquí publicaremos la programación cuando esté confirmada.</p></section><section class="notice"><span class="soon">EN PREPARACIÓN</span><h3>Aún no hay eventos anunciados</h3><p>Vuelve pronto para conocer las novedades de <span id="sport-inline">fútbol</span>.</p></section></div>
 <p class="credit">Fotografía ilustrativa: <a id="photo-credit" href="https://unsplash.com">Unsplash</a>. No corresponde a una transmisión actual.</p></main></div>

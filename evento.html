@@ -7,7 +7,23 @@
 <link rel="stylesheet" href="styles.css?v=3">
 
 <style>html[data-auth-pending] body{visibility:hidden}</style>
-</head>
+<style>
+/* Esquina blanca a la izquierda, azul a la derecha. */
+:root{--white:#f5f7fb}
+.side-card.white{border-top:3px solid #f5f7fb}
+.side-tag.white{background:#f5f7fb18;color:#f5f7fb}
+.rooster-avatar.white{background:#f5f7fb12;border-color:#f5f7fb}
+.rooster-avatar.white svg{color:#f5f7fb}
+.side-card.white .odds-val,.side-card.white .quick-chip.active,.upcoming-odds .r{color:#f5f7fb}
+.corner.white{border-color:#f5f7fb;color:#f5f7fb}
+.corner.blue{border-color:#2e7dff;color:#2e7dff}
+.side-btn.white{color:#f5f7fb;border-color:#f5f7fb55}
+.side-btn.white.active{background:#f5f7fb18;border-color:#f5f7fb}
+.side-btn.blue{color:#2e7dff;border-color:#2e7dff55}
+.side-btn.blue.active{background:#2e7dff18;border-color:#2e7dff}
+.bet-card.white{border-top-color:#f5f7fb}
+.bet-card.white .corner{color:#f5f7fb}
+</style></head>
 <body>
 
 <header class="topbar">
@@ -21,7 +37,7 @@
         <a href="login.html" class="btn btn-outline" style="padding:8px 16px; font-size:14px;">Iniciar sesión</a>
       </span>
       <span id="nav-user" style="display:flex; gap:14px; align-items:center;">
-        <a href="billetera.html" class="balance-pill" id="balance-pill">RD$ 0</a>
+        <a href="billetera.html" class="balance-pill" id="balance-pill">USD 0</a>
         <a href="#" onclick="logout(); return false;" style="color:var(--ink-soft); font-size:14px;">Salir</a>
       </span>
     </nav>
@@ -47,15 +63,15 @@
   </div>
 
   <div class="matchup-board">
-    <div class="corner red">
-      <div class="label">Gallo A</div>
+    <div class="corner white">
+      <div class="label">BLANCO</div>
       <div class="name">Matador</div>
       <div class="record">14 peleas · 11 victorias</div>
       <div class="odds-big" id="odds-red">1.85</div>
     </div>
     <div class="vs-mark">VS</div>
-    <div class="corner green">
-      <div class="label">Gallo B</div>
+    <div class="corner blue">
+      <div class="label">AZUL</div>
       <div class="name">Huracán</div>
       <div class="record">9 peleas · 7 victorias</div>
       <div class="odds-big" id="odds-green">1.95</div>
@@ -66,24 +82,24 @@
     <div>
       <h3>Arma tu apuesta</h3>
       <div class="side-toggle">
-        <div class="side-btn active red" id="btn-a" onclick="selectSide('a')">A · Matador</div>
-        <div class="side-btn green" id="btn-b" onclick="selectSide('b')">B · Huracán</div>
+        <div class="side-btn active white" id="btn-a" onclick="selectSide('a')">Blanco · Matador</div>
+        <div class="side-btn blue" id="btn-b" onclick="selectSide('b')">Azul · Huracán</div>
       </div>
 
       <div class="chip-row" id="chip-row">
         ${''}
       </div>
 
-      <input type="number" id="amount-input" class="amount-input" placeholder="Monto personalizado (RD$)" min="50" step="50">
+      <input type="number" id="amount-input" class="amount-input" placeholder="Monto personalizado (USD)" min="50" step="50">
 
-      <button class="btn btn-brass btn-block" id="place-bet-btn" onclick="placeBet()">Confirmar apuesta</button>
+      <button class="btn btn-brass btn-block" id="place-bet-btn" disabled>Apostar · Próximamente</button>
     </div>
 
     <div class="summary">
-      <div class="summary-row"><span>Lado elegido</span><strong id="sum-side">A — Matador</strong></div>
+      <div class="summary-row"><span>Lado elegido</span><strong id="sum-side">Blanco — Matador</strong></div>
       <div class="summary-row"><span>Cuota</span><strong id="sum-odds">1.85</strong></div>
-      <div class="summary-row"><span>Monto</span><strong id="sum-amount">RD$ 0</strong></div>
-      <div class="summary-total"><span>Ganancia potencial</span><span class="val" id="sum-payout">RD$ 0</span></div>
+      <div class="summary-row"><span>Monto</span><strong id="sum-amount">USD 0</strong></div>
+      <div class="summary-total"><span>Ganancia potencial</span><span class="val" id="sum-payout">USD 0</span></div>
     </div>
   </div>
 </div>
@@ -95,7 +111,7 @@
   </div>
 </footer>
 
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 <script src="firebase-config.js"></script>
 <script src="auth.js?v=9"></script>
 <script src="site-content.js?v=1"></script>
@@ -113,7 +129,7 @@ function selectSide(s){
   side = s;
   document.getElementById('btn-a').classList.toggle('active', s==='a');
   document.getElementById('btn-b').classList.toggle('active', s==='b');
-  document.getElementById('sum-side').textContent = s==='a' ? 'A — Matador' : 'B — Huracán';
+  document.getElementById('sum-side').textContent = s==='a' ? 'Blanco — Matador' : 'Azul — Huracán';
   document.getElementById('sum-odds').textContent = odds[s].toFixed(2);
   updateSummary();
 }
@@ -137,28 +153,7 @@ function updateSummary(){
   document.getElementById('sum-payout').textContent = money(amt * odds[side]);
 }
 
-function placeBet(){
-  const amt = chipAmount || 0;
-  if(amt < 50){ showToast('El monto mínimo es RD$ 50'); return; }
-  if(amt > Store.getBalance()){ showToast('Saldo insuficiente. Carga tu billetera.'); return; }
-
-  Store.setBalance(Store.getBalance() - amt);
-  Store.addBet({
-    id: 'AP-' + Math.floor(1000 + Math.random()*9000),
-    evento: 'Copa Espaillat — Bout 5',
-    lado: side === 'a' ? 'A' : 'B',
-    monto: amt,
-    cuota: odds[side],
-    resultado: 'pending',
-    fecha: 'Ahora'
-  });
-  renderBalancePill();
-  showToast(`Apuesta confirmada: ${money(amt)} a ${side === 'a' ? 'Matador' : 'Huracán'}`);
-  chipAmount = 0;
-  document.getElementById('amount-input').value = '';
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  updateSummary();
-}
+/* Publicación y liquidación pendientes de servidor; sin descontar saldo local. */
 
 // Reloj de cierre simulado
 let secondsLeft = 240;

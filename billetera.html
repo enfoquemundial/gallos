@@ -21,7 +21,7 @@
         <a href="login.html" class="btn btn-outline" style="padding:8px 16px; font-size:14px;">Iniciar sesión</a>
       </span>
       <span id="nav-user" style="display:flex; gap:14px; align-items:center;">
-        <a href="billetera.html" class="balance-pill" id="balance-pill">RD$ 0</a>
+        <a href="billetera.html" class="balance-pill" id="balance-pill">USD 0</a>
         <a href="#" onclick="logout(); return false;" style="color:var(--ink-soft); font-size:14px;">Salir</a>
       </span>
     </nav>
@@ -35,7 +35,7 @@
     <div class="balance-card">
       <div>
         <div class="label">Saldo disponible</div>
-        <div class="amount" id="big-balance">RD$ 0</div>
+        <div class="amount" id="big-balance">USD 0</div>
       </div>
       <a href="evento.html" class="btn btn-outline btn-block">Ir a apostar</a>
     </div>
@@ -62,7 +62,7 @@
   </div>
 </footer>
 
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 <script src="firebase-config.js"></script>
 <script src="auth.js?v=9"></script>
 <script src="site-content.js?v=1"></script>
@@ -88,7 +88,7 @@ function renderHistory(){
     <tr>
       <td>${r.id}</td>
       <td>${r.evento}</td>
-      <td>${r.lado}</td>
+      <td>${r.lado === 'Rojo' ? 'Blanco' : r.lado}</td>
       <td class="num">${r.cuota.toFixed(2)}</td>
       <td>${r.fecha}</td>
       <td class="num">${money(r.monto)}</td>

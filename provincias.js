@@ -19,6 +19,6 @@ function render(){
  window.dispatchEvent(new Event('tn-media-render'));title.focus({preventScroll:true});
 }
 document.querySelectorAll('[data-province]').forEach(button=>button.addEventListener('click',()=>{location.hash='provincia='+button.dataset.province}));
-search.addEventListener('input',()=>{const value=normalize(search.value.trim());let count=0;document.querySelectorAll('[data-province]').forEach(button=>{const province=provinces.find(p=>p.id===button.dataset.province);button.hidden=!normalize(province.name).includes(value);if(!button.hidden)count++});document.getElementById('province-empty').hidden=count>0});
+search.addEventListener('input',()=>{const value=normalize(search.value.trim());let count=0;document.querySelectorAll('[data-province]').forEach(button=>{const province=provinces.find(p=>p.id===button.dataset.province);button.hidden=!normalize(province.name).includes(value);if(!button.hidden)count++});document.getElementById('province-empty').hidden=count>0;document.getElementById('province-top-block').hidden=![...document.querySelectorAll('.top-province')].some(button=>!button.hidden)});
 window.addEventListener('hashchange',render);render();
 })();

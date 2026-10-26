@@ -17,7 +17,7 @@
 .matchup-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
 .matchup-row .vs-panel{grid-column:1/-1;grid-row:1;order:0;padding:14px;flex-direction:row;flex-wrap:wrap;gap:12px}
 .matchup-row .vs-panel .ring-icon{display:none}
-.matchup-row .side-card.red{grid-column:1;grid-row:2}
+.matchup-row .side-card.white{grid-column:1;grid-row:2}
 .matchup-row .side-card.blue{grid-column:2;grid-row:2}
 .matchup-row .side-card{min-width:0;padding:18px;display:grid;grid-template-rows:48px 58px 52px auto auto;align-content:start}
 .matchup-row .side-card .name{font-size:clamp(15px,2.4vw,21px);line-height:1.2;margin:12px 0 0;overflow-wrap:anywhere}
@@ -32,6 +32,22 @@
 .available-bets .pending-label{display:inline-block;font-size:10px;color:#ffc46b;border:1px solid #ffc46b55;border-radius:20px;padding:4px 9px;margin-bottom:12px}
 #bet-selection{margin-top:12px;color:var(--ink);font-size:13px;line-height:1.5}
 @media(max-width:600px){.matchup-row{gap:10px}.matchup-row .side-card{padding:13px 10px;grid-template-rows:38px 58px 44px auto auto}.matchup-row .rooster-avatar{width:30px;height:30px;flex-shrink:0}.matchup-row .side-tag{font-size:11px;padding:5px 7px}.matchup-row .side-card-top{gap:5px}.matchup-row .quick-chip{font-size:13px}.matchup-row .vs-panel .vs-mark{font-size:22px}.available-bets{padding:16px}}
+</style><style>
+/* Esquina blanca a la izquierda, azul a la derecha. */
+:root{--white:#f5f7fb}
+.side-card.white{border-top:3px solid #f5f7fb}
+.side-tag.white{background:#f5f7fb18;color:#f5f7fb}
+.rooster-avatar.white{background:#f5f7fb12;border-color:#f5f7fb}
+.rooster-avatar.white svg{color:#f5f7fb}
+.side-card.white .odds-val,.side-card.white .quick-chip.active,.upcoming-odds .r{color:#f5f7fb}
+.corner.white{border-color:#f5f7fb;color:#f5f7fb}
+.corner.blue{border-color:#2e7dff;color:#2e7dff}
+.side-btn.white{color:#f5f7fb;border-color:#f5f7fb55}
+.side-btn.white.active{background:#f5f7fb18;border-color:#f5f7fb}
+.side-btn.blue{color:#2e7dff;border-color:#2e7dff55}
+.side-btn.blue.active{background:#2e7dff18;border-color:#2e7dff}
+.bet-card.white{border-top-color:#f5f7fb}
+.bet-card.white .corner{color:#f5f7fb}
 </style></head>
 <body>
 
@@ -77,7 +93,7 @@
       </span>
       <span id="nav-user" style="display:none; align-items:center; gap:12px;">
         <a href="billetera.html" class="wallet-pill">
-          <span class="amt" id="balance-pill">RD$ 0.00</span>
+          <span class="amt" id="balance-pill">USD 0.00</span>
           <span class="add-btn">+</span>
         </a>
         <button class="icon-btn" aria-label="Notificaciones">
@@ -170,14 +186,14 @@
 
     <section class="available-bets" aria-labelledby="available-bets-title"><span class="pending-label">EN PREPARACIÓN</span><h2 id="available-bets-title">Apuestas disponibles</h2><p>Cuando se habilite el sistema, aquí podrás aceptar una apuesta del lado contrario por el mismo monto.</p><p id="bet-selection" role="status" aria-live="polite">Selecciona un lado y un monto para preparar tu apuesta.</p></section>
     <div class="matchup-row">
-      <div class="side-card red">
+      <div class="side-card white">
         <div class="side-card-top">
-          <span class="side-tag red">ROJO</span>
-          <span class="rooster-avatar red"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg></span>
+          <span class="side-tag white">BLANCO</span>
+          <span class="rooster-avatar white"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg></span>
         </div>
         <div class="name">El Diablo</div>
-        <div class="odds-val" id="odds-red">1 a 1</div>
-        <div class="quick-chips" id="chip-row-red"></div>
+        <div class="odds-val" id="odds-white">1 a 1</div>
+        <div class="quick-chips" id="chip-row-white"></div>
         <button class="bet-btn" disabled>Publicar · Próximamente</button>
       </div>
 
@@ -227,7 +243,7 @@
   </div>
 </footer>
 
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 <script src="firebase-config.js"></script>
 <script src="auth.js?v=9"></script>
 <script src="site-content.js?v=1"></script>
@@ -240,20 +256,20 @@ function toggleSidebar(){
 }
 
 /* ---------- Cuotas y apuesta rápida por esquina ---------- */
-let odds = { red: 1.85, blue: 1.95 };
-let selected = { red: 0, blue: 0 };
+let odds = { white: 1.85, blue: 1.95 };
+let selected = { white: 0, blue: 0 };
 const chipVals = [100, 500, 1000];
 
 function buildChips(side){
  const row=document.getElementById('chip-row-'+side);
- row.replaceChildren(...chipVals.map(value=>{const button=document.createElement('button');button.type='button';button.className='quick-chip';button.dataset.val=value;button.textContent='RD$ '+value.toLocaleString('es-DO');button.setAttribute('aria-pressed','false');button.setAttribute('aria-label',value+' pesos al '+(side==='red'?'rojo':'azul'));button.addEventListener('click',()=>selectChip(side,value));return button}));
+ row.replaceChildren(...chipVals.map(value=>{const button=document.createElement('button');button.type='button';button.className='quick-chip';button.dataset.val=value;button.textContent='USD '+value.toLocaleString('es-DO');button.setAttribute('aria-pressed','false');button.setAttribute('aria-label',value+' dólares al '+(side==='white'?'blanco':'azul'));button.addEventListener('click',()=>selectChip(side,value));return button}));
 }
-buildChips('red');buildChips('blue');
+buildChips('white');buildChips('blue');
 function selectChip(side,value){
- if(!['red','blue'].includes(side)||!chipVals.includes(value))return;
- selected.red=0;selected.blue=0;selected[side]=value;
- for(const color of ['red','blue'])document.querySelectorAll('#chip-row-'+color+' .quick-chip').forEach(button=>{const active=color===side&&Number(button.dataset.val)===value;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
- document.getElementById('bet-selection').textContent='Selección: '+(side==='red'?'ROJO':'AZUL')+' · RD$ '+value.toLocaleString('es-DO')+' contra RD$ '+value.toLocaleString('es-DO')+'. La publicación compartida todavía no está habilitada.';
+ if(!['white','blue'].includes(side)||!chipVals.includes(value))return;
+ selected.white=0;selected.blue=0;selected[side]=value;
+ for(const color of ['white','blue'])document.querySelectorAll('#chip-row-'+color+' .quick-chip').forEach(button=>{const active=color===side&&Number(button.dataset.val)===value;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
+ document.getElementById('bet-selection').textContent='Selección: '+(side==='white'?'BLANCO':'AZUL')+' · USD '+value.toLocaleString('es-DO')+' contra USD '+value.toLocaleString('es-DO')+'. La publicación compartida todavía no está habilitada.';
 }
 /* No se descuenta saldo ni se simula confirmación de apuestas. */
 
@@ -286,7 +302,7 @@ document.getElementById('upcoming-grid').innerHTML = upcoming.map(f => `
   <div class="upcoming-card">
     <div class="upcoming-time">${f.time}</div>
     <div class="upcoming-vs">
-      <span class="rooster-avatar red">${roosterIcon}</span>
+      <span class="rooster-avatar white">${roosterIcon}</span>
       <span class="vs-mini">VS</span>
       <span class="rooster-avatar blue">${roosterIcon}</span>
     </div>
@@ -313,7 +329,7 @@ document.getElementById('leaderboard-list').innerHTML = leaders.map(l => `
     <div class="lb-rank ${l.cls || ''}">${l.rank}</div>
     <div class="lb-avatar" style="background:${colorFor(l.name)}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#fff;">${l.name.charAt(0)}</div>
     <div class="lb-name">${l.name}</div>
-    <div class="lb-amt">RD$ ${l.amt.toLocaleString('es-DO')}.00</div>
+    <div class="lb-amt">USD ${l.amt.toLocaleString('es-DO')}.00</div>
   </div>
 `).join('');
 </script>
