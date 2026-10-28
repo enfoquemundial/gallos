@@ -42,41 +42,35 @@ dialog.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key
 document.addEventListener('visibilitychange',()=>{last=null});
 window.addEventListener('pagehide',()=>{if(dialog.open)dialog.close()});
 
-/* Carruseles independientes; ninguna transición comienza junto a la otra. */
-let lastCardSlide=-Infinity;
-document.querySelectorAll('[data-story-gallery]').forEach(card=>{
-const collection=galleries[card.dataset.storyGallery];if(!collection)return;
-const layers=[document.createElement('img'),document.createElement('img')];
-layers.forEach(img=>{img.className='category-photo';img.alt='';img.setAttribute('aria-hidden','true');img.decoding='async';card.prepend(img)});
-let position=0,front=0,visible=!('IntersectionObserver' in window),timer=null,version=0;
-const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-function stop(){clearTimeout(timer);timer=null;++version}
-const interval=card.dataset.storyGallery==='galleros'?3600:5300;
-function schedule(delay=interval){clearTimeout(timer);if(visible&&!document.hidden&&!reduced)timer=setTimeout(advance,delay)}
-async function advance(){
-const ticket=++version,next=(position+1)%collection.items.length;
-try{await preload(collection.items[next].src);if(ticket!==version||!visible||document.hidden)return;
-const gap=performance.now()-lastCardSlide;
-if(gap<1100){schedule(1100-gap+100);return}
-lastCardSlide=performance.now();
-const back=1-front;
-layers.forEach(layer=>layer.classList.remove('is-entering','is-leaving'));
-layers[back].src=collection.items[next].src;
-layers[back].classList.remove('is-visible');
-void layers[back].offsetWidth;
-layers[back].classList.add('is-visible','is-entering');
-layers[front].classList.remove('is-visible');
-layers[front].classList.add('is-leaving');
-front=back;position=next;
-preload(collection.items[(position+1)%collection.items.length].src).catch(()=>{});schedule();
-}catch{schedule()}
+/* Un solo reloj para ambas tarjetas; las fotos se preparan antes de deslizar juntas. */
+const cardSlides=[...document.querySelectorAll('[data-story-gallery]')].map(card=>{
+ const collection=galleries[card.dataset.storyGallery];if(!collection)return null;
+ const layers=[document.createElement('img'),document.createElement('img')];
+ layers.forEach(img=>{img.className='category-photo';img.alt='';img.setAttribute('aria-hidden','true');img.decoding='async';card.prepend(img)});
+ layers[0].src=collection.items[0].src;layers[0].classList.add('is-visible');
+ return {card,collection,layers,position:0,front:0,visible:!('IntersectionObserver' in window)};
+}).filter(Boolean);
+const slideMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)');
+let slideTimer=null,slideVersion=0;
+function stopSlides(){clearTimeout(slideTimer);slideTimer=null;++slideVersion}
+function scheduleSlides(){clearTimeout(slideTimer);if(cardSlides.some(state=>state.visible)&&!document.hidden&&!slideMotion?.matches)slideTimer=setTimeout(advanceSlides,4200)}
+async function advanceSlides(){
+ const ticket=++slideVersion;
+ const next=cardSlides.map(state=>(state.position+1)%state.collection.items.length);
+ try{
+  await Promise.all(cardSlides.map((state,i)=>preload(state.collection.items[next[i]].src)));
+  if(ticket!==slideVersion||document.hidden||slideMotion?.matches||!cardSlides.some(state=>state.visible))return;
+  cardSlides.forEach((state,i)=>{const back=1-state.front;state.layers.forEach(layer=>layer.classList.remove('is-entering','is-leaving'));state.layers[back].classList.remove('is-visible');state.layers[back].src=state.collection.items[next[i]].src});
+  if(cardSlides.length)void cardSlides[0].card.offsetWidth;
+  cardSlides.forEach((state,i)=>{const back=1-state.front;state.layers[back].classList.add('is-visible','is-entering');state.layers[state.front].classList.remove('is-visible');state.layers[state.front].classList.add('is-leaving');state.front=back;state.position=next[i];preload(state.collection.items[(state.position+1)%state.collection.items.length].src).catch(()=>{})});
+  scheduleSlides();
+ }catch{if(ticket===slideVersion)scheduleSlides()}
 }
-layers[0].src=collection.items[0].src;layers[0].classList.add('is-visible');
-preload(collection.items[0].src).then(()=>{if(visible){preload(collection.items[1].src).catch(()=>{});schedule()}}).catch(()=>{});
-if('IntersectionObserver' in window)new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)schedule();else stop()},{threshold:.15}).observe(card);
-document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else schedule()});
-window.addEventListener('pagehide',stop);
-window.addEventListener('pageshow',()=>schedule());
-});
+if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const state=cardSlides.find(state=>state.card===entry.target);if(state)state.visible=entry.isIntersecting});stopSlides();scheduleSlides()},{threshold:.15});cardSlides.forEach(state=>observer.observe(state.card))}
+else scheduleSlides();
+document.addEventListener('visibilitychange',()=>{stopSlides();scheduleSlides()});
+slideMotion?.addEventListener?.('change',()=>{stopSlides();scheduleSlides()});
+window.addEventListener('pagehide',stopSlides);
+window.addEventListener('pageshow',()=>{stopSlides();scheduleSlides()});
 
 })();

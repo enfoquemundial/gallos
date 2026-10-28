@@ -47,4 +47,9 @@
 .category-card .category-photo.is-leaving{opacity:1;animation:category-slide-out .7s cubic-bezier(.22,.61,.36,1) both}
 @keyframes category-slide-in{from{transform:translateX(-100%)}to{transform:translateX(0)}}
 @keyframes category-slide-out{from{transform:translateX(0)}to{transform:translateX(100%)}}
+/* La tarjeta derecha se desliza hacia el centro en sentido contrario. */
+.category-card.criaderos .category-photo.is-entering{animation-name:category-slide-in-reverse}
+.category-card.criaderos .category-photo.is-leaving{animation-name:category-slide-out-reverse}
+@keyframes category-slide-in-reverse{from{transform:translateX(100%)}to{transform:translateX(0)}}
+@keyframes category-slide-out-reverse{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 @media(prefers-reduced-motion:reduce){.category-card .category-photo.is-entering,.category-card .category-photo.is-leaving{animation:none}.category-card .category-photo.is-leaving{opacity:0}}
