@@ -56,7 +56,7 @@
 .matchup-row .advantage-note{margin:10px 0 0;color:#aeb9cd;font-size:11px;line-height:1.6;overflow-wrap:anywhere}
 .matchup-row .advantage-note:empty{display:none}
 @media(max-width:600px){.matchup-row .quick-chip{font-size:12px}}
-</style><link rel="stylesheet" href="live-view.css?v=2"><style>.advantage-options-title{display:block;margin:5px 0 0;font-size:11px;font-weight:700;letter-spacing:.5px;color:#aeb9cd}.matchup-row .quick-chip.advantage-option{border-style:dashed}.matchup-row .quick-chip.advantage-option.active{border-style:solid}</style></head>
+</style><link rel="stylesheet" href="live-view.css?v=2"><style>.advantage-options-title{display:block;margin:5px 0 0;font-size:11px;font-weight:700;letter-spacing:.5px;color:#aeb9cd}.matchup-row .quick-chip.advantage-option{border-style:dashed}.matchup-row .quick-chip.advantage-option.active{border-style:solid}</style><link rel="stylesheet" href="demo-bets.css?v=1"></head>
 <body>
 
 <header class="topbar">
@@ -192,7 +192,7 @@
       <span>ARENA LA NORTEÑA</span><span class="sep">·</span><span>RONDA 3</span><span class="sep">·</span><span>PESO 2.5 LBS</span><span class="sep">·</span><span>REGLAS CLÁSICAS</span>
     </div>
 
-    </div><div class="live-bets-area" id="live-bets-panel"><section id="bet-offers" class="available-bets" aria-label="Apuestas" hidden></section>
+    </div><div class="live-bets-area" id="live-bets-panel"><div class="demo-banner">DEMOSTRACIÓN · SIN DINERO REAL<small>No modifica tu billetera.</small></div><section id="bet-offers" class="available-bets demo-board" aria-label="Apuestas de demostración"><div class="demo-board-head"><h2>Apuestas demo</h2><span class="demo-room" id="demo-room"></span></div><p class="demo-status" id="demo-status" role="status" aria-live="polite"></p><div class="demo-offers" id="demo-offers"></div></section>
     <div class="matchup-row">
       <div class="side-card white">
         <div class="side-card-top">
@@ -202,7 +202,7 @@
         <div class="name">El Diablo</div>
         <div class="odds-val" id="odds-white">1 a 1</div>
         <div class="quick-chips" id="chip-row-white"></div>
-        <button class="bet-btn" disabled>Publicar · Próximamente</button>
+        <button type="button" class="bet-btn" data-demo-publish="white" disabled>Publicar demo</button>
         <p class="advantage-note" id="advantage-note-white" role="status" aria-live="polite"></p>
       </div>
 
@@ -222,7 +222,7 @@
         <div class="name">El Relámpago</div>
         <div class="odds-val" id="odds-blue">1 a 1</div>
         <div class="quick-chips" id="chip-row-blue"></div>
-        <button class="bet-btn" disabled>Publicar · Próximamente</button>
+        <button type="button" class="bet-btn" data-demo-publish="blue" disabled>Publicar demo</button>
         <p class="advantage-note" id="advantage-note-blue" role="status" aria-live="polite"></p>
       </div>
     </div>
@@ -303,7 +303,9 @@ function selectChip(side,value,withAdvantage=false){
  }
 }
 buildChips('white');buildChips('blue');
-/* No se descuenta saldo ni se simula confirmación de apuestas. */
+window.tnBetSelection=()=>{const side=['white','blue'].find(side=>selected[side]>0);return side?{side,stake:selected[side],advantage:advantage[side]}:null};
+window.tnClearBetSelection=()=>{selected.white=0;selected.blue=0;advantage.white=false;advantage.blue=false;for(const side of ['white','blue']){buildChips(side);showAdvantage(side);document.getElementById('odds-'+side).textContent='1 a 1'}};
+/* Demo compartida sin tocar saldos. */
 
 /* Reloj de cierre */
 let secondsLeft = 12*60 + 45;
@@ -369,6 +371,6 @@ document.getElementById('leaderboard-list').innerHTML = leaders.map(l => `
 <script src="stream-config.js"></script>
 <script src="stream-player.js?v=5"></script>
 <script src="live-presence.js?v=1"></script>
-<script src="live-view.js?v=2"></script></body>
+<script src="live-view.js?v=2"></script><script type="module" src="demo-bets.js?v=1"></script></body>
 </html>
 
