@@ -15,3 +15,5 @@ Iniciar sesión con dos cuentas diferentes en navegadores/perfiles distintos o d
 - firestore-demo-live.rules refleja las reglas activas (perfiles + demo). firestore.rules conserva la propuesta más amplia con panel todavía no desplegada.
 
 Actualización: al publicar ofertas recíprocas en lados contrarios se emparejan automáticamente. Las dos ofertas se actualizan en una transacción y las reglas comprueban vínculos recíprocos con getAfter. Para 100 a 50 debe haber una oferta que aporte 100 y otra que aporte 50; no se emparejan dos ofertas que ambas aporten 100 contra 50. Aceptar demo genera la oferta recíproca cuando hace falta.
+
+Cada oferta nueva incluye makerName, comprobado por reglas contra el nombre del perfil del autor. Las emparejadas guardan opponentName verificado contra la oferta opuesta. Los datos de contacto siguen privados; ofertas antiguas sin nombre no aparecen ni se usan para emparejar.

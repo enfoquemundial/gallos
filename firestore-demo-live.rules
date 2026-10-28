@@ -42,7 +42,9 @@ service cloud.firestore {
       function demoFields() {
         let d = request.resource.data;
         return d.keys().hasAll(['mode','makerUid','takerUid','side','stake','opponentStake','status','createdAt','updatedAt','expiresAt'])
-          && d.keys().hasOnly(['mode','makerUid','takerUid','side','stake','opponentStake','status','createdAt','updatedAt','expiresAt','pairedWith'])
+          && d.keys().hasOnly(['mode','makerUid','takerUid','side','stake','opponentStake','status','createdAt','updatedAt','expiresAt','pairedWith','makerName','opponentName'])
+          && d.get('makerName','') is string && d.get('makerName','').size() <= 100
+          && d.get('opponentName','') is string && d.get('opponentName','').size() <= 100
           && d.mode == 'demo' && d.side in ['white','blue']
           && d.makerUid is string && d.takerUid is string
           && d.stake is int && d.opponentStake is int
@@ -59,6 +61,8 @@ service cloud.firestore {
           && other.mode == 'demo' && other.status == 'matched'
           && other.pairedWith == offer
           && other.makerUid == d.takerUid && other.takerUid == d.makerUid
+          && d.makerName == get(/databases/$(database)/documents/users/$(d.makerUid)).data.displayName
+          && d.opponentName == other.makerName && other.opponentName == d.makerName
           && d.makerUid != other.makerUid
           && request.auth.uid in [d.makerUid,other.makerUid]
           && other.side != d.side
@@ -73,6 +77,7 @@ service cloud.firestore {
       allow create: if demoUser() && demoFields()
         && room.matches('^[a-z0-9-]{1,90}$')
         && request.resource.data.makerUid == request.auth.uid
+        && request.resource.data.makerName == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.displayName
         && request.resource.data.createdAt == request.time
         && request.resource.data.updatedAt == request.time
         && request.resource.data.expiresAt is timestamp
@@ -81,6 +86,7 @@ service cloud.firestore {
         && (
           (request.resource.data.status == 'open'
             && request.resource.data.takerUid == ''
+            && request.resource.data.opponentName == ''
             && request.resource.data.get('pairedWith','') == ''
             && request.resource.data.stake in [100,500,1000]
             && request.resource.data.opponentStake in [request.resource.data.stake,request.resource.data.stake / 2])
@@ -95,7 +101,7 @@ service cloud.firestore {
             && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','updatedAt']))
           ||
           (request.resource.data.status == 'matched'
-            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','takerUid','pairedWith','updatedAt'])
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','takerUid','pairedWith','opponentName','updatedAt'])
             && validPair())
         );
       allow delete: if false;
