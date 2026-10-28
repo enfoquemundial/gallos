@@ -13,3 +13,5 @@ Iniciar sesión con dos cuentas diferentes en navegadores/perfiles distintos o d
 - No hay liquidación ni ganador financiero. El futuro backend real debe implementar reservas, cierres, idempotencia, resultados y auditoría.
 - No aparecen correos, nombres privados ni WhatsApp de otros usuarios en las ofertas.
 - firestore-demo-live.rules refleja las reglas activas (perfiles + demo). firestore.rules conserva la propuesta más amplia con panel todavía no desplegada.
+
+Actualización: al publicar ofertas recíprocas en lados contrarios se emparejan automáticamente. Las dos ofertas se actualizan en una transacción y las reglas comprueban vínculos recíprocos con getAfter. Para 100 a 50 debe haber una oferta que aporte 100 y otra que aporte 50; no se emparejan dos ofertas que ambas aporten 100 contra 50. Aceptar demo genera la oferta recíproca cuando hace falta.
