@@ -184,7 +184,7 @@
       <span>ARENA LA NORTEÑA</span><span class="sep">·</span><span>RONDA 3</span><span class="sep">·</span><span>PESO 2.5 LBS</span><span class="sep">·</span><span>REGLAS CLÁSICAS</span>
     </div>
 
-    <section class="available-bets" aria-labelledby="available-bets-title"><span class="pending-label">EN PREPARACIÓN</span><h2 id="available-bets-title">Apuestas disponibles</h2><p>Cuando se habilite el sistema, aquí podrás aceptar una apuesta del lado contrario por el mismo monto.</p><p id="bet-selection" role="status" aria-live="polite">Selecciona un lado y un monto para preparar tu apuesta.</p></section>
+    <section id="bet-offers" class="available-bets" aria-label="Apuestas" hidden></section>
     <div class="matchup-row">
       <div class="side-card white">
         <div class="side-card-top">
@@ -269,7 +269,7 @@ function selectChip(side,value){
  if(!['white','blue'].includes(side)||!chipVals.includes(value))return;
  selected.white=0;selected.blue=0;selected[side]=value;
  for(const color of ['white','blue'])document.querySelectorAll('#chip-row-'+color+' .quick-chip').forEach(button=>{const active=color===side&&Number(button.dataset.val)===value;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
- document.getElementById('bet-selection').textContent='Selección: '+(side==='white'?'BLANCO':'AZUL')+' · USD '+value.toLocaleString('es-DO')+' contra USD '+value.toLocaleString('es-DO')+'. La publicación compartida todavía no está habilitada.';
+
 }
 /* No se descuenta saldo ni se simula confirmación de apuestas. */
 
