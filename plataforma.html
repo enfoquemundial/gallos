@@ -56,7 +56,7 @@
 .matchup-row .advantage-note{margin:10px 0 0;color:#aeb9cd;font-size:11px;line-height:1.6;overflow-wrap:anywhere}
 .matchup-row .advantage-note:empty{display:none}
 @media(max-width:600px){.matchup-row .quick-chip{font-size:12px}}
-</style></head>
+</style><link rel="stylesheet" href="live-view.css?v=1"></head>
 <body>
 
 <header class="topbar">
@@ -162,7 +162,7 @@
 
   <!-- ===== MAIN ===== -->
   <main>
-    <p data-event-title></p><p data-event-location></p><div class="video-panel" data-stream-container>
+    <p data-event-title></p><p data-event-location></p><section class="live-view" id="live-view" aria-label="En vivo y apuestas"><div class="live-expanded-bar"><span>En vivo y apuestas</span><button type="button" id="close-live-view">✕ Volver</button></div><div class="live-video-area"><div class="video-panel" data-stream-container>
       <div class="gallos-poster" data-stream-poster><img data-cms-key="photo-025" src="assets/gallos-en-vivo-panoramica.webp" width="1751" height="898" fetchpriority="high" decoding="async" alt="Dos gallos y el logo de Tu Norte"><span>Preparando la transmisión</span></div>
       <div class="video-watermark">
         <svg viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg>
@@ -180,19 +180,19 @@
           <button class="video-icon-btn" id="mute-btn" aria-label="Sonido">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>
           </button>
-          <button class="video-icon-btn" onclick="document.querySelector('.video-panel').requestFullscreen && document.querySelector('.video-panel').requestFullscreen()" aria-label="Pantalla completa">
+          <button class="video-icon-btn" id="expand-live" type="button" aria-controls="live-view" aria-expanded="false" aria-label="Pantalla completa con apuestas">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg>
           </button>
         </div>
       </div>
-      <iframe id="live-iframe" data-tu-norte-live title="Tu Norte — transmisión en vivo" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      <iframe id="live-iframe" data-tu-norte-live title="Tu Norte — transmisión en vivo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen 'none'" loading="lazy"></iframe>
       <div class="stream-placeholder" data-stream-placeholder hidden>La transmisión se está preparando. Vuelve pronto.</div>
     </div>
     <div class="video-caption">
       <span>ARENA LA NORTEÑA</span><span class="sep">·</span><span>RONDA 3</span><span class="sep">·</span><span>PESO 2.5 LBS</span><span class="sep">·</span><span>REGLAS CLÁSICAS</span>
     </div>
 
-    <section id="bet-offers" class="available-bets" aria-label="Apuestas" hidden></section>
+    </div><div class="live-bets-area"><section id="bet-offers" class="available-bets" aria-label="Apuestas" hidden></section>
     <div class="matchup-row">
       <div class="side-card white">
         <div class="side-card-top">
@@ -227,6 +227,7 @@
       </div>
     </div>
 
+    </div></section>
     <div class="upcoming-panel" id="proximas">
       <div class="upcoming-title">Próximas peleas</div>
       <div class="upcoming-grid" id="upcoming-grid"></div>
@@ -372,6 +373,6 @@ document.getElementById('leaderboard-list').innerHTML = leaders.map(l => `
 <script src="stream-config.js"></script>
 <script src="stream-player.js?v=5"></script>
 <script src="live-presence.js?v=1"></script>
-</body>
+<script src="live-view.js?v=1"></script></body>
 </html>
 
