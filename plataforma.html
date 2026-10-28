@@ -48,6 +48,14 @@
 .side-btn.blue.active{background:#2e7dff18;border-color:#2e7dff}
 .bet-card.white{border-top-color:#f5f7fb}
 .bet-card.white .corner{color:#f5f7fb}
+</style><style>
+.matchup-row .advantage-btn{width:100%;min-height:42px;margin-top:10px;padding:10px 5px;background:transparent;border:1px solid #ffffff40;border-radius:10px;color:#eef2fa;font:600 12px system-ui;cursor:pointer}
+.matchup-row .advantage-btn[aria-pressed="true"]{border-color:currentColor;background:#ffffff0a}
+.matchup-row .side-card.blue .advantage-btn[aria-pressed="true"]{color:#73b0ff}
+.matchup-row .advantage-btn:focus-visible{outline:2px solid white;outline-offset:3px}
+.matchup-row .advantage-note{margin:10px 0 0;color:#aeb9cd;font-size:11px;line-height:1.6;overflow-wrap:anywhere}
+.matchup-row .advantage-note:empty{display:none}
+@media(max-width:600px){.matchup-row .quick-chip{font-size:12px}}
 </style></head>
 <body>
 
@@ -195,6 +203,7 @@
         <div class="odds-val" id="odds-white">1 a 1</div>
         <div class="quick-chips" id="chip-row-white"></div>
         <button class="bet-btn" disabled>Publicar · Próximamente</button>
+        <button type="button" class="advantage-btn" id="advantage-white" aria-pressed="false" onclick="toggleAdvantage('white')">Dar ventaja</button><p class="advantage-note" id="advantage-note-white" role="status" aria-live="polite"></p>
       </div>
 
       <div class="vs-panel">
@@ -214,6 +223,7 @@
         <div class="odds-val" id="odds-blue">1 a 1</div>
         <div class="quick-chips" id="chip-row-blue"></div>
         <button class="bet-btn" disabled>Publicar · Próximamente</button>
+        <button type="button" class="advantage-btn" id="advantage-blue" aria-pressed="false" onclick="toggleAdvantage('blue')">Dar ventaja</button><p class="advantage-note" id="advantage-note-blue" role="status" aria-live="polite"></p>
       </div>
     </div>
 
@@ -258,19 +268,44 @@ function toggleSidebar(){
 /* ---------- Cuotas y apuesta rápida por esquina ---------- */
 let odds = { white: 1.85, blue: 1.95 };
 let selected = { white: 0, blue: 0 };
+const advantage = { white: false, blue: false };
 const chipVals = [100, 500, 1000];
-
+function stakeTerms(side,value){
+ return {stake:value,opponent:advantage[side]?value/2:value};
+}
 function buildChips(side){
  const row=document.getElementById('chip-row-'+side);
- row.replaceChildren(...chipVals.map(value=>{const button=document.createElement('button');button.type='button';button.className='quick-chip';button.dataset.val=value;button.textContent='USD '+value.toLocaleString('es-DO');button.setAttribute('aria-pressed','false');button.setAttribute('aria-label',value+' dólares al '+(side==='white'?'blanco':'azul'));button.addEventListener('click',()=>selectChip(side,value));return button}));
+ row.replaceChildren(...chipVals.map(value=>{
+ const terms=stakeTerms(side,value),button=document.createElement('button');
+ button.type='button';button.className='quick-chip';button.dataset.val=value;
+ button.textContent=advantage[side]?'USD '+value.toLocaleString('es-DO')+' a '+terms.opponent.toLocaleString('es-DO'):'USD '+value.toLocaleString('es-DO');
+ button.setAttribute('aria-pressed',String(selected[side]===value));
+ if(selected[side]===value)button.classList.add('active');
+ button.setAttribute('aria-label',value+' dólares al '+(side==='white'?'blanco':'azul')+(advantage[side]?', dando ventaja: el contrario aporta '+terms.opponent+' dólares':''));
+ button.addEventListener('click',()=>selectChip(side,value));return button;
+ }));
 }
-buildChips('white');buildChips('blue');
+function showAdvantage(side){
+ const note=document.getElementById('advantage-note-'+side),value=selected[side];
+ if(!advantage[side]){note.textContent='';return}
+ if(!value){note.textContent='Aportas el doble que tu contrincante. Elige un monto.';return}
+ const terms=stakeTerms(side,value);
+ note.textContent='Arriesgas USD '+terms.stake.toLocaleString('es-DO')+'. Si ganas: USD '+terms.opponent.toLocaleString('es-DO')+' de ganancia neta; si pierdes: pierdes USD '+terms.stake.toLocaleString('es-DO')+'.';
+}
+function toggleAdvantage(side){
+ if(!['white','blue'].includes(side))return;
+ advantage[side]=!advantage[side];
+ const button=document.getElementById('advantage-'+side);
+ button.textContent=advantage[side]?'Quitar ventaja':'Dar ventaja';button.setAttribute('aria-pressed',String(advantage[side]));
+ document.getElementById('odds-'+side).textContent=advantage[side]?'2 a 1':'1 a 1';
+ buildChips(side);showAdvantage(side);
+}
 function selectChip(side,value){
  if(!['white','blue'].includes(side)||!chipVals.includes(value))return;
  selected.white=0;selected.blue=0;selected[side]=value;
- for(const color of ['white','blue'])document.querySelectorAll('#chip-row-'+color+' .quick-chip').forEach(button=>{const active=color===side&&Number(button.dataset.val)===value;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
-
+ for(const color of ['white','blue']){document.querySelectorAll('#chip-row-'+color+' .quick-chip').forEach(button=>{const active=color===side&&Number(button.dataset.val)===value;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});showAdvantage(color)}
 }
+buildChips('white');buildChips('blue');
 /* No se descuenta saldo ni se simula confirmación de apuestas. */
 
 /* Reloj de cierre */
