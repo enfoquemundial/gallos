@@ -68,6 +68,8 @@ service cloud.firestore {
           && other.side != d.side
           && other.stake == d.opponentStake && other.opponentStake == d.stake
           && d.expiresAt > request.time && other.expiresAt > request.time
+          && d.createdAt + duration.value(1,'m') > request.time
+          && other.createdAt + duration.value(1,'m') > request.time
           && other.updatedAt == request.time
           && ((!exists(path) && other.makerUid == request.auth.uid)
             || (exists(path) && get(path).data.status == 'open'));
@@ -104,7 +106,9 @@ service cloud.firestore {
             && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','takerUid','pairedWith','opponentName','updatedAt'])
             && validPair())
         );
-      allow delete: if false;
+      allow delete: if demoUser() && resource.data.mode == 'demo'
+        && resource.data.createdAt is timestamp
+        && resource.data.createdAt + duration.value(1,'m') <= request.time;
     }
     match /{document=**} { allow read, write: if false; }
   }

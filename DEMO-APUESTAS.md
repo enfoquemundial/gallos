@@ -17,3 +17,7 @@ Iniciar sesión con dos cuentas diferentes en navegadores/perfiles distintos o d
 Actualización: al publicar ofertas recíprocas en lados contrarios se emparejan automáticamente. Las dos ofertas se actualizan en una transacción y las reglas comprueban vínculos recíprocos con getAfter. Para 100 a 50 debe haber una oferta que aporte 100 y otra que aporte 50; no se emparejan dos ofertas que ambas aporten 100 contra 50. Aceptar demo genera la oferta recíproca cuando hace falta.
 
 Cada oferta nueva incluye makerName, comprobado por reglas contra el nombre del perfil del autor. Las emparejadas guardan opponentName verificado contra la oferta opuesta. Los datos de contacto siguen privados; ofertas antiguas sin nombre no aparecen ni se usan para emparejar.
+
+
+## Limpieza al minuto
+Las ofertas demo pendientes, canceladas y emparejadas caducan 60 segundos después de su publicación. La pantalla las oculta al vencer y, mientras alguien tenga esa gallera abierta, borra los documentos vencidos aproximadamente cada 2 segundos. Si no hay usuarios conectados, la limpieza se ejecuta al volver a entrar. Las reglas solo permiten eliminar documentos de modo demo cuya creación tenga al menos un minuto según el servidor. No es un servicio programado ni afecta saldos o perfiles.

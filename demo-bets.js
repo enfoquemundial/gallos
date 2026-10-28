@@ -1,8 +1,8 @@
 import{getApps}from'https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js';
-import{getFirestore,collection,doc,query,orderBy,limit,onSnapshot,getDoc,runTransaction,serverTimestamp,Timestamp}from'https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js';
-import{offerTerms,opposite,canAccept,compatible,roomFromSearch}from'./demo-bets-core.js?v=3';
+import{getFirestore,collection,doc,query,orderBy,limit,onSnapshot,getDoc,deleteDoc,runTransaction,serverTimestamp,Timestamp}from'https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js';
+import{DEMO_LIFETIME_MS,activeOffer,offerTerms,opposite,canAccept,compatible,roomFromSearch}from'./demo-bets-core.js?v=4';
 const board=document.getElementById('bet-offers'),list=document.getElementById('demo-offers'),status=document.getElementById('demo-status'),roomLabel=document.getElementById('demo-room');
-const buttons=[...document.querySelectorAll('[data-demo-publish]')];let stop=null,clock=null,user=null,offers=[],busy=false,matching=false,connected=false,leaving=false,db,offersRef,displayName='';
+const buttons=[...document.querySelectorAll('[data-demo-publish]')];let stop=null,clock=null,user=null,offers=[],busy=false,matching=false,cleaning=false,connected=false,leaving=false,db,offersRef,displayName='';
 const color=side=>side==='white'?'BLANCO':'AZUL',amount=value=>'USD '+Number(value).toLocaleString('en-US');
 function node(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n}
 function tell(text){status.textContent=text}
@@ -18,7 +18,7 @@ async function pairExisting(mine,peer){
  });
 }
 async function publish(terms,requiredPeer=null){
- const target=doc(offersRef),proposal={mode:'demo',makerUid:user.uid,makerName:displayName,...terms,status:'open',expiresAt:Timestamp.fromMillis(Date.now()+10*60*1000)};
+ const target=doc(offersRef),proposal={mode:'demo',makerUid:user.uid,makerName:displayName,...terms,status:'open',expiresAt:Timestamp.fromMillis(Date.now()+DEMO_LIFETIME_MS)};
  const candidate=requiredPeer||offers.find(offer=>compatible(proposal,offer));
  return runTransaction(db,async tx=>{
   const existing=await tx.get(target);if(existing.exists())throw Error('Esta apuesta ya fue publicada.');
@@ -31,17 +31,25 @@ async function publish(terms,requiredPeer=null){
 }
 async function matchAutomatically(){
  if(matching||busy||!connected||!user||leaving)return;
- const mine=offers.filter(o=>o.makerUid===user.uid&&o.status==='open'&&o.expiresAt?.toMillis()>Date.now());
+ const mine=offers.filter(o=>o.makerUid===user.uid&&o.status==='open'&&activeOffer(o));
  if(!mine.length)return;
  matching=true;updateButtons();
  try{for(const own of mine){if(leaving)break;const peer=offers.find(o=>compatible(own,o));if(peer&&await pairExisting(own,peer))tell('Contrincante encontrado automáticamente. Apuesta demo emparejada, sin mover dinero.')}}
  catch(error){tell(errorMessage(error))}
  finally{matching=false;updateButtons();render()}
 }
+async function cleanupExpired(){
+ if(cleaning||!connected||!user||leaving)return;
+ const expired=offers.filter(o=>o.mode==='demo'&&Number.isFinite(o.createdAt?.toMillis())&&o.createdAt.toMillis()+DEMO_LIFETIME_MS+2000<=Date.now());
+ if(!expired.length)return;
+ cleaning=true;
+ try{await Promise.all(expired.map(async o=>{try{await deleteDoc(doc(offersRef,o.id))}catch(error){if(error.code!=='permission-denied'&&error.code!=='unavailable')console.warn('No se pudo limpiar la oferta demo',error.code)}}))}
+ finally{cleaning=false}
+}
 async function action(fn){if(busy||matching||!connected||!user||leaving)return;busy=true;updateButtons();render();try{await fn()}catch(error){tell(errorMessage(error))}finally{busy=false;updateButtons();render();matchAutomatically()}}
 function render(){
  list.replaceChildren();if(!user||leaving)return;
- const now=Date.now(),visible=offers.filter(o=>Boolean(o.makerName)&&(o.status==='open'?o.expiresAt?.toMillis()>now:o.status==='matched'&&o.makerUid===user.uid));
+ const now=Date.now(),visible=offers.filter(o=>Boolean(o.makerName)&&activeOffer(o,now)&&(o.status==='open'||o.status==='matched'&&o.makerUid===user.uid));
  if(!visible.length){list.append(node('p',connected?'No hay apuestas demo pendientes en esta gallera.':'Conectando la demo…','demo-empty'));return}
  visible.forEach(offer=>{
   const mine=offer.makerUid===user.uid,row=node('article',undefined,'demo-offer'),info=node('div',undefined,'demo-offer-info');
@@ -73,8 +81,8 @@ if(board&&list&&status){
  await window.gcAuth?.ready;
  if(window.gcAuth?.user&&await window.gcAuth.profileReady&&!window.gcAuth.accessSuspended){
   user=window.gcAuth.user;db=getFirestore(getApps().find(app=>app.name==='[DEFAULT]'));const profile=(await getDoc(doc(db,'users',user.uid))).data();displayName=profile?.displayName||'';if(!displayName.trim()||displayName.length>100)throw Error('Completa el nombre de tu perfil para publicar apuestas demo.');const room=roomFromSearch(location.search);offersRef=collection(db,'demoRooms',room,'offers');roomLabel.textContent=room==='demo-general'?'Sala general de demostración':room.replaceAll('-',' ');
-  stop=onSnapshot(query(offersRef,orderBy('createdAt','desc'),limit(30)),snapshot=>{if(leaving)return;connected=true;offers=snapshot.docs.map(s=>({id:s.id,...s.data()}));updateButtons();render();matchAutomatically()},error=>{connected=false;updateButtons();tell(errorMessage(error))});
-  clock=setInterval(render,15000);
+  stop=onSnapshot(query(offersRef,orderBy('createdAt','desc'),limit(30)),snapshot=>{if(leaving)return;connected=true;offers=snapshot.docs.map(s=>({id:s.id,...s.data()}));updateButtons();render();matchAutomatically();cleanupExpired()},error=>{connected=false;updateButtons();tell(errorMessage(error))});
+  clock=setInterval(()=>{render();cleanupExpired()},2000);
   buttons.forEach(button=>button.addEventListener('click',()=>action(async()=>{
    const choice=window.tnBetSelection?.();if(!choice||choice.side!==button.dataset.demoPublish)throw Error('Selecciona primero un monto normal o con ventaja de este lado.');
    const terms=offerTerms(choice.side,choice.stake,choice.advantage),paired=await publish(terms);
