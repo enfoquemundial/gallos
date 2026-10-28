@@ -28,3 +28,11 @@
 .live-view.is-expanded .available-bets{margin-top:0;margin-bottom:10px}
 html[data-auth-pending] .live-view.is-expanded{display:none!important}
 @media(orientation:landscape){.live-view.is-expanded{grid-template-columns:minmax(0,1fr) clamp(280px,38vw,430px);grid-template-rows:auto minmax(0,1fr)}.live-view.is-expanded .live-video-area{grid-column:1;grid-row:2;display:flex;align-items:center;justify-content:center}.live-view.is-expanded .live-bets-area{grid-column:2;grid-row:2}.live-view.is-expanded .video-panel[data-stream-container]{max-height:100%;aspect-ratio:1751/898}}
+
+.live-expanded-actions{display:flex;gap:8px;align-items:center}
+#toggle-live-bets{display:none}
+@media(orientation:landscape){
+ .live-view.is-expanded #toggle-live-bets{display:inline-flex;align-items:center;justify-content:center;border-color:#00df8660;color:#64efb1}
+ .live-view.is-expanded.bets-collapsed{grid-template-columns:minmax(0,1fr)}
+ .live-view.is-expanded.bets-collapsed .live-bets-area{display:none}
+}
