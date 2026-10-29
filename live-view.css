@@ -36,3 +36,14 @@ html[data-auth-pending] .live-view.is-expanded{display:none!important}
  .live-view.is-expanded.bets-collapsed{grid-template-columns:minmax(0,1fr)}
  .live-view.is-expanded.bets-collapsed .live-bets-area{display:none}
 }
+
+/* En horizontal, ambos contrincantes comparten la misma fila. */
+@media(orientation:landscape){
+ .live-view.is-expanded .matchup-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:stretch}
+ .live-view.is-expanded .matchup-row .vs-panel{grid-column:1/-1;grid-row:1;order:0;flex-direction:row;flex-wrap:wrap;justify-content:center}
+ .live-view.is-expanded .matchup-row .side-card.white{grid-column:1;grid-row:2;order:1}
+ .live-view.is-expanded .matchup-row .side-card.blue{grid-column:2;grid-row:2;order:2}
+ .live-view.is-expanded .matchup-row .side-card{min-width:0;padding:10px 8px}
+ .live-view.is-expanded .matchup-row .side-card-top{gap:4px}
+ .live-view.is-expanded .matchup-row .quick-chip{font-size:11px}
+}
