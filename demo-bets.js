@@ -6,7 +6,7 @@ const buttons=[...document.querySelectorAll('[data-demo-publish]')];let stop=nul
 const color=side=>side==='white'?'BLANCO':'AZUL',amount=value=>'USD '+Number(value).toLocaleString('en-US');
 function node(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n}
 function tell(text){status.textContent=text}
-function updateButtons(){buttons.forEach(b=>{b.disabled=!connected||busy||matching||leaving;b.textContent=busy?'Guardando…':'Publicar demo'})}
+function updateButtons(){buttons.forEach(b=>{const paired=connected&&!leaving&&!!user&&offers.some(o=>o.makerUid===user.uid&&o.side===b.dataset.demoPublish&&o.status==='matched'&&activeOffer(o));b.classList.toggle('demo-paired',paired);b.disabled=!connected||busy||matching||leaving;b.textContent=busy?'Guardando…':paired?'Emparejada · Publicar otra':'Publicar demo';b.setAttribute('aria-label',paired?'Apuesta demo emparejada. Publicar otra apuesta':'Publicar apuesta demo')})}
 function shutdown(){leaving=true;connected=false;stop?.();stop=null;clearInterval(clock);clock=null;offers=[];list.replaceChildren();updateButtons()}
 function errorMessage(error){if(error.code==='permission-denied')return 'No se pudo acceder a la demo. Revisa sus permisos en Firebase.';if(error.code==='unavailable'||!navigator.onLine)return 'No hay conexión. Vuelve a intentarlo cuando tengas internet.';return error.message||'No se pudo guardar. Inténtalo de nuevo.'}
 function matchPatch(takerUid,pairedWith,opponentName){return {status:'matched',takerUid,pairedWith,opponentName,updatedAt:serverTimestamp()}}
@@ -82,7 +82,7 @@ if(board&&list&&status){
  if(window.gcAuth?.user&&await window.gcAuth.profileReady&&!window.gcAuth.accessSuspended){
   user=window.gcAuth.user;db=getFirestore(getApps().find(app=>app.name==='[DEFAULT]'));const profile=(await getDoc(doc(db,'users',user.uid))).data();displayName=profile?.displayName||'';if(!displayName.trim()||displayName.length>100)throw Error('Completa el nombre de tu perfil para publicar apuestas demo.');const room=roomFromSearch(location.search);offersRef=collection(db,'demoRooms',room,'offers');roomLabel.textContent=room==='demo-general'?'Sala general de demostración':room.replaceAll('-',' ');
   stop=onSnapshot(query(offersRef,orderBy('createdAt','desc'),limit(30)),snapshot=>{if(leaving)return;connected=true;offers=snapshot.docs.map(s=>({id:s.id,...s.data()}));updateButtons();render();matchAutomatically();cleanupExpired()},error=>{connected=false;updateButtons();tell(errorMessage(error))});
-  clock=setInterval(()=>{render();cleanupExpired()},2000);
+  clock=setInterval(()=>{updateButtons();render();cleanupExpired()},2000);
   buttons.forEach(button=>button.addEventListener('click',()=>action(async()=>{
    const choice=window.tnBetSelection?.();if(!choice||choice.side!==button.dataset.demoPublish)throw Error('Selecciona primero un monto normal o con ventaja de este lado.');
    const terms=offerTerms(choice.side,choice.stake,choice.advantage),paired=await publish(terms);
