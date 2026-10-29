@@ -13,7 +13,7 @@ function render(){
  grid.replaceChildren(...province.galleras.map(g=>{
   const link=document.createElement('a');link.className='city-profile gallera-profile';link.href='plataforma.html?provincia='+encodeURIComponent(province.id)+'&gallera='+g.id;link.setAttribute('aria-label','Entrar a '+g.name+' en '+province.name);
   const circle=document.createElement('span');circle.className='city-circle';circle.setAttribute('aria-hidden','true');
-  const image=document.createElement('img');image.src='assets/ciudades/gallera-'+g.image+'.webp';image.dataset.cmsKey='gallera-'+province.id+'-'+g.id;image.alt='';image.width=320;image.height=240;image.decoding='async';circle.append(image);
+  const image=document.createElement('img');image.src='assets/ciudades/gallera-'+g.image+'.webp';image.dataset.cmsKey='gallera-'+province.id+'-'+g.id;image.alt='';image.width=320;image.height=240;image.decoding='async';circle.append(image);if(province.id==='espaillat'&&g.id===1){circle.classList.add('has-live-badge');const badge=document.createElement('span');badge.className='province-live-label';badge.textContent='En Vivo';circle.append(badge);link.setAttribute('aria-label','Gallera 1 de Espaillat en vivo')}
   const name=document.createElement('span');name.className='city-name';name.textContent=g.name;link.append(circle,name);return link;
  }));
  window.dispatchEvent(new Event('tn-media-render'));title.focus({preventScroll:true});
