@@ -3,7 +3,7 @@
 'use strict';
 const view=document.getElementById('live-view'),open=document.getElementById('expand-live'),close=document.getElementById('close-live-view');if(!view||!open||!close)return;
 const toggle=document.getElementById('toggle-live-bets'),bets=document.getElementById('live-bets-panel'),landscape=window.matchMedia('(orientation: landscape)');
-let expanded=false,oldOverflow='',focusBefore=null,collapsed=false;
+let expanded=false,oldOverflow='',focusBefore=null,collapsed=false,autoExpanded=false;
 function syncBets(){
  const hidden=expanded&&landscape.matches&&collapsed;
  view.classList.toggle('bets-collapsed',collapsed);
@@ -11,7 +11,15 @@ function syncBets(){
  if(toggle){toggle.textContent=collapsed?'Apostar':'Ocultar apuestas';toggle.setAttribute('aria-expanded',String(!hidden&&expanded))}
 }
 toggle?.addEventListener('click',()=>{if(!expanded||!landscape.matches)return;collapsed=!collapsed;syncBets()});
-landscape.addEventListener('change',syncBets);
+const phone=window.matchMedia('(any-pointer: coarse) and (max-height: 900px)');
+function rotateView(){
+ syncBets();
+ if(landscape.matches&&phone.matches&&!document.hidden&&!expanded){enter(true)}
+ else if(!landscape.matches&&autoExpanded){exit()}
+}
+landscape.addEventListener('change',rotateView);
+phone.addEventListener('change',rotateView);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)rotateView()});
 function render(active){
  if(active===expanded)return;
  expanded=active;if(active)collapsed=false;view.classList.toggle('is-expanded',active);syncBets();
@@ -20,16 +28,17 @@ function render(active){
  else{document.body.style.overflow=oldOverflow;if(!document.documentElement.hasAttribute('data-auth-pending'))focusBefore?.focus({preventScroll:true})}
 }
 function exit(){
- render(false);
+ autoExpanded=false;render(false);
  if(document.fullscreenElement===view)document.exitFullscreen?.().catch(()=>{});
  else if(document.webkitFullscreenElement===view)document.webkitExitFullscreen?.();
 }
-open.addEventListener('click',()=>{
- if(expanded){exit();return}
+function enter(automatic=false){
  if(!window.gcAuth?.user||window.gcAuth.accessSuspended||document.documentElement.hasAttribute('data-auth-pending'))return;
- render(true);
- try{const result=view.requestFullscreen?view.requestFullscreen():view.webkitRequestFullscreen?.();result?.catch(()=>{/* Vista ampliada como respaldo. */})}catch{/* Vista ampliada como respaldo. */}
-});
+ autoExpanded=automatic;render(true);
+ try{const result=view.requestFullscreen?view.requestFullscreen():view.webkitRequestFullscreen?.();result?.catch(()=>{/* El giro conserva la vista ampliada si el navegador exige un toque. */})}catch{}
+}
+open.addEventListener('click',()=>{if(expanded){exit();return}enter(false)});
+Promise.resolve(window.gcAuth?.ready).then(()=>window.gcAuth?.profileReady).then(()=>rotateView()).catch(()=>{});
 close.addEventListener('click',exit);
 document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)render(false)});
 document.addEventListener('webkitfullscreenchange',()=>{if(!document.webkitFullscreenElement)render(false)});
