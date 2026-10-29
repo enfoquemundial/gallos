@@ -3,7 +3,7 @@
 'use strict';
 const view=document.getElementById('live-view'),open=document.getElementById('expand-live'),close=document.getElementById('close-live-view');if(!view||!open||!close)return;
 const toggle=document.getElementById('toggle-live-bets'),bets=document.getElementById('live-bets-panel'),landscape=window.matchMedia('(orientation: landscape)');
-let expanded=false,oldOverflow='',focusBefore=null,collapsed=true;
+let expanded=false,oldOverflow='',focusBefore=null,collapsed=false;
 function syncBets(){
  const hidden=expanded&&landscape.matches&&collapsed;
  view.classList.toggle('bets-collapsed',collapsed);
@@ -14,7 +14,7 @@ toggle?.addEventListener('click',()=>{if(!expanded||!landscape.matches)return;co
 landscape.addEventListener('change',syncBets);
 function render(active){
  if(active===expanded)return;
- expanded=active;if(active)collapsed=true;view.classList.toggle('is-expanded',active);syncBets();
+ expanded=active;if(active)collapsed=false;view.classList.toggle('is-expanded',active);syncBets();
  open.setAttribute('aria-label',active?'Salir de pantalla completa':'Pantalla completa con apuestas');open.setAttribute('aria-expanded',String(active));
  if(active){oldOverflow=document.body.style.overflow;focusBefore=document.activeElement;document.body.style.overflow='hidden';close.focus({preventScroll:true})}
  else{document.body.style.overflow=oldOverflow;if(!document.documentElement.hasAttribute('data-auth-pending'))focusBefore?.focus({preventScroll:true})}
