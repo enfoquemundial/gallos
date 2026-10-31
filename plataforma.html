@@ -56,7 +56,14 @@
 .matchup-row .advantage-note{margin:10px 0 0;color:#aeb9cd;font-size:11px;line-height:1.6;overflow-wrap:anywhere}
 .matchup-row .advantage-note:empty{display:none}
 @media(max-width:600px){.matchup-row .quick-chip{font-size:12px}}
-</style><link rel="stylesheet" href="live-view.css?v=5"><style>.advantage-options-title{display:block;margin:5px 0 0;font-size:11px;font-weight:700;letter-spacing:.5px;color:#aeb9cd}.matchup-row .quick-chip.advantage-option{border-style:dashed}.matchup-row .quick-chip.advantage-option.active{border-style:solid}</style><link rel="stylesheet" href="demo-bets.css?v=4"></head>
+</style><link rel="stylesheet" href="live-view.css?v=5"><style>.advantage-options-title{display:block;margin:5px 0 0;font-size:11px;font-weight:700;letter-spacing:.5px;color:#aeb9cd}.matchup-row .quick-chip.advantage-option{border-style:dashed}.matchup-row .quick-chip.advantage-option.active{border-style:solid}</style><link rel="stylesheet" href="demo-bets.css?v=4"><style>
+/* Apuestas junto al video, sin ficha de muestra intermedia. */
+#live-view:not(.is-expanded) .matchup-row{margin-top:8px}
+.live-view .matchup-row .side-card .side-tag{font-size:clamp(16px,4.8vw,24px);font-weight:900;line-height:1.1;letter-spacing:.035em;padding:6px;margin-bottom:0;white-space:nowrap}
+.live-view .matchup-row .side-card-top{gap:4px}
+@media(max-width:350px){.live-view .matchup-row .rooster-avatar{width:24px;height:24px}}
+@media(orientation:landscape){.live-view.is-expanded .matchup-row .side-card .side-tag{font-size:clamp(16px,2.1vw,22px)}}
+</style></head>
 <body>
 
 <header class="topbar">
@@ -188,11 +195,7 @@
       <iframe id="live-iframe" data-tu-norte-live title="Tu Norte — transmisión en vivo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen 'none'" loading="lazy"></iframe>
       <div class="stream-placeholder" data-stream-placeholder hidden>La transmisión se está preparando. Vuelve pronto.</div>
     </div>
-    <div class="video-caption">
-      <span>ARENA LA NORTEÑA</span><span class="sep">·</span><span>RONDA 3</span><span class="sep">·</span><span>PESO 2.5 LBS</span><span class="sep">·</span><span>REGLAS CLÁSICAS</span>
-    </div>
-
-    </div><div class="live-bets-area" id="live-bets-panel">
+</div><div class="live-bets-area" id="live-bets-panel">
     <div class="matchup-row">
       <div class="side-card white">
         <div class="side-card-top">
