@@ -3,6 +3,11 @@
 'use strict';
 const view=document.getElementById('live-view'),open=document.getElementById('expand-live'),close=document.getElementById('close-live-view');if(!view||!open||!close)return;
 const toggle=document.getElementById('toggle-live-bets'),bets=document.getElementById('live-bets-panel'),landscape=window.matchMedia('(orientation: landscape)');
+view.tabIndex=-1;
+let controlsTimer=null;
+function revealControls(){if(!expanded||!landscape.matches)return;view.classList.add('controls-visible');clearTimeout(controlsTimer);controlsTimer=setTimeout(()=>view.classList.remove('controls-visible'),2200)}
+view.querySelector('.live-video-area')?.addEventListener('pointermove',revealControls);
+view.querySelector('.live-video-area')?.addEventListener('pointerdown',revealControls);
 let expanded=false,oldOverflow='',focusBefore=null,collapsed=false,autoExpanded=false;
 function syncBets(){
  const hidden=expanded&&landscape.matches&&collapsed;
@@ -24,8 +29,8 @@ function render(active){
  if(active===expanded)return;
  expanded=active;if(active)collapsed=false;view.classList.toggle('is-expanded',active);syncBets();
  open.setAttribute('aria-label',active?'Salir de pantalla completa':'Pantalla completa con apuestas');open.setAttribute('aria-expanded',String(active));
- if(active){oldOverflow=document.body.style.overflow;focusBefore=document.activeElement;document.body.style.overflow='hidden';close.focus({preventScroll:true})}
- else{document.body.style.overflow=oldOverflow;if(!document.documentElement.hasAttribute('data-auth-pending'))focusBefore?.focus({preventScroll:true})}
+ if(active){oldOverflow=document.body.style.overflow;focusBefore=document.activeElement;document.body.style.overflow='hidden';view.focus({preventScroll:true})}
+ else{clearTimeout(controlsTimer);view.classList.remove('controls-visible');document.body.style.overflow=oldOverflow;if(!document.documentElement.hasAttribute('data-auth-pending'))focusBefore?.focus({preventScroll:true})}
 }
 function exit(){
  autoExpanded=false;render(false);

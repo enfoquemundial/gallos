@@ -5,7 +5,8 @@ const board=document.getElementById('bet-offers'),list=document.getElementById('
 const buttons=[...document.querySelectorAll('[data-demo-publish]')];let stop=null,clock=null,user=null,offers=[],busy=false,matching=false,cleaning=false,connected=false,leaving=false,db,offersRef,displayName='';
 const color=side=>side==='white'?'BLANCO':'AZUL',amount=value=>'USD '+Number(value).toLocaleString('en-US');
 function node(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n}
-function tell(text){status.textContent=text}
+let hasError=false;
+function tell(text,isError=false){hasError=isError;status.textContent=text;if(isError)board.hidden=false}
 function updateButtons(){buttons.forEach(b=>{b.classList.remove('demo-paired');b.disabled=!connected||busy||matching||leaving;b.textContent=busy?'Guardando…':'Publicar demo'});document.querySelectorAll('.quick-chip[data-val]').forEach(chip=>{const side=chip.closest('.side-card')?.classList.contains('white')?'white':'blue',stake=Number(chip.dataset.val),opponentStake=chip.dataset.advantage==='true'?stake/2:stake;const paired=connected&&!leaving&&!!user&&offers.some(o=>o.makerUid===user.uid&&o.side===side&&o.stake===stake&&o.opponentStake===opponentStake&&o.status==='matched'&&activeOffer(o));chip.classList.toggle('demo-amount-matched',paired);chip.title=paired?'Apuesta emparejada':'Sin emparejar'})}
 
 const matchPreload=new Image();matchPreload.src='assets/contrincantes-v2.png';
@@ -41,7 +42,7 @@ async function matchAutomatically(){
  if(!mine.length)return;
  matching=true;updateButtons();
  try{for(const own of mine){if(leaving)break;const peer=offers.find(o=>compatible(own,o));if(peer&&await pairExisting(own,peer))tell('Contrincante encontrado automáticamente. Apuesta demo emparejada, sin mover dinero.')}}
- catch(error){tell(errorMessage(error))}
+ catch(error){tell(errorMessage(error),true)}
  finally{matching=false;updateButtons();render()}
 }
 async function cleanupExpired(){
@@ -52,11 +53,12 @@ async function cleanupExpired(){
  try{await Promise.all(expired.map(async o=>{try{await deleteDoc(doc(offersRef,o.id))}catch(error){if(error.code!=='permission-denied'&&error.code!=='unavailable')console.warn('No se pudo limpiar la oferta demo',error.code)}}))}
  finally{cleaning=false}
 }
-async function action(fn){if(busy||matching||!connected||!user||leaving)return;busy=true;updateButtons();render();try{await fn()}catch(error){tell(errorMessage(error))}finally{busy=false;updateButtons();render();matchAutomatically()}}
+async function action(fn){if(busy||matching||!connected||!user||leaving)return;busy=true;updateButtons();render();try{await fn()}catch(error){tell(errorMessage(error),true)}finally{busy=false;updateButtons();render();matchAutomatically()}}
 function render(){
- list.replaceChildren();if(!user||leaving)return;
+ list.replaceChildren();if(!user||leaving){board.hidden=true;return}
  const now=Date.now(),visible=offers.filter(o=>Boolean(o.makerName)&&activeOffer(o,now)&&(o.status==='open'||o.status==='matched'&&o.makerUid===user.uid));
- if(!visible.length){list.append(node('p',connected?'No hay apuestas demo pendientes en esta gallera.':'Conectando la demo…','demo-empty'));return}
+ board.hidden=!visible.length&&!hasError;
+ if(!visible.length)return;
  visible.forEach(offer=>{
   const mine=offer.makerUid===user.uid,row=node('article',undefined,'demo-offer'),info=node('div',undefined,'demo-offer-info');
   info.append(node('span',offer.status==='matched'?'EMPAREJADA':mine?'TU APUESTA':'ABIERTA','demo-offer-badge'),node('strong',color(offer.side)+' '+amount(offer.stake)+' · '+color(opposite(offer.side))+' '+amount(offer.opponentStake)));
@@ -87,7 +89,7 @@ if(board&&list&&status){
  await window.gcAuth?.ready;
  if(window.gcAuth?.user&&await window.gcAuth.profileReady&&!window.gcAuth.accessSuspended){
   user=window.gcAuth.user;db=getFirestore(getApps().find(app=>app.name==='[DEFAULT]'));const profile=(await getDoc(doc(db,'users',user.uid))).data();displayName=profile?.displayName||'';if(!displayName.trim()||displayName.length>100)throw Error('Completa el nombre de tu perfil para publicar apuestas demo.');const room=roomFromSearch(location.search);offersRef=collection(db,'demoRooms',room,'offers');roomLabel.textContent=room==='demo-general'?'Sala general de demostración':room.replaceAll('-',' ');
-  stop=onSnapshot(query(offersRef,orderBy('createdAt','desc'),limit(30)),snapshot=>{if(leaving)return;connected=true;offers=snapshot.docs.map(s=>({id:s.id,...s.data()}));updateButtons();render();announceMatches();matchAutomatically();cleanupExpired()},error=>{connected=false;updateButtons();tell(errorMessage(error))});
+  stop=onSnapshot(query(offersRef,orderBy('createdAt','desc'),limit(30)),snapshot=>{if(leaving)return;connected=true;offers=snapshot.docs.map(s=>({id:s.id,...s.data()}));updateButtons();render();announceMatches();matchAutomatically();cleanupExpired()},error=>{connected=false;updateButtons();tell(errorMessage(error),true)});
   clock=setInterval(()=>{updateButtons();render();cleanupExpired()},2000);
   buttons.forEach(button=>button.addEventListener('click',()=>action(async()=>{
    const choice=window.tnBetSelection?.();if(!choice||choice.side!==button.dataset.demoPublish)throw Error('Selecciona primero un monto normal o con ventaja de este lado.');
@@ -97,5 +99,5 @@ if(board&&list&&status){
  }else{tell('Inicia sesión para probar la demo.');updateButtons()}
  window.addEventListener('pagehide',shutdown);
  new MutationObserver(()=>{if(document.documentElement.hasAttribute('data-auth-pending'))shutdown()}).observe(document.documentElement,{attributes:true,attributeFilter:['data-auth-pending']});
- }catch(error){connected=false;updateButtons();tell(errorMessage(error))}
+ }catch(error){connected=false;updateButtons();tell(errorMessage(error),true)}
 }

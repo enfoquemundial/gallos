@@ -13,3 +13,10 @@
 @keyframes match-left{from{transform:translateX(-100vw)}to{transform:translateX(0)}}
 @keyframes match-right{from{transform:translateX(100vw)}to{transform:translateX(0)}}
 @media(prefers-reduced-motion:reduce){.match-bird{animation:none}}
+
+/* Vista limpia: estado vacío sin tarjetas ni franja de demostración. */
+#bet-offers[hidden]{display:none!important}
+.live-view .matchup-row .vs-panel{display:none!important}
+.live-view .matchup-row .side-card.white,.live-view .matchup-row .side-card.blue{grid-row:1}
+.live-view .demo-inline-note{display:block;font-size:10px;line-height:1.4;color:#9aa9bd;text-align:center;margin-top:7px}
+.live-view .available-bets{margin-top:16px}
