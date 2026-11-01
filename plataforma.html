@@ -202,8 +202,6 @@
           <span class="side-tag white">BLANCO</span>
           <span class="rooster-avatar white"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg></span>
         </div>
-        <div class="name">El Rayo</div>
-        <div class="odds-val" id="odds-white">1 a 1</div>
         <div class="quick-chips" id="chip-row-white"></div>
         <button type="button" class="bet-btn" data-demo-publish="white" disabled>Publicar demo</button><small class="demo-inline-note">Prueba · Sin dinero real</small>
         <p class="advantage-note" id="advantage-note-white" role="status" aria-live="polite"></p>
@@ -222,8 +220,6 @@
           <span class="side-tag blue">AZUL</span>
           <span class="rooster-avatar blue"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6 18c1-4 3-7 6-8-1-2 0-4 2-4-.5 1 0 2 1 2 1-1 2-1 3 0-1 0-1 1-1 2 2 0 3 2 3 4-1-.5-2-.5-3 0 1 2 0 4-2 5-1 2-3 3-5 3-1-1-2-2-2-4-1 1-1 0-2 0z"/></svg></span>
         </div>
-        <div class="name">El Relámpago</div>
-        <div class="odds-val" id="odds-blue">1 a 1</div>
         <div class="quick-chips" id="chip-row-blue"></div>
         <button type="button" class="bet-btn" data-demo-publish="blue" disabled>Publicar demo</button><small class="demo-inline-note">Prueba · Sin dinero real</small>
         <p class="advantage-note" id="advantage-note-blue" role="status" aria-live="polite"></p>
@@ -302,12 +298,12 @@ function selectChip(side,value,withAdvantage=false){
    const active=color===side&&Number(button.dataset.val)===value&&button.dataset.advantage===String(withAdvantage);
    button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));
   });
-  document.getElementById('odds-'+color).textContent=advantage[color]?'2 a 1':'1 a 1';showAdvantage(color);
+  showAdvantage(color);
  }
 }
 buildChips('white');buildChips('blue');
 window.tnBetSelection=()=>{const side=['white','blue'].find(side=>selected[side]>0);return side?{side,stake:selected[side],advantage:advantage[side]}:null};
-window.tnClearBetSelection=()=>{selected.white=0;selected.blue=0;advantage.white=false;advantage.blue=false;for(const side of ['white','blue']){buildChips(side);showAdvantage(side);document.getElementById('odds-'+side).textContent='1 a 1'}};
+window.tnClearBetSelection=()=>{selected.white=0;selected.blue=0;advantage.white=false;advantage.blue=false;for(const side of ['white','blue']){buildChips(side);showAdvantage(side)}};
 /* Demo compartida sin tocar saldos. */
 
 /* Reloj de cierre */
