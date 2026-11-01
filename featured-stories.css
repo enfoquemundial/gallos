@@ -45,11 +45,22 @@
 /* La foto nueva entra por la izquierda y empuja la anterior a la derecha. */
 .category-card .category-photo.is-entering{animation:category-slide-in .7s cubic-bezier(.22,.61,.36,1) both}
 .category-card .category-photo.is-leaving{opacity:1;animation:category-slide-out .7s cubic-bezier(.22,.61,.36,1) both}
-@keyframes category-slide-in{from{transform:translateX(-100%)}to{transform:translateX(0)}}
-@keyframes category-slide-out{from{transform:translateX(0)}to{transform:translateX(100%)}}
+@keyframes category-slide-in{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+@keyframes category-slide-out{from{transform:translateY(0)}to{transform:translateY(100%)}}
 /* La tarjeta derecha se desliza hacia el centro en sentido contrario. */
 .category-card.criaderos .category-photo.is-entering{animation-name:category-slide-in-reverse}
 .category-card.criaderos .category-photo.is-leaving{animation-name:category-slide-out-reverse}
-@keyframes category-slide-in-reverse{from{transform:translateX(100%)}to{transform:translateX(0)}}
-@keyframes category-slide-out-reverse{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+@keyframes category-slide-in-reverse{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+@keyframes category-slide-out-reverse{from{transform:translateY(0)}to{transform:translateY(100%)}}
 @media(prefers-reduced-motion:reduce){.category-card .category-photo.is-entering,.category-card .category-photo.is-leaving{animation:none}.category-card .category-photo.is-leaving{opacity:0}}
+
+/* Dos títulos dentro de la misma tarjeta, sin franja sobre la fotografía. */
+.category-card[data-story-gallery] h2.featured-dual-title{left:8px;right:8px;bottom:8px;height:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px;align-items:end}
+.featured-dual-title>span{display:flex;flex-direction:column;gap:2px;min-width:0;font-size:clamp(9px,1.8vw,14px);font-weight:700;text-shadow:0 2px 3px #000,0 0 8px #000}
+.category-card.criaderos h2.featured-dual-title strong{font-size:clamp(11px,2.8vw,22px);line-height:1.15;letter-spacing:0;font-weight:900}
+.featured-galleros{color:#ffe075}.featured-criaderos{color:#66ffdb;text-align:right}
+.category-card[data-story-gallery] .category-art{top:10px;right:10px;bottom:auto;color:#66ffdb}
+.category-card.criaderos .category-photo.is-entering{animation-name:category-slide-down-in}
+.category-card.criaderos .category-photo.is-leaving{animation-name:category-slide-down-out}
+@keyframes category-slide-down-in{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+@keyframes category-slide-down-out{from{transform:translateY(0)}to{transform:translateY(100%)}}
