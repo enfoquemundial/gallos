@@ -7,14 +7,27 @@ const color=side=>side==='white'?'BLANCO':'AZUL',amount=value=>'USD '+Number(val
 function node(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n}
 let hasError=false;
 function tell(text,isError=false){hasError=isError;status.textContent=text;if(isError)board.hidden=false}
-function updateButtons(){buttons.forEach(b=>{b.classList.remove('demo-paired');b.disabled=!connected||busy||matching||leaving;b.textContent=busy?'Guardando…':'Publicar demo'});document.querySelectorAll('.quick-chip[data-val]').forEach(chip=>{const side=chip.closest('.side-card')?.classList.contains('white')?'white':'blue',stake=Number(chip.dataset.val),opponentStake=chip.dataset.advantage==='true'?stake/2:stake;const paired=connected&&!leaving&&!!user&&offers.some(o=>o.makerUid===user.uid&&o.side===side&&o.stake===stake&&o.opponentStake===opponentStake&&o.status==='matched'&&activeOffer(o));chip.classList.toggle('demo-amount-matched',paired);chip.title=paired?'Apuesta emparejada':'Sin emparejar'})}
+// Mantener la confirmación visual un minuto desde el emparejamiento del servidor.
+const matchedAmounts=new Map();
+const amountKey=(side,stake,opponentStake)=>[side,stake,opponentStake].join(':');
+function rememberMatchedAmounts(now=Date.now()){
+ if(!user)return;
+ for(const offer of offers){
+  if(offer.makerUid!==user.uid||offer.status!=='matched')continue;
+  const matchedAt=offer.updatedAt?.toMillis();
+  if(!Number.isFinite(matchedAt)||matchedAt>now+5000)continue;
+  const until=matchedAt+60_000,key=amountKey(offer.side,offer.stake,offer.opponentStake);
+  if(until>now)matchedAmounts.set(key,Math.max(matchedAmounts.get(key)||0,until));
+ }
+}
+function updateButtons(){for(const [key,until]of matchedAmounts)if(until<=Date.now())matchedAmounts.delete(key);buttons.forEach(b=>{b.classList.remove('demo-paired');b.disabled=!connected||busy||matching||leaving;b.textContent=busy?'Guardando…':'Publicar demo'});document.querySelectorAll('.quick-chip[data-val]').forEach(chip=>{const side=chip.closest('.side-card')?.classList.contains('white')?'white':'blue',stake=Number(chip.dataset.val),opponentStake=chip.dataset.advantage==='true'?stake/2:stake;const paired=!leaving&&!!user&&(matchedAmounts.get(amountKey(side,stake,opponentStake))||0)>Date.now();chip.classList.toggle('demo-amount-matched',paired);chip.title=paired?'Apuesta emparejada':'Sin emparejar'})}
 
 const matchPreload=new Image();matchPreload.src='assets/contrincantes-v2.png';
 const seenMatches=new Set();let matchOverlay=null,matchTimer=null;
 function closeMatch(){clearTimeout(matchTimer);matchOverlay?.remove();matchOverlay=null}
 function announceMatches(){if(!user||leaving)return;for(const o of offers){if(o.makerUid!==user.uid||o.status!=='matched'||!o.pairedWith||!activeOffer(o))continue;const key='tn-match:'+user.uid+':'+[o.id,o.pairedWith].sort().join(':');if(seenMatches.has(key))continue;seenMatches.add(key);try{if(sessionStorage.getItem(key))continue;sessionStorage.setItem(key,'1')}catch{}closeMatch();const overlay=node('div',undefined,'match-celebration');overlay.setAttribute('role','status');const stage=node('div',undefined,'match-birds');for(const side of ['left','right']){const frame=node('div',undefined,'match-bird '+side),img=document.createElement('img');img.src='assets/contrincantes-v2.png';img.alt='';frame.append(img);stage.append(frame)}const title=node('strong','¡YA TIENES CONTRINCANTE!'),names=node('p',o.makerName+' vs '+o.opponentName),close=node('button','Continuar');close.type='button';close.addEventListener('click',closeMatch);overlay.append(stage,title,names,close);document.getElementById('live-view').append(overlay);matchOverlay=overlay;matchTimer=setTimeout(closeMatch,4000)}}
 
-function shutdown(){closeMatch();leaving=true;connected=false;stop?.();stop=null;clearInterval(clock);clock=null;offers=[];list.replaceChildren();updateButtons()}
+function shutdown(){matchedAmounts.clear();closeMatch();leaving=true;connected=false;stop?.();stop=null;clearInterval(clock);clock=null;offers=[];list.replaceChildren();updateButtons()}
 function errorMessage(error){if(error.code==='permission-denied')return 'No se pudo acceder a la demo. Revisa sus permisos en Firebase.';if(error.code==='unavailable'||!navigator.onLine)return 'No hay conexión. Vuelve a intentarlo cuando tengas internet.';return error.message||'No se pudo guardar. Inténtalo de nuevo.'}
 function matchPatch(takerUid,pairedWith,opponentName){return {status:'matched',takerUid,pairedWith,opponentName,updatedAt:serverTimestamp()}}
 async function pairExisting(mine,peer){
@@ -89,8 +102,8 @@ if(board&&list&&status){
  await window.gcAuth?.ready;
  if(window.gcAuth?.user&&await window.gcAuth.profileReady&&!window.gcAuth.accessSuspended){
   user=window.gcAuth.user;db=getFirestore(getApps().find(app=>app.name==='[DEFAULT]'));const profile=(await getDoc(doc(db,'users',user.uid))).data();displayName=profile?.displayName||'';if(!displayName.trim()||displayName.length>100)throw Error('Completa el nombre de tu perfil para publicar apuestas demo.');const room=roomFromSearch(location.search);offersRef=collection(db,'demoRooms',room,'offers');roomLabel.textContent=room==='demo-general'?'Sala general de demostración':room.replaceAll('-',' ');
-  stop=onSnapshot(query(offersRef,orderBy('createdAt','desc'),limit(30)),snapshot=>{if(leaving)return;connected=true;offers=snapshot.docs.map(s=>({id:s.id,...s.data()}));updateButtons();render();announceMatches();matchAutomatically();cleanupExpired()},error=>{connected=false;updateButtons();tell(errorMessage(error),true)});
-  clock=setInterval(()=>{updateButtons();render();cleanupExpired()},2000);
+  stop=onSnapshot(query(offersRef,orderBy('createdAt','desc'),limit(30)),snapshot=>{if(leaving)return;connected=true;offers=snapshot.docs.map(s=>({id:s.id,...s.data()}));if(!snapshot.metadata.hasPendingWrites)rememberMatchedAmounts();updateButtons();render();announceMatches();matchAutomatically();cleanupExpired()},error=>{connected=false;updateButtons();tell(errorMessage(error),true)});
+  clock=setInterval(()=>{updateButtons();render();cleanupExpired()},1000);
   buttons.forEach(button=>button.addEventListener('click',()=>action(async()=>{
    const choice=window.tnBetSelection?.();if(!choice||choice.side!==button.dataset.demoPublish)throw Error('Selecciona primero un monto normal o con ventaja de este lado.');
    const terms=offerTerms(choice.side,choice.stake,choice.advantage),paired=await publish(terms);
