@@ -21,11 +21,11 @@
 .live-view .demo-inline-note{display:block;font-size:10px;line-height:1.4;color:#9aa9bd;text-align:center;margin-top:7px}
 .live-view .available-bets{margin-top:16px}
 
-/* Selección: verde/mamey. Emparejamiento confirmado: verde fijo. */
-.live-view .matchup-row .side-card .quick-chip.active:not(.demo-amount-matched){animation:amount-selection-pulse 1.6s ease-in-out infinite}
+/* Seleccionado: verde fijo. Publicado pendiente: verde/naranja. Enlazado: verde fijo. */
+.live-view .matchup-row .side-card .quick-chip.demo-amount-pending:not(.demo-amount-matched){animation:amount-selection-pulse 1.6s ease-in-out infinite}
 @keyframes amount-selection-pulse{
  0%,100%{border-color:#36eda1;box-shadow:0 0 0 2px #36eda1}
  50%{border-color:#ff9955;box-shadow:0 0 0 2px #ff9955}
 }
 .live-view .matchup-row .side-card .quick-chip.demo-amount-matched{animation:none;border-color:#36eda1;box-shadow:0 0 0 2px #36eda1}
-@media(prefers-reduced-motion:reduce){.live-view .matchup-row .side-card .quick-chip.active:not(.demo-amount-matched){animation:none;border-color:#36eda1;box-shadow:0 0 0 2px #36eda1}}
+@media(prefers-reduced-motion:reduce){.live-view .matchup-row .side-card .quick-chip.demo-amount-pending:not(.demo-amount-matched){animation:none;border-color:#36eda1;box-shadow:0 0 0 2px #36eda1}}

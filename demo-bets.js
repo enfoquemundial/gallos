@@ -7,7 +7,7 @@ const color=side=>side==='white'?'BLANCO':'AZUL',amount=value=>'USD '+Number(val
 function node(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n}
 let hasError=false;
 function tell(text,isError=false){hasError=isError;status.textContent=text;if(isError)board.hidden=false}
-// Mantener la confirmación visual un minuto desde el emparejamiento del servidor.
+// Mantener la confirmación visual 30 segundos desde el emparejamiento del servidor.
 const matchedAmounts=new Map();
 const amountKey=(side,stake,opponentStake)=>[side,stake,opponentStake].join(':');
 function rememberMatchedAmounts(now=Date.now()){
@@ -16,11 +16,11 @@ function rememberMatchedAmounts(now=Date.now()){
   if(offer.makerUid!==user.uid||offer.status!=='matched')continue;
   const matchedAt=offer.updatedAt?.toMillis();
   if(!Number.isFinite(matchedAt)||matchedAt>now+5000)continue;
-  const until=matchedAt+60_000,key=amountKey(offer.side,offer.stake,offer.opponentStake);
+  const until=matchedAt+30_000,key=amountKey(offer.side,offer.stake,offer.opponentStake);
   if(until>now)matchedAmounts.set(key,Math.max(matchedAmounts.get(key)||0,until));
  }
 }
-function updateButtons(){for(const [key,until]of matchedAmounts)if(until<=Date.now())matchedAmounts.delete(key);buttons.forEach(b=>{b.classList.remove('demo-paired');b.disabled=!connected||busy||matching||leaving;b.textContent=busy?'Guardando…':'Publicar demo'});document.querySelectorAll('.quick-chip[data-val]').forEach(chip=>{const side=chip.closest('.side-card')?.classList.contains('white')?'white':'blue',stake=Number(chip.dataset.val),opponentStake=chip.dataset.advantage==='true'?stake/2:stake;const paired=!leaving&&!!user&&(matchedAmounts.get(amountKey(side,stake,opponentStake))||0)>Date.now();chip.classList.toggle('demo-amount-matched',paired);chip.title=paired?'Apuesta emparejada':'Sin emparejar'})}
+function updateButtons(){for(const [key,until]of matchedAmounts)if(until<=Date.now())matchedAmounts.delete(key);buttons.forEach(b=>{b.classList.remove('demo-paired');b.disabled=!connected||busy||matching||leaving;b.textContent=busy?'Guardando…':'Publicar demo'});document.querySelectorAll('.quick-chip[data-val]').forEach(chip=>{const side=chip.closest('.side-card')?.classList.contains('white')?'white':'blue',stake=Number(chip.dataset.val),opponentStake=chip.dataset.advantage==='true'?stake/2:stake;const paired=!leaving&&!!user&&(matchedAmounts.get(amountKey(side,stake,opponentStake))||0)>Date.now();const pending=!leaving&&!!user&&offers.some(o=>o.makerUid===user.uid&&o.side===side&&o.stake===stake&&o.opponentStake===opponentStake&&o.status==='open'&&activeOffer(o));chip.classList.toggle('demo-amount-matched',paired);chip.classList.toggle('demo-amount-pending',pending&&!paired);chip.title=paired?'Apuesta emparejada':pending?'Esperando oponente':'Sin publicar'})}
 
 const matchPreload=new Image();matchPreload.src='assets/contrincantes-v2.png';
 const seenMatches=new Set();let matchOverlay=null,matchTimer=null;
